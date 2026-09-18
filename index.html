@@ -20,6 +20,13 @@
 @media(max-width:800px){.sidebar{width:72px;padding:18px 8px}.logo{font-size:0;text-align:center}.logo:first-letter{font-size:22px}.nav button{font-size:0;text-align:center}.nav button::first-letter{font-size:19px}.main{padding:18px}.grid{grid-template-columns:repeat(2,1fr)}} 
 @media(max-width:480px){.grid{grid-template-columns:1fr}.top{gap:10px;align-items:flex-start}.top h1{font-size:23px}}
 .timer{font-size:26px;font-weight:800;text-align:center;padding:12px;border-radius:12px;background:#f1f4ff;margin-bottom:18px}.danger{font-weight:800}\n</style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#16243d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
 </head>
 <body>
 <div class="app">
@@ -413,6 +420,12 @@ function closeModal(id){document.getElementById(id).classList.remove('show')}
 function addClass(){let n=document.getElementById('className').value.trim(),l=document.getElementById('classLevel').value.trim();if(!n)return alert('Veuillez saisir le nom de la classe.');data.classes.push({name:n,level:l||'—'});save();closeModal('classModal');document.getElementById('className').value='';document.getElementById('classLevel').value=''}
 function addStudent(){let last=document.getElementById('lastName').value.trim(),first=document.getElementById('firstName').value.trim(),c=document.getElementById('studentClass').value.trim();if(!last||!first||!c)return alert('Veuillez remplir tous les champs.');data.students.push({last,first,className:c});save();closeModal('studentModal');['lastName','firstName','studentClass'].forEach(id=>document.getElementById(id).value='')}
 render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
 </script>
 </body>
 </html>
