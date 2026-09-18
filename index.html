@@ -29,13 +29,29 @@
 
 .grade-big{font-size:28px;font-weight:800;margin:5px 0}
 \n
-/* V19 — navigation à droite */
-.app{display:flex;min-height:100vh}
-.sidebar{order:2;flex:0 0 245px}
-.main{order:1;min-width:0}
+/* V19 — barre de navigation fixée à droite */
+.sidebar{
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  z-index:1000;
+  overflow-y:auto;
+}
+.main{
+  margin-left:0;
+  margin-right:245px;
+}
 @media(max-width:800px){
-  .sidebar{order:2;flex:0 0 72px}
-  .main{order:1}
+  .sidebar{
+    right:0;
+    left:auto;
+    width:72px;
+  }
+  .main{
+    margin-left:0;
+    margin-right:72px;
+  }
 }
 </style>
 
