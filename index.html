@@ -62,12 +62,15 @@
 
 <section id="classes" class="page">
   <div class="top"><h1>Mes classes</h1><button class="btn" onclick="openModal('classModal')">+ Ajouter une classe</button></div>
-  <div class="card"><table class="table"><thead><tr><th>Classe</th><th>Niveau</th><th>Élèves</th></tr></thead><tbody id="classTable"></tbody></table></div>
+  <div class="card"><div style="overflow:auto"><table class="table"><thead><tr><th>Classe</th><th>Niveau</th><th>Élèves</th><th>Actions</th></tr></thead><tbody id="classTable"></tbody></table></div></div>
 </section>
 
 <section id="eleves" class="page">
   <div class="top"><h1>Mes élèves</h1><div><button class="btn cancel" onclick="exportStudentsCSV()">📥 Exporter</button> <button class="btn" onclick="openModal('studentModal')">+ Ajouter un élève</button></div></div>
-  <div class="card"><table class="table"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th></tr></thead><tbody id="studentTable"></tbody></table></div>
+  <div class="card">
+  <div class="field"><label>🔎 Rechercher un élève</label><input id="studentSearch" oninput="renderStudents()" placeholder="Nom, prénom ou classe..."></div>
+  <div style="overflow:auto"><table class="table"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Actions</th></tr></thead><tbody id="studentTable"></tbody></table></div>
+</div>
 </section>
 
 <section id="cours" class="page">
@@ -109,6 +112,15 @@
       <button class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
     </div>
     <p id="importMsg" class="muted"></p>
+  </div>
+  <div class="card section">
+    <h2>💾 Sauvegarde des données</h2>
+    <p class="muted">Enregistrez toutes vos classes, élèves, exercices, notes, cours et emploi du temps dans un fichier. Vous pourrez le restaurer sur ce téléphone.</p>
+    <div class="actions" style="justify-content:flex-start;flex-wrap:wrap">
+      <button class="btn" onclick="backupData()">⬇️ Sauvegarder</button>
+      <button class="btn cancel" onclick="document.getElementById('backupFile').click()">⬆️ Restaurer</button>
+      <input type="file" id="backupFile" accept=".json,application/json" style="display:none" onchange="restoreData(event)">
+    </div>
   </div>
 </section>
 
@@ -154,7 +166,7 @@
 <h2>Nouvel élève</h2>
 <div class="field"><label>Nom</label><input id="lastName"></div>
 <div class="field"><label>Prénom</label><input id="firstName"></div>
-<div class="field"><label>Classe</label><input id="studentClass" placeholder="Ex. 1BAC Sciences"></div>
+<div class="field"><label>Classe</label><input id="studentClass" list="classOptions" placeholder="Ex. 1BAC Sciences"><datalist id="classOptions"></datalist></div>
 <div class="actions"><button class="btn cancel" onclick="closeModal('studentModal')">Annuler</button><button class="btn" onclick="addStudent()">Enregistrer</button></div>
 </div></div>
 
@@ -336,13 +348,63 @@ function render(){
  document.getElementById('statClasses').textContent=data.classes.length;
  document.getElementById('statEleves').textContent=data.students.length;
  const ct=document.getElementById('classTable');
- ct.innerHTML=data.classes.length?data.classes.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.level)}</td><td>${data.students.filter(s=>s.className===c.name).length}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Aucune classe. Cliquez sur « Ajouter une classe ».</td></tr>';
+ ct.innerHTML=data.classes.length?data.classes.map((c,i)=>`<tr><td>${esc(c.name)}</td><td>${esc(c.level)}</td><td>${data.students.filter(s=>s.className===c.name).length}</td><td><button class="btn cancel" onclick="editClass(${i})">✏️</button> <button class="btn cancel" onclick="deleteClass(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucune classe. Cliquez sur « Ajouter une classe ».</td></tr>';
+ const dl=document.getElementById('classOptions'); if(dl) dl.innerHTML=data.classes.map(c=>`<option value="${esc(c.name)}">`).join('');
+ renderStudents();
  renderExercises();
  renderEvaluationSelectors(); renderStatistics(); renderProfileSelectors(); renderDashboardSummary(); renderCourses(); renderSchedule();
  const rt=document.getElementById('resultsTable');
  rt.innerHTML=data.grades.length?data.grades.slice().reverse().map(g=>{let s=data.students[g.student],e=data.exercises[g.exercise],d=g.date?new Date(g.date).toLocaleDateString('fr-FR'):'—';return `<tr><td>${s?esc(s.last+' '+s.first):'—'}</td><td>${s?esc(s.className):'—'}</td><td>${e?esc(e.title):'—'}</td><td><b>${g.score20.toFixed(2)}</b></td><td>${d}</td></tr>`}).join(''):'<tr><td colspan="5" class="empty">Aucune note enregistrée.</td></tr>';
- const st=document.getElementById('studentTable');
- st.innerHTML=data.students.length?data.students.map(s=>`<tr><td>${esc(s.last)}</td><td>${esc(s.first)}</td><td>${esc(s.className)}</td></tr>`).join(''):'<tr><td colspan="3" class="empty">Aucun élève enregistré.</td></tr>';
+ renderStudents();
+}
+function renderStudents(){
+ const st=document.getElementById('studentTable'); if(!st)return;
+ const q=(document.getElementById('studentSearch')?.value||'').trim().toLowerCase();
+ const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!q||`${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q));
+ st.innerHTML=rows.length?rows.map(({s,i})=>`<tr><td>${esc(s.last)}</td><td>${esc(s.first)}</td><td>${esc(s.className)}</td><td><button class="btn cancel" onclick="editStudent(${i})">✏️</button> <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
+}
+function editClass(i){
+ const c=data.classes[i]; if(!c)return;
+ const n=prompt('Nom de la classe :',c.name); if(n===null)return;
+ const name=n.trim(); if(!name)return alert('Le nom ne peut pas être vide.');
+ const level=prompt('Niveau :',c.level||''); if(level===null)return;
+ const old=c.name; c.name=name; c.level=level.trim()||'—';
+ data.students.forEach(s=>{if(s.className===old)s.className=name}); save();
+}
+function deleteClass(i){
+ const c=data.classes[i]; if(!c)return;
+ const count=data.students.filter(s=>s.className===c.name).length;
+ if(!confirm(`Supprimer la classe « ${c.name} » ?${count?`\n${count} élève(s) y sont rattaché(s) et conserveront leur classe.`:''}`))return;
+ data.classes.splice(i,1); save();
+}
+function editStudent(i){
+ const s=data.students[i]; if(!s)return;
+ const last=prompt('Nom :',s.last); if(last===null)return;
+ const first=prompt('Prénom :',s.first); if(first===null)return;
+ const cls=prompt('Classe :',s.className); if(cls===null)return;
+ if(!last.trim()||!first.trim()||!cls.trim())return alert('Tous les champs sont obligatoires.');
+ s.last=last.trim(); s.first=first.trim(); s.className=cls.trim(); save();
+}
+function deleteStudent(i){
+ const s=data.students[i]; if(!s)return;
+ if(!confirm(`Supprimer ${s.first} ${s.last} ?`))return;
+ data.students.splice(i,1);
+ data.grades=data.grades.filter(g=>g.student!==i).map(g=>({...g,student:g.student>i?g.student-1:g.student}));
+ save();
+}
+function backupData(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='EduProf_FR_sauvegarde.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+function restoreData(event){
+ const f=event.target.files?.[0]; if(!f)return;
+ const r=new FileReader(); r.onload=()=>{try{
+   const x=JSON.parse(r.result);
+   if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw new Error();
+   if(!confirm('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.'))return;
+   data={classes:x.classes||[],students:x.students||[],exercises:x.exercises||[],grades:x.grades||[],courses:x.courses||[],schedule:x.schedule||[]};
+   localStorage.setItem(key,JSON.stringify(data)); render(); alert('Sauvegarde restaurée avec succès.');
+ }catch(e){alert('Fichier de sauvegarde invalide.');}}; r.readAsText(f,'UTF-8'); event.target.value='';
 }
 function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function renderExercises(){
