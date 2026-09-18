@@ -245,6 +245,7 @@
 <div class="field"><label>Activité / cours</label><input id="schActivity" placeholder="Ex. Compréhension orale"></div>
 <div class="actions"><button class="btn cancel" onclick="closeModal('scheduleModal')">Annuler</button><button class="btn" onclick="addSchedule()">Enregistrer</button></div>
 </div></div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const key='eduprof_fr_data';
 let data=JSON.parse(localStorage.getItem(key)||'{"classes":[],"students":[],"exercises":[],"grades":[],"courses":[],"schedule":[]}'); data.exercises=data.exercises||[]; data.courses=data.courses||[]; data.schedule=data.schedule||[]; data.exercises=data.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'};}); data.grades=(data.grades||[]).map(g=>({...g,coef:Number(g.coef)||1}));
