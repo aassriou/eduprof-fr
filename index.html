@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduProf FR — Gestion pédagogique</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#687386;--accent:#315efb;--border:#e5e9f2}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#18243a;color:#fff;padding:24px 16px}
+.logo{font-size:22px;font-weight:800;margin:4px 10px 28px}.logo span{color:#7ea0ff}
+.nav button{width:100%;border:0;background:transparent;color:#dce4f5;text-align:left;padding:13px 14px;border-radius:10px;margin:3px 0;font-size:15px;cursor:pointer}
+.nav button:hover,.nav button.active{background:#2a3a5c;color:#fff}.main{flex:1;padding:28px;max-width:1250px;margin:auto;width:100%}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top h1{margin:0;font-size:28px}.btn{border:0;background:var(--accent);color:#fff;padding:11px 16px;border-radius:9px;cursor:pointer;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:20px;box-shadow:0 4px 16px #17203308}
+.stat{font-size:30px;font-weight:800;margin:8px 0}.muted{color:var(--muted);font-size:14px}
+.section{margin-top:24px}.section h2{font-size:19px}.table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}.table th,.table td{padding:13px;border-bottom:1px solid var(--border);text-align:left}.table th{background:#f8f9fc;font-size:13px}.empty{text-align:center;padding:35px;color:var(--muted)}
+.modal{position:fixed;inset:0;background:#10182888;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modalbox{background:#fff;width:min(500px,100%);border-radius:16px;padding:24px}.modalbox h2{margin-top:0}.field{margin:14px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}.field input{width:100%;padding:11px;border:1px solid var(--border);border-radius:9px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}.cancel{background:#eef1f7;color:#172033}
+.page{display:none}.page.active{display:block}
+@media(max-width:800px){.sidebar{width:72px;padding:18px 8px}.logo{font-size:0;text-align:center}.logo:first-letter{font-size:22px}.nav button{font-size:0;text-align:center}.nav button::first-letter{font-size:19px}.main{padding:18px}.grid{grid-template-columns:repeat(2,1fr)}} 
+@media(max-width:480px){.grid{grid-template-columns:1fr}.top{gap:10px;align-items:flex-start}.top h1{font-size:23px}}
+.timer{font-size:26px;font-weight:800;text-align:center;padding:12px;border-radius:12px;background:#f1f4ff;margin-bottom:18px}.danger{font-weight:800}
+.grade-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:18px}
+.gradebook-table th,.gradebook-table td{white-space:nowrap;min-width:88px;text-align:center}
+.gradebook-table th:first-child,.gradebook-table td:first-child{text-align:left;min-width:155px;position:sticky;left:0;background:#fff;z-index:1}
+.gradebook-note{font-weight:800;font-size:16px}
+.gradebook-avg{font-weight:900;font-size:18px}
+.gradebook-empty{padding:24px;text-align:center;color:#667085}
+
+.grade-big{font-size:28px;font-weight:800;margin:5px 0}
+\n
+/* V19 — barre latérale à droite */
+@media (min-width: 769px){
+  .app{display:flex;flex-direction:row-reverse}
+  .sidebar{order:2}
+  .main{order:1}
+}
+</style>
+
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#16243d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="logo">Edu<span>Prof</span> FR</div>
+  <div class="nav">
+    <button class="active" onclick="showPage('dashboard',this)">🏠 Tableau de bord</button>
+    <button onclick="showPage('classes',this)">🏫 Mes classes</button>
+    <button onclick="showPage('eleves',this)">👨‍🎓 Mes élèves</button>
+<button onclick="showPage('profils',this)">👤 Profils élèves</button>
+<button onclick="showPage('emploi',this)">🗓️ Emploi du temps</button>
+<button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
+    <button onclick="showPage('cours',this)">📚 Cours</button>
+    <button onclick="showPage('exercices',this)">📝 Exercices</button>
+    <button onclick="showPage('evaluations',this)">✅ Évaluations</button>
+    <button onclick="showPage('resultats',this)">📊 Résultats</button>
+<button onclick="showPage('import',this)">📥 Import Excel</button>
+  </div>
+</aside>
+
+<main class="main">
+<section id="dashboard" class="page active">
+  <div class="top"><div><h1>Bonjour, Professeur 👋</h1><p class="muted">Votre espace de gestion pédagogique.</p></div></div>
+  <div class="grid">
+    <div class="card"><div class="muted">Classes</div><div class="stat" id="statClasses">0</div></div>
+    <div class="card"><div class="muted">Élèves</div><div class="stat" id="statEleves">0</div></div>
+    <div class="card"><div class="muted">Cours</div><div class="stat">0</div></div>
+    <div class="card"><div class="muted">Évaluations</div><div class="stat">0</div></div>
+  </div>
+  <div class="section card"><h2>Démarrage rapide</h2><p class="muted">Commencez par créer une classe et ajouter vos élèves.</p><button class="btn" onclick="showPage('classes',document.querySelectorAll('.nav button')[1])">+ Ajouter une classe</button></div>
+<div class="section card"><h2>📈 Vue d’ensemble</h2><div id="dashboardSummary" class="muted"></div></div>
+</section>
+
+<section id="classes" class="page">
+  <div class="top"><h1>Mes classes</h1><button class="btn" onclick="openModal('classModal')">+ Ajouter une classe</button></div>
+  <div class="card"><div style="overflow:auto"><table class="table"><thead><tr><th>Classe</th><th>Niveau</th><th>Élèves</th><th>Actions</th></tr></thead><tbody id="classTable"></tbody></table></div></div>
+</section>
+
+<section id="eleves" class="page">
+  <div class="top"><h1>Mes élèves</h1><div><button class="btn cancel" onclick="exportStudentsCSV()">📥 Exporter</button> <button class="btn" onclick="openModal('studentModal')">+ Ajouter un élève</button></div></div>
+  <div class="card">
+  <div class="field"><label>🔎 Rechercher un élève</label><input id="studentSearch" oninput="renderStudents()" placeholder="Nom, prénom ou classe..."></div>
+  <div style="overflow:auto"><table class="table"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Actions</th></tr></thead><tbody id="studentTable"></tbody></table></div>
+</div>
+</section>
+
+<section id="cours" class="page">
+<div class="top"><h1>📚 Cours & fiches pédagogiques</h1><button class="btn" onclick="openModal('courseModal')">+ Nouveau cours</button></div>
+<div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr)"></div>
+</section>
+<section id="exercices" class="page">
+<div class="top"><h1>📝 Exercices & tests interactifs</h1><button class="btn" onclick="openModal('exerciseModal')">+ Nouvel exercice</button></div>
+<div id="exerciseList" class="grid" style="grid-template-columns:repeat(2,1fr)"></div>
+<div id="testArea" class="card" style="margin-top:20px;display:none"></div>
+</section>
+<section id="evaluations" class="page">
+<div class="top"><h1>✅ Évaluations</h1></div>
+<div class="card">
+<p class="muted">Choisissez un élève et un test. La note sera enregistrée automatiquement dans son dossier.</p>
+<div class="field"><label>Élève</label><select id="evalStudent"></select></div>
+<div class="field"><label>Test</label><select id="evalExercise"></select></div>
+<button class="btn" onclick="launchStudentTest()">▶ Lancer le test</button>
+</div>
+<div id="studentTestArea" class="card" style="display:none;margin-top:20px"></div>
+</section>
+<section id="resultats" class="page">
+<div class="top"><h1>📊 Notes & moyennes</h1><div><button class="btn cancel" onclick="exportResultsCSV()">📥 Exporter CSV</button> <button class="btn" onclick="openGradeModal()">+ Ajouter une note</button></div></div>
+<div class="grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="card"><div class="muted">Notes enregistrées</div><div class="stat" id="statGrades">0</div></div>
+<div class="card"><div class="muted">Moyenne générale</div><div class="stat" id="statAverage">—</div></div>
+<div class="card"><div class="muted">Meilleure note</div><div class="stat" id="statBest">—</div></div>
+</div>
+<div class="card section">
+  <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="field"><label>Classe</label><select id="gradeClassFilter" onchange="renderGradesPage();renderGradebook()"><option value="">Toutes les classes</option></select></div>
+    <div class="field"><label>Élève</label><select id="gradeStudentFilter" onchange="renderGradesPage()"><option value="">Tous les élèves</option></select></div>
+  </div>
+</div>
+<div id="gradeStudentAverages" class="grid" style="grid-template-columns:repeat(2,1fr);margin-top:20px"></div>
+<div class="card section" style="margin-top:20px">
+  <div class="top" style="margin-bottom:14px">
+    <h2 style="margin:0">📋 Carnet de notes</h2>
+    <button class="btn" onclick="openGradeModal()">+ Nouvelle note</button>
+  </div>
+  <div class="muted" style="margin-bottom:12px">Vue par classe : chaque colonne correspond à une évaluation et la dernière colonne calcule automatiquement la moyenne pondérée.</div>
+  <div style="overflow:auto">
+    <table class="table gradebook-table">
+      <thead id="gradebookHead"></thead>
+      <tbody id="gradebookBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px;overflow:auto"><table class="table"><thead><tr><th>Élève</th><th>Classe</th><th>Évaluation</th><th>Note</th><th>/20</th><th>Coef.</th><th>Date</th><th></th></tr></thead><tbody id="resultsTable"></tbody></table></div>
+</section>
+
+<section id="import" class="page">
+  <div class="top"><h1>📥 Importer les élèves</h1></div>
+  <div class="card">
+    <p class="muted">Importez directement votre fichier <b>Excel (.xlsx)</b> ou CSV. Colonnes attendues : <b>Nom, Prénom, Classe</b>. Les doublons sont automatiquement ignorés.</p>
+    <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="field">
+    <div class="actions" style="justify-content:flex-start">
+      <button class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
+      <button class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
+    </div>
+    <p id="importMsg" class="muted"></p>
+  </div>
+  <div class="card section">
+    <h2>💾 Sauvegarde des données</h2>
+    <p class="muted">Enregistrez toutes vos classes, élèves, exercices, notes, cours et emploi du temps dans un fichier. Vous pourrez le restaurer sur ce téléphone.</p>
+    <div class="actions" style="justify-content:flex-start;flex-wrap:wrap">
+      <button class="btn" onclick="backupData()">⬇️ Sauvegarder</button>
+      <button class="btn cancel" onclick="document.getElementById('backupFile').click()">⬆️ Restaurer</button>
+      <input type="file" id="backupFile" accept=".json,application/json" style="display:none" onchange="restoreData(event)">
+    </div>
+  </div>
+</section>
+
+<section id="profils" class="page">
+<div class="top"><h1>👤 Profil élève</h1></div>
+<div class="card">
+<div class="field"><label>Choisir un élève</label><select id="profileStudent" onchange="renderProfile()"></select></div>
+<div id="profileContent" class="empty">Sélectionnez un élève.</div>
+</div>
+</section>
+
+<section id="emploi" class="page">
+<div class="top"><h1>🗓️ Emploi du temps</h1><button class="btn" onclick="openModal('scheduleModal')">+ Ajouter une séance</button></div>
+<div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Jour</th><th>Horaire</th><th>Classe</th><th>Activité</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
+</section>
+
+<section id="assistant" class="page">
+<div class="top"><div><h1>🤖 Assistant IA</h1><p class="muted">Générez rapidement une activité de français à partir de vos objectifs.</p></div></div>
+<div class="card">
+<div class="grid" style="grid-template-columns:repeat(2,1fr)">
+<div class="field"><label>Niveau / classe</label><input id="aiLevel" placeholder="Ex. 1BAC"></div>
+<div class="field"><label>Compétence</label><select id="aiSkill"><option>Compréhension écrite</option><option>Grammaire</option><option>Vocabulaire</option><option>Production écrite</option><option>Compréhension orale</option></select></div>
+<div class="field"><label>Thème / leçon</label><input id="aiTopic" placeholder="Ex. Le passé composé"></div>
+<div class="field"><label>Type d'activité</label><select id="aiType"><option>QCM</option><option>Vrai / Faux</option><option>Questions courtes</option><option>Fiche pédagogique</option></select></div>
+<div class="field"><label>Difficulté</label><select id="aiDifficulty"><option>Facile</option><option>Moyenne</option><option>Difficile</option></select></div>
+<div class="field"><label>Nombre de questions</label><input id="aiCount" type="number" min="1" max="20" value="5"></div>
+</div>
+<button class="btn" onclick="generateAIContent()">✨ Générer</button>
+</div>
+<div id="aiOutput" class="card" style="display:none;margin-top:20px"></div>
+</section>
+</main>
+</div>
+
+<div class="modal" id="gradeModal"><div class="modalbox">
+<h2>Ajouter une note</h2>
+<div class="field"><label>Élève</label><select id="manualGradeStudent"></select></div>
+<div class="field"><label>Évaluation</label><input id="manualGradeTitle" placeholder="Ex. Contrôle 1, Production écrite..."></div>
+<div class="grid" style="grid-template-columns:repeat(2,1fr)">
+  <div class="field"><label>Note obtenue</label><input id="manualGradeScore" type="number" min="0" step="0.25" placeholder="Ex. 14"></div>
+  <div class="field"><label>Barème</label><input id="manualGradeMax" type="number" min="1" step="0.5" value="20"></div>
+</div>
+<div class="field"><label>Coefficient</label><input id="manualGradeCoef" type="number" min="0.1" step="0.1" value="1"></div>
+<div class="field"><label>Date</label><input id="manualGradeDate" type="date"></div>
+<div class="actions"><button class="btn cancel" onclick="closeModal('gradeModal')">Annuler</button><button class="btn" onclick="addManualGrade()">Enregistrer</button></div>
+</div></div>
+
+<div class="modal" id="classModal"><div class="modalbox">
+<h2>Nouvelle classe</h2>
+<div class="field"><label>Nom de la classe</label><input id="className" placeholder="Ex. 1BAC Sciences"></div>
+<div class="field"><label>Niveau</label><input id="classLevel" placeholder="Ex. 1ère année Bac"></div>
+<div class="actions"><button class="btn cancel" onclick="closeModal('classModal')">Annuler</button><button class="btn" onclick="addClass()">Enregistrer</button></div>
+</div></div>
+
+<div class="modal" id="studentModal"><div class="modalbox">
+<h2>Nouvel élève</h2>
+<div class="field"><label>Nom</label><input id="lastName"></div>
+<div class="field"><label>Prénom</label><input id="firstName"></div>
+<div class="field"><label>Classe</label><input id="studentClass" list="classOptions" placeholder="Ex. 1BAC Sciences"><datalist id="classOptions"></datalist></div>
+<div class="actions"><button class="btn cancel" onclick="closeModal('studentModal')">Annuler</button><button class="btn" onclick="addStudent()">Enregistrer</button></div>
+</div></div>
+
+
+<div class="modal" id="exerciseModal"><div class="modalbox">
+<h2>Nouvel exercice</h2>
+<div class="field"><label>Titre</label><input id="exTitle" placeholder="Ex. Compréhension écrite"></div>
+<div class="field"><label>Compétence</label><input id="exSkill" placeholder="Ex. Comprendre un texte"></div>
+<div class="field"><label>Nombre de questions</label><input id="exQuestions" type="number" min="1" value="3"></div>
+<div class="field"><label>Barème total</label><input id="exPoints" type="number" min="1" value="10"></div>
+<div class="field"><label>Durée du test (minutes)</label><input id="exDuration" type="number" min="1" value="10"></div>
+<div class="field"><label>Type</label><select id="exType"><option value="qcm">QCM</option><option value="vrai-faux">Vrai / Faux</option><option value="texte">Réponse courte</option></select></div>
+<div id="questionBuilder"></div>
+<button class="btn cancel" type="button" onclick="buildQuestions()">Générer les champs des questions</button>
+<div class="actions"><button class="btn cancel" onclick="closeModal('exerciseModal')">Annuler</button><button class="btn" onclick="addExercise()">Enregistrer</button></div>
+</div></div>
+
+<div class="modal" id="courseModal"><div class="modalbox">
+<h2>Nouveau cours / fiche</h2>
+<div class="field"><label>Titre</label><input id="courseTitle" placeholder="Ex. Le passé composé"></div>
+<div class="field"><label>Classe</label><input id="courseClass" placeholder="Ex. 1BAC"></div>
+<div class="field"><label>Objectif</label><input id="courseObjective" placeholder="Objectif de la séance"></div>
+<div class="field"><label>Compétence</label><input id="courseSkill" placeholder="Ex. Production écrite"></div>
+<div class="field"><label>Contenu / déroulement</label><textarea id="courseContent" rows="4" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:9px"></textarea></div>
+<div class="actions"><button class="btn cancel" onclick="closeModal('courseModal')">Annuler</button><button class="btn" onclick="addCourse()">Enregistrer</button></div>
+</div></div>
+
+<div class="modal" id="scheduleModal"><div class="modalbox">
+<h2>Ajouter une séance</h2>
+<div class="field"><label>Jour</label><select id="schDay"><option>Lundi</option><option>Mardi</option><option>Mercredi</option><option>Jeudi</option><option>Vendredi</option><option>Samedi</option></select></div>
+<div class="field"><label>Horaire</label><input id="schTime" placeholder="Ex. 13h30 – 15h30"></div>
+<div class="field"><label>Classe</label><input id="schClass" placeholder="Ex. 1BAC"></div>
+<div class="field"><label>Activité / cours</label><input id="schActivity" placeholder="Ex. Compréhension orale"></div>
+<div class="actions"><button class="btn cancel" onclick="closeModal('scheduleModal')">Annuler</button><button class="btn" onclick="addSchedule()">Enregistrer</button></div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+const key='eduprof_fr_data';
+let data=JSON.parse(localStorage.getItem(key)||'{"classes":[],"students":[],"exercises":[],"grades":[],"courses":[],"schedule":[]}'); data.exercises=data.exercises||[]; data.courses=data.courses||[]; data.schedule=data.schedule||[]; data.exercises=data.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'};}); data.grades=(data.grades||[]).map(g=>({...g,coef:Number(g.coef)||1}));
+function save(){localStorage.setItem(key,JSON.stringify(data));render()}
+
+
+function renderEvaluationSelectors(){
+ const s=document.getElementById('evalStudent'),e=document.getElementById('evalExercise'); if(!s||!e)return;
+ s.innerHTML=data.students.length?data.students.map((x,i)=>`<option value="${i}">${esc(x.last)} ${esc(x.first)} — ${esc(x.className)}</option>`).join(''):'<option value="">Aucun élève</option>';
+ e.innerHTML=data.exercises.length?data.exercises.map((x,i)=>`<option value="${i}">${esc(x.title)}</option>`).join(''):'<option value="">Aucun test</option>';
+}
+function renderStatistics(){
+ const valid=data.grades.filter(g=>Number.isFinite(Number(g.score20)));
+ const n=valid.length;
+ document.getElementById('statGrades').textContent=n;
+ const w=valid.reduce((a,g)=>a+gradeCoef(g),0);
+ document.getElementById('statAverage').textContent=w?(valid.reduce((a,g)=>a+Number(g.score20)*gradeCoef(g),0)/w).toFixed(2)+'/20':'—';
+ document.getElementById('statBest').textContent=n?Math.max(...valid.map(g=>Number(g.score20))).toFixed(2)+'/20':'—';
+}
+let activeTimer=null;
+function launchStudentTest(){
+ const si=Number(document.getElementById('evalStudent').value), ei=Number(document.getElementById('evalExercise').value);
+ if(!data.students[si]||!data.exercises[ei])return alert('Ajoutez au moins un élève et un test.');
+ const s=data.students[si],e=data.exercises[ei];
+ if(data.grades.some(g=>g.student===si&&g.exercise===ei))return alert('Ce test a déjà été réalisé par cet élève. Une nouvelle tentative n’est pas autorisée.');
+ const area=document.getElementById('studentTestArea'); area.style.display='block';
+ const duration=Number(e.duration)||10; let seconds=duration*60;
+ area.innerHTML=`<div class="timer" id="countdown">Temps restant : ${duration}:00</div><h2>${esc(e.title)}</h2><p class="muted">Élève : <b>${esc(s.first+' '+s.last)}</b> · Classe : ${esc(s.className)}</p>`+
+ e.questions.map((q,i)=>{
+   if(e.type==='qcm')return `<div class="field"><label>${i+1}. ${esc(q.text)}</label>${q.options.map((o,j)=>`<label style="display:block;margin:7px 0"><input type="radio" name="stuans${i}" value="${j}"> ${esc(o)}</label>`).join('')}</div>`;
+   if(e.type==='vrai-faux')return `<div class="field"><label>${i+1}. ${esc(q.text)}</label><select id="stuans${i}"><option value="">— Choisir —</option><option value="true">Vrai</option><option value="false">Faux</option></select></div>`;
+   return `<div class="field"><label>${i+1}. ${esc(q.text)}</label><input id="stuans${i}" placeholder="Votre réponse"></div>`;
+ }).join('')+`<button class="btn" onclick="gradeStudentTest(${si},${ei})">Terminer et corriger</button><p id="studentTestResult" class="stat"></p>`;
+ if(activeTimer)clearInterval(activeTimer);
+ activeTimer=setInterval(()=>{seconds--;let m=Math.floor(seconds/60),s2=String(seconds%60).padStart(2,'0');let el=document.getElementById('countdown');if(el)el.textContent=`Temps restant : ${m}:${s2}`;if(seconds<=0){clearInterval(activeTimer);gradeStudentTest(si,ei,true)}},1000);
+ area.scrollIntoView({behavior:'smooth'});
+}
+function gradeStudentTest(si,ei,timeout=false){
+ const e=data.exercises[ei]; let good=0;
+ e.questions.forEach((q,i)=>{
+   let a=e.type==='qcm'?document.querySelector(`input[name="stuans${i}"]:checked`)?.value:document.getElementById('stuans'+i)?.value;
+   if(e.type==='qcm'&&Number(a)===q.correct)good++;
+   else if(e.type==='vrai-faux'&&a===String(q.correct))good++;
+   else if(e.type==='texte'&&String(a||'').trim().toLowerCase()===q.correct)good++;
+ });
+ if(activeTimer)clearInterval(activeTimer);
+ const score20=good/e.questions.length*20;
+ data.grades.push({student:si,exercise:ei,score:good,max:e.questions.length,score20,date:new Date().toISOString()});
+ save();
+ document.getElementById('studentTestResult').textContent=`Résultat : ${good}/${e.questions.length} · ${score20.toFixed(2)}/20 — ${timeout?'temps écoulé · ':''}enregistré ✓`;
+}
+function openEvaluation(){
+ const ss=document.getElementById('gradeStudent'), ee=document.getElementById('gradeExercise');
+ ss.innerHTML=data.students.length?data.students.map((s,i)=>`<option value="${i}">${esc(s.last)} ${esc(s.first)} — ${esc(s.className)}</option>`).join(''):'<option>Aucun élève</option>';
+ ee.innerHTML=data.exercises.length?data.exercises.map((e,i)=>`<option value="${i}">${esc(e.title)} — /${e.points}</option>`).join(''):'<option>Aucun exercice</option>';
+ document.getElementById('gradeScore').value='';
+ document.getElementById('gradeMax').value='20';
+ document.getElementById('gradeMsg').textContent='';
+ showPage('evaluations',document.querySelectorAll('.nav button')[5]);
+}
+function saveGrade(){
+ if(!data.students.length||!data.exercises.length)return alert('Ajoutez au moins un élève et un exercice.');
+ let student=Number(document.getElementById('gradeStudent').value), exercise=Number(document.getElementById('gradeExercise').value);
+ let score=Number(document.getElementById('gradeScore').value), max=Number(document.getElementById('gradeMax').value)||20;
+ if(!Number.isFinite(score)||score<0||score>max)return alert('La note doit être comprise entre 0 et la note maximale.');
+ data.grades.push({student,exercise,score,max,score20:score/max*20,date:new Date().toISOString()});
+ save(); document.getElementById('gradeMsg').textContent='Note enregistrée : '+(score/max*20).toFixed(2)+'/20.';
+}
+
+function renderProfileSelectors(){
+ const s=document.getElementById('profileStudent'); if(!s)return;
+ s.innerHTML=data.students.length?data.students.map((x,i)=>`<option value="${i}">${esc(x.last)} ${esc(x.first)} — ${esc(x.className)}</option>`).join(''):'<option value="">Aucun élève</option>';
+ renderProfile();
+}
+function renderProfile(){
+ const sEl=document.getElementById('profileStudent'); const box=document.getElementById('profileContent'); if(!sEl||!box)return;
+ const i=Number(sEl.value),s=data.students[i]; if(!s){box.innerHTML='<div class="empty">Aucun élève.</div>';return;}
+ const gs=data.grades.filter(g=>g.student===i),avg=gs.length?gs.reduce((a,g)=>a+g.score20,0)/gs.length:0;
+ box.innerHTML=`<h2>${esc(s.first+' '+s.last)}</h2><p class="muted">Classe : ${esc(s.className)}</p><div class="grid" style="grid-template-columns:repeat(3,1fr)"><div><b>${gs.length}</b><br><span class="muted">Évaluations</span></div><div><b>${gs.length?avg.toFixed(2)+'/20':'—'}</b><br><span class="muted">Moyenne</span></div><div><b>${gs.length?Math.max(...gs.map(g=>g.score20)).toFixed(2)+'/20':'—'}</b><br><span class="muted">Meilleure note</span></div></div><h3>Historique</h3>${gs.length?'<table class="table"><thead><tr><th>Évaluation</th><th>Note</th><th>Date</th></tr></thead><tbody>'+gs.map(g=>`<tr><td>${esc(data.exercises[g.exercise]?.title||'—')}</td><td>${g.score20.toFixed(2)}/20</td><td>${new Date(g.date).toLocaleDateString('fr-FR')}</td></tr>`).join('')+'</tbody></table>':'<p class="muted">Aucune évaluation enregistrée.</p>'}<div class="actions" style="justify-content:flex-start"><button class="btn" onclick="printProfile()">🖨️ Imprimer le profil</button></div>`;
+}
+function printProfile(){window.print();}
+
+function exportCSV(filename, rows){
+ const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+ const blob=new Blob(["\uFEFF"+csv],{type:'text/csv;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();URL.revokeObjectURL(a.href);
+}
+function exportStudentsCSV(){
+ exportCSV('eleves.csv',[['Nom','Prénom','Classe'],...data.students.map(s=>[s.last,s.first,s.className])]);
+}
+function exportResultsCSV(){
+ exportCSV('resultats.csv',[['Nom','Prénom','Classe','Évaluation','Note','Barème','Note /20','Coefficient','Date'],...data.grades.map(g=>{let s=data.students[g.student];return [s?.last,s?.first,s?.className,gradeTitle(g),g.score,g.max,g.score20?.toFixed(2),gradeCoef(g),gradeDate(g)];})]);
+}
+function renderDashboardSummary(){
+ const box=document.getElementById('dashboardSummary');if(!box)return;
+ const n=data.grades.length,avg=n?data.grades.reduce((a,g)=>a+g.score20,0)/n:0;
+ box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
+}
+
+function renderCourses(){
+ const box=document.getElementById('courseList');if(!box)return;
+ box.innerHTML=data.courses.length?data.courses.map(c=>`<div class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(c.className)} · ${esc(c.skill)}</p><b>Objectif :</b> ${esc(c.objective)}<p class="muted">${esc(c.content)}</p></div>`).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun cours enregistré.</div>';
+}
+function addCourse(){
+ const title=document.getElementById('courseTitle').value.trim(),className=document.getElementById('courseClass').value.trim(),objective=document.getElementById('courseObjective').value.trim(),skill=document.getElementById('courseSkill').value.trim(),content=document.getElementById('courseContent').value.trim();
+ if(!title)return alert('Veuillez saisir le titre du cours.');
+ data.courses.push({title,className:className||'—',objective:objective||'—',skill:skill||'—',content:content||'—'});save();closeModal('courseModal');
+ ['courseTitle','courseClass','courseObjective','courseSkill','courseContent'].forEach(id=>document.getElementById(id).value='');
+}
+function renderSchedule(){
+ const box=document.getElementById('scheduleTable');if(!box)return;
+ const order=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+ const rows=data.schedule.slice().sort((a,b)=>order.indexOf(a.day)-order.indexOf(b.day));
+ box.innerHTML=rows.length?rows.map(s=>`<tr><td>${esc(s.day)}</td><td>${esc(s.time)}</td><td>${esc(s.className)}</td><td>${esc(s.activity)}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucune séance enregistrée.</td></tr>';
+}
+function addSchedule(){
+ const day=document.getElementById('schDay').value,time=document.getElementById('schTime').value.trim(),className=document.getElementById('schClass').value.trim(),activity=document.getElementById('schActivity').value.trim();
+ if(!time||!className||!activity)return alert('Veuillez remplir tous les champs.');
+ data.schedule.push({day,time,className,activity});save();closeModal('scheduleModal');
+ ['schTime','schClass','schActivity'].forEach(id=>document.getElementById(id).value='');
+}
+
+function generateAIContent(){
+ const topic=document.getElementById('aiTopic').value.trim()||'la langue française';
+ const level=document.getElementById('aiLevel').value.trim()||'niveau secondaire';
+ const skill=document.getElementById('aiSkill').value, type=document.getElementById('aiType').value;
+ const difficulty=document.getElementById('aiDifficulty').value, count=Math.min(20,Math.max(1,Number(document.getElementById('aiCount').value)||5));
+ const box=document.getElementById('aiOutput'); box.style.display='block';
+ let out=`<h2>✨ Activité pédagogique</h2><p><b>Niveau :</b> ${esc(level)} · <b>Compétence :</b> ${esc(skill)} · <b>Thème :</b> ${esc(topic)} · <b>Difficulté :</b> ${esc(difficulty)}</p>`;
+ if(type==='Fiche pédagogique'){
+   out+=`<h3>Objectifs</h3><ul><li>Comprendre et mobiliser les notions de ${esc(topic)}.</li><li>Développer la compétence : ${esc(skill)}.</li></ul><h3>Déroulement</h3><ol><li>Mise en situation.</li><li>Observation et découverte.</li><li>Conceptualisation.</li><li>Entraînement guidé puis autonome.</li><li>Évaluation formative et activité de clôture.</li></ol>`;
+ }else{
+   out+=`<h3>${esc(type)}</h3><ol>`;
+   for(let i=1;i<=count;i++){
+     if(type==='QCM') out+=`<li><b>Question ${i} :</b> Choisissez la réponse correcte concernant « ${esc(topic)} ».<br>A. Proposition A<br>B. Proposition B<br>C. Proposition C</li>`;
+     else if(type==='Vrai / Faux') out+=`<li><b>Question ${i} :</b> L'affirmation suivante concernant « ${esc(topic)} » est-elle vraie ou fausse ?<br>« Cette notion est correctement employée dans le contexte étudié. »</li>`;
+     else out+=`<li><b>Question ${i} :</b> Répondez brièvement en utilisant correctement « ${esc(topic)} ».</li>`;
+   }
+   out+='</ol><h3>Corrigé</h3><p>Préparez le corrigé selon le contenu travaillé en classe.</p>';
+ }
+ box.innerHTML=out+`<div class="actions" style="justify-content:flex-start"><button class="btn" onclick="window.print()">🖨️ Imprimer</button><button class="btn cancel" onclick="copyAIResult()">📋 Copier</button></div>`;
+ window.lastAIResult=box.innerText;
+}
+function copyAIResult(){ if(window.lastAIResult) navigator.clipboard?.writeText(window.lastAIResult); }
+
+function classKey(name){return String(name||'').trim().toLowerCase().replace(/\s+/g,' ');}
+function studentClassMatches(studentClass, className){return classKey(studentClass)===classKey(className);}
+function gradeTitle(g){
+  return g.title || data.exercises[g.exercise]?.title || 'Évaluation';
+}
+function gradeCoef(g){return Number(g.coef)||1;}
+function gradeDate(g){return g.date?new Date(g.date).toLocaleDateString('fr-FR'):'—';}
+
+function openGradeModal(){
+  const sel=document.getElementById('manualGradeStudent');
+  sel.innerHTML=data.students.length
+    ? data.students.map((s,i)=>`<option value="${i}">${esc(s.last)} ${esc(s.first)} — ${esc(s.className)}</option>`).join('')
+    : '<option value="">Aucun élève</option>';
+  document.getElementById('manualGradeTitle').value='';
+  document.getElementById('manualGradeScore').value='';
+  document.getElementById('manualGradeMax').value='20';
+  document.getElementById('manualGradeCoef').value='1';
+  document.getElementById('manualGradeDate').value=new Date().toISOString().slice(0,10);
+  openModal('gradeModal');
+}
+
+function addManualGrade(){
+  if(!data.students.length)return alert('Ajoutez d’abord un élève.');
+  const student=Number(document.getElementById('manualGradeStudent').value);
+  const title=document.getElementById('manualGradeTitle').value.trim();
+  const score=Number(document.getElementById('manualGradeScore').value);
+  const max=Number(document.getElementById('manualGradeMax').value)||20;
+  const coef=Number(document.getElementById('manualGradeCoef').value)||1;
+  const dateValue=document.getElementById('manualGradeDate').value;
+  if(!data.students[student]||!title)return alert('Veuillez choisir un élève et saisir le nom de l’évaluation.');
+  if(!Number.isFinite(score)||score<0||score>max)return alert('La note doit être comprise entre 0 et le barème.');
+  if(coef<=0)return alert('Le coefficient doit être supérieur à 0.');
+  const iso=dateValue?new Date(dateValue+'T12:00:00').toISOString():new Date().toISOString();
+  data.grades.push({student,title,score,max,score20:score/max*20,coef,date:iso});
+  save();
+  closeModal('gradeModal');
+}
+
+function deleteGrade(i){
+  if(!data.grades[i])return;
+  if(!confirm('Supprimer cette note ?'))return;
+  data.grades.splice(i,1);
+  save();
+}
+
+function renderGradeFilters(){
+  const cf=document.getElementById('gradeClassFilter');
+  const sf=document.getElementById('gradeStudentFilter');
+  if(!cf||!sf)return;
+  const oldC=cf.value, oldS=sf.value;
+  const classes=[...new Map(data.classes.map(c=>[classKey(c.name),c])).values()];
+  cf.innerHTML='<option value="">Toutes les classes</option>'+classes.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
+  sf.innerHTML='<option value="">Tous les élèves</option>'+data.students.map((s,i)=>`<option value="${i}">${esc(s.last)} ${esc(s.first)} — ${esc(s.className)}</option>`).join('');
+  if([...cf.options].some(o=>o.value===oldC))cf.value=oldC;
+  if([...sf.options].some(o=>o.value===oldS))sf.value=oldS;
+}
+
+function renderGradesPage(){
+  renderGradeFilters();
+  const cf=document.getElementById('gradeClassFilter')?.value||'';
+  const sf=document.getElementById('gradeStudentFilter')?.value||'';
+  const selectedStudent=sf===''?null:Number(sf);
+  const rows=data.grades.map((g,i)=>({g,i})).filter(({g})=>{
+    const s=data.students[g.student];
+    if(!s)return false;
+    if(cf && !studentClassMatches(s.className,cf))return false;
+    if(selectedStudent!==null && g.student!==selectedStudent)return false;
+    return true;
+  });
+  const rt=document.getElementById('resultsTable');
+  rt.innerHTML=rows.length?rows.slice().reverse().map(({g,i})=>{
+    const s=data.students[g.student];
+    return `<tr><td>${esc(s.last+' '+s.first)}</td><td>${esc(s.className)}</td><td>${esc(gradeTitle(g))}</td><td>${Number(g.score).toFixed(2)} / ${Number(g.max).toFixed(2)}</td><td><b>${Number(g.score20).toFixed(2)}</b></td><td>${gradeCoef(g)}</td><td>${gradeDate(g)}</td><td><button class="btn cancel" onclick="deleteGrade(${i})">🗑️</button></td></tr>`;
+  }).join(''):'<tr><td colspan="8" class="empty">Aucune note pour cette sélection.</td></tr>';
+
+  const box=document.getElementById('gradeStudentAverages');
+  let studentsToShow;
+  if(selectedStudent!==null) studentsToShow=[selectedStudent];
+  else {
+    const classFiltered=data.students.map((s,i)=>({s,i})).filter(({s})=>!cf||studentClassMatches(s.className,cf));
+    studentsToShow=classFiltered.map(x=>x.i);
+  }
+  box.innerHTML=studentsToShow.length?studentsToShow.map(i=>{
+    const s=data.students[i];
+    const gs=data.grades.filter(g=>g.student===i && (!cf||studentClassMatches(s.className,cf)));
+    const weighted=gs.reduce((a,g)=>a+Number(g.score20||0)*gradeCoef(g),0);
+    const weights=gs.reduce((a,g)=>a+gradeCoef(g),0);
+    const avg=weights?weighted/weights:0;
+    return `<div class="grade-card"><div class="muted">${esc(s.className)}</div><h3>${esc(s.first+' '+s.last)}</h3><div class="grade-big">${gs.length?avg.toFixed(2)+'/20':'—'}</div><div class="muted">${gs.length} note(s) · moyenne pondérée</div></div>`;
+  }).join(''):'<div class="card empty" style="grid-column:1/-1">Ajoutez des élèves pour voir les moyennes.</div>';
+}
+
+
+  renderGradebook();
+
+function gradebookEvaluations(className){
+  const ids=new Set();
+  data.grades.forEach(g=>{
+    const s=data.students[g.student];
+    if(s && studentClassMatches(s.className,className)) ids.add(gradeTitle(g));
+  });
+  return [...ids];
+}
+
+function renderGradebook(){
+  const head=document.getElementById('gradebookHead');
+  const body=document.getElementById('gradebookBody');
+  if(!head||!body)return;
+  const classFilter=document.getElementById('gradeClassFilter')?.value||'';
+  let classes=[...new Map(data.students.map(s=>[classKey(s.className),s.className])).values()];
+  if(classFilter) classes=classes.filter(c=>studentClassMatches(c,classFilter));
+  const className=classes[0]||classFilter||'';
+  if(!className){
+    head.innerHTML='<tr><th>Élève</th><th>Moyenne</th></tr>';
+    body.innerHTML='<tr><td colspan="2" class="gradebook-empty">Ajoutez des élèves ou choisissez une classe.</td></tr>';
+    return;
+  }
+  const evals=gradebookEvaluations(className);
+  head.innerHTML='<tr><th>Élève</th>'+evals.map(e=>`<th>${esc(e)}</th>`).join('')+'<th>Moyenne</th></tr>';
+  const students=data.students.map((s,i)=>({s,i})).filter(x=>studentClassMatches(x.s.className,className));
+  if(!students.length){
+    body.innerHTML=`<tr><td colspan="${evals.length+2}" class="gradebook-empty">Aucun élève dans ${esc(className)}.</td></tr>`;
+    return;
+  }
+  body.innerHTML=students.map(({s,i})=>{
+    const cells=evals.map(ev=>{
+      const gs=data.grades.filter(g=>g.student===i && gradeTitle(g)===ev);
+      if(!gs.length)return '<td>—</td>';
+      const w=gs.reduce((a,g)=>a+gradeCoef(g),0);
+      const avg=w?gs.reduce((a,g)=>a+Number(g.score20)*gradeCoef(g),0)/w:0;
+      return `<td class="gradebook-note">${avg.toFixed(2)}</td>`;
+    }).join('');
+    const all=data.grades.filter(g=>g.student===i);
+    const w=all.reduce((a,g)=>a+gradeCoef(g),0);
+    const avg=w?all.reduce((a,g)=>a+Number(g.score20)*gradeCoef(g),0)/w:null;
+    return `<tr><td><b>${esc(s.last+' '+s.first)}</b><br><span class="muted">${esc(s.className)}</span></td>${cells}<td class="gradebook-avg">${avg===null?'—':avg.toFixed(2)+'/20'}</td></tr>`;
+  }).join('');
+}
+
+function render(){
+ document.getElementById('statClasses').textContent=data.classes.length;
+ document.getElementById('statEleves').textContent=data.students.length;
+ const ct=document.getElementById('classTable');
+ ct.innerHTML=data.classes.length?data.classes.map((c,i)=>`<tr><td>${esc(c.name)}</td><td>${esc(c.level)}</td><td>${data.students.filter(s=>studentClassMatches(s.className,c.name)).length}</td><td><button class="btn cancel" onclick="editClass(${i})">✏️</button> <button class="btn cancel" onclick="deleteClass(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucune classe. Cliquez sur « Ajouter une classe ».</td></tr>';
+ const dl=document.getElementById('classOptions'); if(dl) dl.innerHTML=data.classes.map(c=>`<option value="${esc(c.name)}">`).join('');
+ renderStudents();
+ renderExercises();
+ renderEvaluationSelectors(); renderStatistics(); renderProfileSelectors(); renderDashboardSummary(); renderCourses(); renderSchedule();
+ renderGradesPage();
+ renderStudents();
+}
+function renderStudents(){
+ const st=document.getElementById('studentTable'); if(!st)return;
+ const q=(document.getElementById('studentSearch')?.value||'').trim().toLowerCase();
+ const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!q||`${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q));
+ st.innerHTML=rows.length?rows.map(({s,i})=>`<tr><td>${esc(s.last)}</td><td>${esc(s.first)}</td><td>${esc(s.className)}</td><td><button class="btn cancel" onclick="editStudent(${i})">✏️</button> <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
+}
+function editClass(i){
+ const c=data.classes[i]; if(!c)return;
+ const n=prompt('Nom de la classe :',c.name); if(n===null)return;
+ const name=n.trim(); if(!name)return alert('Le nom ne peut pas être vide.');
+ const level=prompt('Niveau :',c.level||''); if(level===null)return;
+ const old=c.name; c.name=name; c.level=level.trim()||'—';
+ data.students.forEach(s=>{if(s.className===old)s.className=name}); save();
+}
+function deleteClass(i){
+ const c=data.classes[i]; if(!c)return;
+ const count=data.students.filter(s=>studentClassMatches(s.className,c.name)).length;
+ if(!confirm(`Supprimer la classe « ${c.name} » ?${count?`\n${count} élève(s) y sont rattaché(s) et conserveront leur classe.`:''}`))return;
+ data.classes.splice(i,1); save();
+}
+function editStudent(i){
+ const s=data.students[i]; if(!s)return;
+ const last=prompt('Nom :',s.last); if(last===null)return;
+ const first=prompt('Prénom :',s.first); if(first===null)return;
+ const cls=prompt('Classe :',s.className); if(cls===null)return;
+ if(!last.trim()||!first.trim()||!cls.trim())return alert('Tous les champs sont obligatoires.');
+ s.last=last.trim(); s.first=first.trim(); s.className=cls.trim(); save();
+}
+function deleteStudent(i){
+ const s=data.students[i]; if(!s)return;
+ if(!confirm(`Supprimer ${s.first} ${s.last} ?`))return;
+ data.students.splice(i,1);
+ data.grades=data.grades.filter(g=>g.student!==i).map(g=>({...g,student:g.student>i?g.student-1:g.student}));
+ save();
+}
+function backupData(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='EduProf_FR_sauvegarde.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+function restoreData(event){
+ const f=event.target.files?.[0]; if(!f)return;
+ const r=new FileReader(); r.onload=()=>{try{
+   const x=JSON.parse(r.result);
+   if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw new Error();
+   if(!confirm('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.'))return;
+   data={classes:x.classes||[],students:x.students||[],exercises:x.exercises||[],grades:x.grades||[],courses:x.courses||[],schedule:x.schedule||[]};
+   localStorage.setItem(key,JSON.stringify(data)); render(); alert('Sauvegarde restaurée avec succès.');
+ }catch(e){alert('Fichier de sauvegarde invalide.');}}; r.readAsText(f,'UTF-8'); event.target.value='';
+}
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderExercises(){
+ const box=document.getElementById('exerciseList'); if(!box)return;
+ box.innerHTML=data.exercises.length?data.exercises.map((e,i)=>`<div class="card">
+ <h3>${esc(e.title)}</h3><p class="muted">${esc(e.skill)} · ${e.type||'QCM'}</p>
+ <b>${e.questions.length} questions · ${e.points} points</b>
+ <div class="actions" style="justify-content:flex-start"><button class="btn" onclick="startTest(${i})">▶ Faire le test</button></div>
+ </div>`).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun exercice. Cliquez sur « Nouvel exercice ».</div>';
+}
+function buildQuestions(){
+ const n=Math.max(1,Number(document.getElementById('exQuestions').value)||1);
+ const type=document.getElementById('exType').value;
+ const b=document.getElementById('questionBuilder');
+ b.innerHTML=Array.from({length:n},(_,i)=>{
+   if(type==='qcm') return `<div class="field"><label>Question ${i+1}</label><input class="qtext" placeholder="Énoncé"><input class="qopt" placeholder="Option A"><input class="qopt" placeholder="Option B"><input class="qopt" placeholder="Option C"><input class="qcorrect" type="number" min="1" max="3" value="1" placeholder="Bonne réponse (1-3)"></div>`;
+   if(type==='vrai-faux') return `<div class="field"><label>Question ${i+1}</label><input class="qtext" placeholder="Énoncé"><select class="qcorrect"><option value="true">Vrai</option><option value="false">Faux</option></select></div>`;
+   return `<div class="field"><label>Question ${i+1}</label><input class="qtext" placeholder="Énoncé"><input class="qcorrect" placeholder="Réponse attendue"></div>`;
+ }).join('');
+}
+function addExercise(){
+ let title=document.getElementById('exTitle').value.trim(),skill=document.getElementById('exSkill').value.trim();
+ let n=Math.max(1,Number(document.getElementById('exQuestions').value)||1),points=Number(document.getElementById('exPoints').value)||10,type=document.getElementById('exType').value,duration=Number(document.getElementById('exDuration').value)||10;
+ let texts=[...document.querySelectorAll('.qtext')];
+ if(!title)return alert('Veuillez saisir le titre.');
+ if(texts.length!==n)return alert('Cliquez sur « Générer les champs des questions » puis remplissez les questions.');
+ let qs=texts.map((el,i)=>{
+   if(type==='qcm'){let opts=[...document.querySelectorAll('.field:nth-of-type('+(i+1)+') .qopt')].map(x=>x.value.trim()); return {text:el.value.trim(),options:opts,correct:Number(document.querySelectorAll('.qcorrect')[i].value)-1};}
+   if(type==='vrai-faux')return {text:el.value.trim(),correct:document.querySelectorAll('.qcorrect')[i].value==='true'};
+   return {text:el.value.trim(),correct:document.querySelectorAll('.qcorrect')[i].value.trim().toLowerCase()};
+ });
+ if(qs.some(q=>!q.text))return alert('Veuillez remplir tous les énoncés.');
+ data.exercises.push({title,skill:skill||'—',questions:qs,points,type,duration});save();closeModal('exerciseModal');
+ ['exTitle','exSkill'].forEach(id=>document.getElementById(id).value='');document.getElementById('questionBuilder').innerHTML='';
+}
+function startTest(index){
+ const e=data.exercises[index], area=document.getElementById('testArea');
+ if(!e||!e.questions?.length)return;
+ area.style.display='block';
+ area.innerHTML=`<h2>${esc(e.title)}</h2><p class="muted">${esc(e.skill)}</p>`+
+ e.questions.map((q,i)=>{
+   if(e.type==='qcm')return `<div class="field"><label>${i+1}. ${esc(q.text)}</label>${q.options.map((o,j)=>`<label style="display:block;margin:6px 0"><input type="radio" name="ans${i}" value="${j}"> ${esc(o)}</label>`).join('')}</div>`;
+   if(e.type==='vrai-faux')return `<div class="field"><label>${i+1}. ${esc(q.text)}</label><select id="ans${i}"><option value="">— Choisir —</option><option value="true">Vrai</option><option value="false">Faux</option></select></div>`;
+   return `<div class="field"><label>${i+1}. ${esc(q.text)}</label><input id="ans${i}" placeholder="Votre réponse"></div>`;
+ }).join('')+`<button class="btn" onclick="correctTest(${index})">Corriger automatiquement</button><p id="testResult" class="stat"></p>`;
+ area.scrollIntoView({behavior:'smooth'});
+}
+function correctTest(index){
+ const e=data.exercises[index]; let good=0;
+ e.questions.forEach((q,i)=>{
+   let a;
+   if(e.type==='qcm')a=document.querySelector(`input[name="ans${i}"]:checked`)?.value;
+   else a=document.getElementById('ans'+i)?.value;
+   if(e.type==='qcm' && Number(a)===q.correct)good++;
+   else if(e.type==='vrai-faux' && a===String(q.correct))good++;
+   else if(e.type==='texte' && String(a||'').trim().toLowerCase()===q.correct)good++;
+ });
+ let score20=good/e.questions.length*20;
+ document.getElementById('testResult').textContent=`Résultat : ${good}/${e.questions.length} · ${score20.toFixed(2)}/20`;
+}
+function downloadTemplate(){
+ const blob=new Blob(['Nom,Prénom,Classe\nAlami,Mohammed,1BAC Sciences\n'],{type:'text/csv;charset=utf-8'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='modele_eleves.csv';a.click();
+}
+function normalizeImportKey(v){return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();}
+function importStudentsFile(){
+ const f=document.getElementById('csvFile').files[0];
+ if(!f)return alert('Choisissez un fichier Excel (.xlsx) ou CSV.');
+ const isExcel=/\.(xlsx|xls)$/i.test(f.name);
+ const finish=(rows)=>{
+   let added=0,skipped=0,classesAdded=0;
+   const existing=new Set(data.students.map(s=>normalizeImportKey(s.last)+'|'+normalizeImportKey(s.first)+'|'+normalizeImportKey(s.className)));
+   rows.forEach(r=>{
+     const get=(keys)=>{for(const k of keys){if(r[k]!==undefined&&r[k]!==null&&String(r[k]).trim())return String(r[k]).trim();}return '';};
+     let last=get(['Nom','nom','NOM','الاسم العائلي','الاسم العائلي ','الإسم الكامل']);
+     let first=get(['Prénom','Prenom','prénom','prenom','Prénom ']);
+     const full=get(['الإسم الكامل','الاسم الكامل','Nom et prénom','Nom Prénom']);
+     const cls=get(['Classe','classe','CLASSE','القسم','المجموعة']);
+     if(!last && full){const parts=full.split(/\s+/); last=parts.shift()||''; first=parts.join(' ');}
+     if(!last||!first||!cls){skipped++;return;}
+     const key=normalizeImportKey(last)+'|'+normalizeImportKey(first)+'|'+normalizeImportKey(cls);
+     if(existing.has(key)){skipped++;return;}
+     data.students.push({last,first,className:cls}); existing.add(key); added++;
+     if(!data.classes.some(c=>studentClassMatches(c.name,cls))){data.classes.push({name:cls,level:'—'});classesAdded++;}
+   });
+   save(); render();
+   document.getElementById('importMsg').textContent=`${added} élève(s) ajouté(s) · ${skipped} ignoré(s) · ${classesAdded} classe(s) créée(s).`;
+   document.getElementById('csvFile').value='';
+ };
+ if(isExcel){
+   if(typeof XLSX==='undefined')return alert('Le module Excel n’est pas chargé. Vérifiez votre connexion Internet puis réessayez.');
+   const r=new FileReader();
+   r.onload=()=>{try{
+     const wb=XLSX.read(new Uint8Array(r.result),{type:'array'});
+     let rows=[];
+     wb.SheetNames.forEach(name=>{rows=rows.concat(XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:'',raw:false}));});
+     if(!rows.length)return alert('Aucune ligne de données trouvée dans le fichier Excel.');
+     finish(rows);
+   }catch(e){alert('Impossible de lire ce fichier Excel.');}};
+   r.readAsArrayBuffer(f);
+ }else{
+   const r=new FileReader();
+   r.onload=()=>{
+     const lines=r.result.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());
+     if(lines.length<2)return alert('Le fichier CSV ne contient aucune donnée.');
+     const headers=lines[0].split(/[,;\t]/).map(x=>x.trim().replace(/^"|"$/g,''));
+     const rows=lines.slice(1).map(line=>{const p=line.split(/[,;\t]/).map(x=>x.trim().replace(/^"|"$/g,''));const o={};headers.forEach((h,i)=>o[h]=p[i]||'');return o;});
+     finish(rows);
+   }; r.readAsText(f,'UTF-8');
+ }
+}
+function importCSV(){importStudentsFile();}
+
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function openModal(id){document.getElementById(id).classList.add('show')}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function addClass(){let n=document.getElementById('className').value.trim(),l=document.getElementById('classLevel').value.trim();if(!n)return alert('Veuillez saisir le nom de la classe.');data.classes.push({name:n,level:l||'—'});save();closeModal('classModal');document.getElementById('className').value='';document.getElementById('classLevel').value=''}
+function addStudent(){let last=document.getElementById('lastName').value.trim(),first=document.getElementById('firstName').value.trim(),c=document.getElementById('studentClass').value.trim();if(!last||!first||!c)return alert('Veuillez remplir tous les champs.');data.students.push({last,first,className:c});save();closeModal('studentModal');['lastName','firstName','studentClass'].forEach(id=>document.getElementById(id).value='')}
+render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>
