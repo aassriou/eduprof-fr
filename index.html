@@ -135,10 +135,10 @@
 <section id="import" class="page">
   <div class="top"><h1>📥 Importer les élèves</h1></div>
   <div class="card">
-    <p class="muted">Importez un fichier CSV (Excel peut enregistrer en CSV UTF-8). Colonnes attendues : <b>Nom, Prénom, Classe</b>.</p>
-    <input type="file" id="csvFile" accept=".csv,text/csv" class="field">
+    <p class="muted">Importez directement votre fichier <b>Excel (.xlsx)</b> ou CSV. Colonnes attendues : <b>Nom, Prénom, Classe</b>. Les doublons sont automatiquement ignorés.</p>
+    <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="field">
     <div class="actions" style="justify-content:flex-start">
-      <button class="btn" onclick="importCSV()">Importer le fichier</button>
+      <button class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
       <button class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
     </div>
     <p id="importMsg" class="muted"></p>
@@ -653,12 +653,54 @@ function downloadTemplate(){
  const blob=new Blob(['Nom,Prénom,Classe\nAlami,Mohammed,1BAC Sciences\n'],{type:'text/csv;charset=utf-8'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='modele_eleves.csv';a.click();
 }
-function importCSV(){
- const f=document.getElementById('csvFile').files[0]; if(!f)return alert('Choisissez un fichier CSV.');
- const r=new FileReader(); r.onload=()=>{let lines=r.result.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());
- let added=0; lines.slice(1).forEach(line=>{let p=line.split(',').map(x=>x.trim());if(p.length>=3&&p[0]&&p[1]&&p[2]){data.students.push({last:p[0],first:p[1],className:p[2]});added++;}});
- save(); document.getElementById('importMsg').textContent=added+' élève(s) importé(s) avec succès.';}; r.readAsText(f,'UTF-8');
+function normalizeImportKey(v){return String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();}
+function importStudentsFile(){
+ const f=document.getElementById('csvFile').files[0];
+ if(!f)return alert('Choisissez un fichier Excel (.xlsx) ou CSV.');
+ const isExcel=/\.(xlsx|xls)$/i.test(f.name);
+ const finish=(rows)=>{
+   let added=0,skipped=0,classesAdded=0;
+   const existing=new Set(data.students.map(s=>normalizeImportKey(s.last)+'|'+normalizeImportKey(s.first)+'|'+normalizeImportKey(s.className)));
+   rows.forEach(r=>{
+     const get=(keys)=>{for(const k of keys){if(r[k]!==undefined&&r[k]!==null&&String(r[k]).trim())return String(r[k]).trim();}return '';};
+     let last=get(['Nom','nom','NOM','الاسم العائلي','الاسم العائلي ','الإسم الكامل']);
+     let first=get(['Prénom','Prenom','prénom','prenom','Prénom ']);
+     const full=get(['الإسم الكامل','الاسم الكامل','Nom et prénom','Nom Prénom']);
+     const cls=get(['Classe','classe','CLASSE','القسم','المجموعة']);
+     if(!last && full){const parts=full.split(/\s+/); last=parts.shift()||''; first=parts.join(' ');}
+     if(!last||!first||!cls){skipped++;return;}
+     const key=normalizeImportKey(last)+'|'+normalizeImportKey(first)+'|'+normalizeImportKey(cls);
+     if(existing.has(key)){skipped++;return;}
+     data.students.push({last,first,className:cls}); existing.add(key); added++;
+     if(!data.classes.some(c=>studentClassMatches(c.name,cls))){data.classes.push({name:cls,level:'—'});classesAdded++;}
+   });
+   save(); render();
+   document.getElementById('importMsg').textContent=`${added} élève(s) ajouté(s) · ${skipped} ignoré(s) · ${classesAdded} classe(s) créée(s).`;
+   document.getElementById('csvFile').value='';
+ };
+ if(isExcel){
+   if(typeof XLSX==='undefined')return alert('Le module Excel n’est pas chargé. Vérifiez votre connexion Internet puis réessayez.');
+   const r=new FileReader();
+   r.onload=()=>{try{
+     const wb=XLSX.read(new Uint8Array(r.result),{type:'array'});
+     let rows=[];
+     wb.SheetNames.forEach(name=>{rows=rows.concat(XLSX.utils.sheet_to_json(wb.Sheets[name],{defval:'',raw:false}));});
+     if(!rows.length)return alert('Aucune ligne de données trouvée dans le fichier Excel.');
+     finish(rows);
+   }catch(e){alert('Impossible de lire ce fichier Excel.');}};
+   r.readAsArrayBuffer(f);
+ }else{
+   const r=new FileReader();
+   r.onload=()=>{
+     const lines=r.result.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());
+     if(lines.length<2)return alert('Le fichier CSV ne contient aucune donnée.');
+     const headers=lines[0].split(/[,;\t]/).map(x=>x.trim().replace(/^"|"$/g,''));
+     const rows=lines.slice(1).map(line=>{const p=line.split(/[,;\t]/).map(x=>x.trim().replace(/^"|"$/g,''));const o={};headers.forEach((h,i)=>o[h]=p[i]||'');return o;});
+     finish(rows);
+   }; r.readAsText(f,'UTF-8');
+ }
 }
+function importCSV(){importStudentsFile();}
 
 function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 function openModal(id){document.getElementById(id).classList.add('show')}
