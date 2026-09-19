@@ -212,13 +212,13 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   <div class="institution-current"><div class="muted">🏫 Institution active</div><strong id="activeInstitutionName">Institut Manarat Rif</strong></div>
   <div class="institution-picker">
     <label for="institutionSelect">Changer d’institution</label>
-    <select id="institutionSelect" aria-label="Choisir l’institution">
+    <select id="institutionSelect" aria-label="Choisir l’institution" onchange="switchInstitution(this.value)">
       <option value="manarat">Institut Manarat Rif</option>
       <option value="sidi">Lycée collégial Sidi bouafif</option>
     </select>
     <div class="institution-quick" aria-label="Institutions">
-      <button type="button" class="institution-choice" data-inst="manarat" onclick="switchInstitution('manarat')">🏫 <span>Institut Manarat Rif</span></button>
-      <button type="button" class="institution-choice" data-inst="sidi" onclick="switchInstitution('sidi')">🏫 <span>Lycée collégial Sidi bouafif</span></button>
+      <button type="button" class="institution-choice" data-inst="manarat" onclick="return switchInstitution('manarat')">🏫 <span>Institut Manarat Rif</span></button>
+      <button type="button" class="institution-choice" data-inst="sidi" onclick="return switchInstitution('sidi')">🏫 <span>Lycée collégial Sidi bouafif</span></button>
     </div>
   </div>
 </div>
@@ -1340,6 +1340,35 @@ button,input,select,textarea{font:inherit}
 
 try{bindInstitutionSelector();}catch(e){}
 try{updateInstitutionUI();}catch(e){}
+</script>
+
+
+<style id="v49-interaction-fix">
+/* V49 — interaction fix: modal and controls must stay clickable above the mobile backdrop */
+.modal{z-index:10050 !important;pointer-events:auto !important;}
+.modal.show{display:flex !important;}
+.modalbox{position:relative;z-index:10051 !important;pointer-events:auto !important;}
+.modalbox input,.modalbox select,.modalbox textarea,.modalbox button{pointer-events:auto !important;}
+.institution-bar{position:relative;z-index:10010 !important;}
+.institution-picker,.institution-picker select,.institution-choice{position:relative;z-index:10011 !important;pointer-events:auto !important;}
+@media(max-width:800px){
+  .mobile-menu-backdrop{z-index:9998 !important;}
+  .mobile-menu-toggle{z-index:10020 !important;}
+}
+</style>
+<script id="v49-interaction-fix-script">
+(function(){
+  function bind(){
+    var sel=document.getElementById('institutionSelect');
+    if(sel){ sel.onchange=function(){ return window.switchInstitution ? window.switchInstitution(this.value) : false; }; }
+    var addClassBtn=document.querySelector('#classes .top .btn');
+    if(addClassBtn){ addClassBtn.type='button'; addClassBtn.onclick=function(){ if(window.openModal) window.openModal('classModal'); }; }
+    var addStudentBtn=document.querySelector('#eleves .top .btn');
+    if(addStudentBtn){ addStudentBtn.type='button'; addStudentBtn.onclick=function(){ if(window.openModal) window.openModal('studentModal'); }; }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+  window.addEventListener('load',bind);
+})();
 </script>
 
 </body>
