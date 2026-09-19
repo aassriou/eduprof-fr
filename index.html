@@ -106,7 +106,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 }
 
 
-/* V58 — emploi du temps Sidi Bouafif : design premium */
+/* V59 — emploi du temps Sidi Bouafif : design premium */
 .sidi-timetable-card{margin-top:18px;background:linear-gradient(145deg,#ffffff 0%,#f7f9ff 100%);border:1px solid rgba(70,92,220,.14);border-radius:26px;padding:20px;box-shadow:0 14px 40px rgba(24,40,90,.10)}
 .sidi-timetable-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
 .sidi-timetable-title{margin:0;font-size:24px;color:#15213d}.sidi-timetable-sub{margin:4px 0 0;color:#71809d}
@@ -117,6 +117,18 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .sidi-slot-body{min-height:68px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.sidi-class{font-size:17px;font-weight:900;color:#1d2b4d}.sidi-room{font-size:12px;color:#7a879e;margin-top:4px}.sidi-empty{color:#a3aec1;font-weight:700}
 .sidi-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.sidi-summary strong{font-size:17px}
 @media(max-width:600px){.sidi-timetable-card{padding:14px;border-radius:20px}.sidi-timetable-title{font-size:20px}.sidi-grid{min-width:590px}.sidi-slot-body{min-height:64px}}
+/* V59 — emploi du temps Institut Manarat Rif */
+.manarat-timetable-card{margin-top:18px;background:linear-gradient(145deg,#ffffff 0%,#f7f9ff 100%);border:1px solid rgba(70,92,220,.14);border-radius:26px;padding:20px;box-shadow:0 14px 40px rgba(24,40,90,.10)}
+.manarat-timetable-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.manarat-timetable-title{margin:0;font-size:24px;color:#15213d}.manarat-timetable-sub{margin:4px 0 0;color:#71809d}
+.manarat-hours{display:flex;gap:8px;flex-wrap:wrap}.manarat-hour-badge{padding:8px 12px;border-radius:999px;background:#eef2ff;color:#3047bd;font-weight:800;font-size:13px}
+.manarat-day-block{margin-top:18px}.manarat-day-label{display:flex;align-items:center;gap:9px;font-weight:900;color:#263556;margin:0 0 10px}.manarat-day-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#5865f2,#2d73ea);box-shadow:0 0 0 5px rgba(74,92,230,.10)}
+.manarat-scroll{overflow-x:auto;padding-bottom:4px}.manarat-grid{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;min-width:620px}
+.manarat-grid.afternoon{grid-template-columns:repeat(2,minmax(145px,1fr));min-width:310px}
+.manarat-slot{background:#fff;border:1px solid #e4e9f4;border-radius:17px;overflow:hidden;box-shadow:0 6px 18px rgba(31,45,90,.06)}.manarat-slot-time{padding:9px 10px;background:linear-gradient(135deg,#eef2ff,#f6f8ff);font-size:12px;font-weight:900;color:#53617b;text-align:center}
+.manarat-slot-body{min-height:72px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.manarat-class{font-size:17px;font-weight:900}.manarat-class.c1{color:#e33d43}.manarat-class.c2{color:#ef7f17}.manarat-subject{font-size:11px;color:#7a879e;margin-top:4px;font-weight:700}.manarat-empty{color:#a3aec1;font-weight:700}
+.manarat-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.manarat-summary strong{font-size:17px}
+@media(max-width:600px){.manarat-timetable-card{padding:14px;border-radius:20px}.manarat-timetable-title{font-size:20px}.manarat-grid{min-width:590px}.manarat-grid.afternoon{min-width:310px}.manarat-slot-body{min-height:64px}}
 </style>
 
 <style id="v40-mobile-layout">
@@ -724,9 +736,35 @@ function addCourse(){
  data.courses.push({title,className:className||'—',objective:objective||'—',skill:skill||'—',content:content||'—'});save();closeModal('courseModal');
  ['courseTitle','courseClass','courseObjective','courseSkill','courseContent'].forEach(id=>document.getElementById(id).value='');
 }
+function renderManaratTimetable(){
+ const panel=document.getElementById('sidiTimetablePanel'); if(!panel||currentInstitution!=='manarat')return;
+ const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+ const morningTimes=['09:00 – 10:00','10:00 – 11:00','11:00 – 12:00','12:00 – 13:00'];
+ const afternoonTimes=['13:30 – 14:30','14:30 – 15:30'];
+ const byDay={
+  'Lundi':{morning:['—','—','—','—'],afternoon:['1APIC-2','1APIC-1']},
+  'Mardi':{morning:['1APIC-1','1APIC-1','1APIC-2','1APIC-2'],afternoon:['—','—']},
+  'Mercredi':{morning:['—','—','—','—'],afternoon:['1APIC-2','1APIC-1']},
+  'Jeudi':{morning:['—','—','—','—'],afternoon:['—','—']},
+  'Vendredi':{morning:['—','—','—','—'],afternoon:['—','—']}
+ };
+ const slot=(time,cl)=>`<div class="manarat-slot"><div class="manarat-slot-time">${time}</div><div class="manarat-slot-body">${cl==='—'?'<span class="manarat-empty">—</span>':`<span class="manarat-class ${cl==='1APIC-1'?'c1':'c2'}">${cl}</span><span class="manarat-subject">FRANÇAIS</span>`}</div></div>`;
+ panel.innerHTML=`<div class="manarat-timetable-card">
+   <div class="manarat-timetable-head">
+     <div><h2 class="manarat-timetable-title">🏫 Institut Manarat Rif</h2><p class="manarat-timetable-sub">Emploi du temps — Français · année scolaire 2026/2027</p></div>
+     <div class="manarat-hours"><span class="manarat-hour-badge">☀️ 09:00 → 13:00</span><span class="manarat-hour-badge">🌙 13:30 → 15:30</span></div>
+   </div>
+   ${days.map(d=>`<div class="manarat-day-block">
+     <h3 class="manarat-day-label"><span class="manarat-day-dot"></span>${d}</h3>
+     <div class="manarat-scroll"><div class="manarat-grid">${byDay[d].morning.map((c,i)=>slot(morningTimes[i],c)).join('')}</div></div>
+     <div class="manarat-scroll" style="margin-top:10px"><div class="manarat-grid afternoon">${byDay[d].afternoon.map((c,i)=>slot(afternoonTimes[i],c)).join('')}</div></div>
+   </div>`).join('')}
+   <div class="manarat-summary"><span>📚 Sections concernées</span><strong>1APIC-1 + 1APIC-2</strong></div>
+ </div>`;
+}
 function renderSidiTimetable(){
  const panel=document.getElementById('sidiTimetablePanel'); if(!panel)return;
- if(currentInstitution!=='sidi'){panel.innerHTML='';return;}
+ if(currentInstitution!=='sidi'){renderManaratTimetable();return;}
  const morningByDay={
   'Lundi':[['08:00 – 09:00','3APIC-2'],['09:00 – 10:00','3APIC-3'],['10:00 – 11:00','3APIC-1'],['11:00 – 12:00','1APIC-5']],
   'Mardi':[['08:00 – 09:00','—'],['09:00 – 10:00','—'],['10:00 – 11:00','—'],['11:00 – 12:00','—']],
