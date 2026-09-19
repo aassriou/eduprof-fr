@@ -283,8 +283,16 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
 }
 </style>
-<meta name="eduprof-version" content="V70">
+<meta name="eduprof-version" content="V71">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="./assets/jszip.min.js"></script>
+
+<style id="v71-pptx-reader">
+.pptx-library{margin-top:18px;padding:18px;border-radius:22px;background:linear-gradient(135deg,#f7f9ff,#eef4ff);border:1px solid #dce5f7;box-shadow:0 12px 32px rgba(24,43,88,.08)}
+.pptx-library-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.pptx-library-title{display:flex;align-items:center;gap:12px}.pptx-library-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff;font-size:24px;box-shadow:0 9px 20px rgba(220,38,38,.2)}.pptx-library h2{margin:0;font-size:18px}.pptx-library p{margin:4px 0 0;color:#66758f;font-size:12px}.pptx-add{border:0;border-radius:12px;padding:11px 14px;background:linear-gradient(135deg,#4055c7,#2d73ea);color:#fff;font-weight:900;cursor:pointer}.pptx-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}.pptx-item{background:#fff;border:1px solid #e0e7f3;border-radius:16px;padding:14px;display:flex;align-items:center;gap:11px;box-shadow:0 7px 20px rgba(18,35,75,.06)}.pptx-file-icon{width:42px;height:42px;border-radius:11px;background:#fff1f2;color:#dc2626;display:flex;align-items:center;justify-content:center;font-size:21px;flex:0 0 42px}.pptx-item-main{min-width:0;flex:1}.pptx-item-main b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pptx-item-main small{display:block;color:#71809a;margin-top:3px}.pptx-item-actions{display:flex;gap:6px;flex-wrap:wrap}.pptx-item-actions button{border:1px solid #d9e1ee;background:#f8fafc;border-radius:9px;padding:8px 9px;font-weight:800;cursor:pointer}.pptx-item-actions .pptx-open{background:#4055c7;color:#fff;border-color:#4055c7}.pptx-empty{padding:18px;text-align:center;color:#75829a;background:rgba(255,255,255,.72);border:1px dashed #ccd7ea;border-radius:14px}
+.pptx-reader{position:fixed;inset:0;z-index:120000;background:#0a1224;display:none;flex-direction:column}.pptx-reader.show{display:flex}.pptx-reader-top{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 13px;background:linear-gradient(135deg,#101d3d,#1b2c58);color:#fff}.pptx-reader-name{min-width:0}.pptx-reader-name b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pptx-reader-name small{color:#b9c4dd}.pptx-reader-tools{display:flex;gap:6px}.pptx-reader-tools button{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.09);color:#fff;border-radius:9px;padding:8px 10px;font-weight:900}.pptx-reader-body{flex:1;min-height:0;display:flex;overflow:hidden}.pptx-thumbs-rail{width:105px;overflow:auto;padding:10px 8px;background:#0e1930;border-right:1px solid rgba(255,255,255,.08)}.pptx-thumb{width:88px;margin-bottom:8px;padding:4px;background:#fff;border:2px solid transparent;border-radius:8px;cursor:pointer}.pptx-thumb.active{border-color:#6372ff}.pptx-thumb-preview{position:relative;width:100%;aspect-ratio:16/9;background:#f4f6fa;overflow:hidden;border-radius:5px}.pptx-thumb-preview .pptx-slide{transform-origin:top left;pointer-events:none}.pptx-thumb-label{text-align:center;color:#475569;font-size:10px;font-weight:900;padding-top:3px}.pptx-stage-wrap{flex:1;min-width:0;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:18px;background:radial-gradient(circle at 50% 10%,#263b68 0,#121d37 55%,#0b1325 100%)}.pptx-stage{position:relative;display:flex;justify-content:center;min-width:100%;padding-bottom:80px}.pptx-slide{position:relative;width:960px;height:540px;background:#fff;overflow:hidden;box-shadow:0 18px 45px rgba(0,0,0,.35);transform-origin:top center;flex:0 0 auto}.pptx-slide .pptx-text{position:absolute;white-space:pre-wrap;overflow:hidden;line-height:1.15}.pptx-slide img{position:absolute;object-fit:fill}.pptx-bottom{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:15px;background:rgba(9,18,38,.93);box-shadow:0 12px 28px rgba(0,0,0,.25);color:#fff}.pptx-bottom button{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);color:#fff;border-radius:9px;height:34px;min-width:34px;font-weight:900}.pptx-bottom span{font-size:12px;font-weight:900;min-width:70px;text-align:center}.pptx-loading{color:#dbe5ff;padding:30px;text-align:center}.pptx-error{color:#fecaca;padding:25px;text-align:center;line-height:1.6}
+@media(max-width:700px){.pptx-list{grid-template-columns:1fr}.pptx-library{padding:14px}.pptx-library-head{align-items:flex-start}.pptx-add{width:100%}.pptx-thumbs-rail{width:78px;padding:7px 5px}.pptx-thumb{width:67px}.pptx-stage-wrap{padding:10px 4px 75px}.pptx-slide{width:960px;height:540px;transform:scale(.55);margin-bottom:-243px}.pptx-bottom{bottom:9px}.pptx-reader-tools button{padding:7px 8px}.pptx-reader-name{max-width:48vw}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -417,7 +425,21 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   </div>
 </div>
 <div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr);margin-top:18px"></div>
+<div id="pptxLibrary" class="pptx-library" style="display:none">
+  <div class="pptx-library-head">
+    <div class="pptx-library-title"><div class="pptx-library-icon">📊</div><div><h2>Mes présentations PowerPoint</h2><p>Ajoutez et lisez vos fichiers .pptx directement dans EduProf.</p></div></div>
+    <button class="pptx-add" type="button" onclick="document.getElementById('pptxFileInput').click()">＋ Ajouter un PPTX</button>
+    <input id="pptxFileInput" type="file" accept=".pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation" hidden onchange="pptxAddFiles(this.files)">
+  </div>
+  <div id="pptxList" class="pptx-list"></div>
+</div>
 </section>
+
+<div id="pptxReader" class="pptx-reader" aria-hidden="true">
+  <div class="pptx-reader-top"><div class="pptx-reader-name"><b id="pptxReaderName">Présentation</b><small id="pptxReaderMeta">PowerPoint</small></div><div class="pptx-reader-tools"><button type="button" onclick="pptxToggleFullscreen()">↗ Plein écran</button><button type="button" onclick="pptxCloseReader()">✕ Fermer</button></div></div>
+  <div class="pptx-reader-body"><div id="pptxThumbsRail" class="pptx-thumbs-rail"></div><div id="pptxStageWrap" class="pptx-stage-wrap"><div id="pptxStage" class="pptx-stage"><div class="pptx-loading">⏳ Chargement de la présentation…</div></div></div></div>
+  <div class="pptx-bottom"><button type="button" onclick="pptxPrev()">‹</button><span id="pptxCounter">1 / 1</span><button type="button" onclick="pptxNext()">›</button></div>
+</div>
 <section id="exercices" class="page">
 <div class="top"><h1>📝 Exercices & tests interactifs</h1><button class="btn" onclick="openModal('exerciseModal')">+ Nouvel exercice</button></div>
 <div id="exerciseList" class="grid" style="grid-template-columns:repeat(2,1fr)"></div>
@@ -821,6 +843,45 @@ async function fichesUpdateThumbs(force=false){const box=document.getElementById
 async function fichesSearchText(){const q=(document.getElementById('fichesSearchInput')?.value||'').trim().toLowerCase();if(!q||!fichesPdfDoc)return;fichesSetStatus('🔎 Recherche…');for(let n=fichesPage+1;n<=fichesPdfDoc.numPages;n++){const p=await fichesPdfDoc.getPage(n);const tc=await p.getTextContent();if(tc.items.some(x=>(x.str||'').toLowerCase().includes(q))){await fichesRenderPage(n);return;}}for(let n=1;n<=fichesPage;n++){const p=await fichesPdfDoc.getPage(n);const tc=await p.getTextContent();if(tc.items.some(x=>(x.str||'').toLowerCase().includes(q))){await fichesRenderPage(n);return;}}fichesSetStatus('Aucun résultat pour « '+q+' ».');}
 initFichesViewer();
 
+
+/* V71 — PPTX library + local browser reader, based on V66 */
+const PPTX_DB='eduprof_fr_pptx_v1';
+let pptxDb=null,pptxSlides=[],pptxCurrent=0,pptxCurrentName='';
+function pptxOpenDb(){return new Promise((resolve,reject)=>{if(pptxDb)return resolve(pptxDb);const r=indexedDB.open(PPTX_DB,1);r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains('files'))r.result.createObjectStore('files',{keyPath:'id',autoIncrement:true});};r.onsuccess=()=>{pptxDb=r.result;resolve(pptxDb)};r.onerror=()=>reject(r.error)});}
+function pptxTx(mode,fn){return pptxOpenDb().then(db=>new Promise((resolve,reject)=>{const tx=db.transaction('files',mode),st=tx.objectStore('files');const req=fn(st);req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)}));}
+function pptxListFiles(){return pptxTx('readonly',st=>st.getAll()).then(a=>a.sort((x,y)=>y.created-x.created));}
+function pptxAddFiles(files){const arr=Array.from(files||[]).filter(f=>/\.pptx$/i.test(f.name));if(!arr.length)return;Promise.all(arr.map(f=>pptxTx('readwrite',st=>st.add({name:f.name,size:f.size,created:Date.now(),blob:f})).catch(()=>null))).then(()=>{document.getElementById('pptxFileInput').value='';renderPptxLibrary();});}
+function pptxDelete(id){if(!confirm('Supprimer cette présentation ?'))return;pptxTx('readwrite',st=>st.delete(Number(id))).then(renderPptxLibrary);}
+function pptxGet(id){return pptxTx('readonly',st=>st.get(Number(id)));}
+function fmtPptxSize(n){return n<1048576?(n/1024).toFixed(0)+' Ko':(n/1048576).toFixed(1)+' Mo';}
+function renderPptxLibrary(){const lib=document.getElementById('pptxLibrary'),box=document.getElementById('pptxList');if(!lib||!box)return;lib.style.display=currentInstitution==='sidi'?'block':'none';if(currentInstitution!=='sidi')return;pptxListFiles().then(files=>{box.innerHTML=files.length?files.map(f=>`<div class="pptx-item"><div class="pptx-file-icon">📊</div><div class="pptx-item-main"><b title="${esc(f.name)}">${esc(f.name)}</b><small>${fmtPptxSize(f.size)} · PowerPoint</small></div><div class="pptx-item-actions"><button class="pptx-open" onclick="pptxOpen(${f.id})">▶ Lire</button><button onclick="pptxDelete(${f.id})">🗑️</button></div></div>`).join(''):'<div class="pptx-empty" style="grid-column:1/-1">Aucune présentation PowerPoint. Cliquez sur « Ajouter un PPTX ».</div>';});}
+function pptxXml(text){return new DOMParser().parseFromString(text,'application/xml');}
+function pptxAttr(el,name){return el?.getAttribute(name)||'';}
+function pptxNum(v){return Number(v)||0;}
+function pptxText(el){return Array.from(el.querySelectorAll('a\\:t,a\\:t')).map(x=>x.textContent||'').join('');}
+function pptxTarget(base,target){if(target.startsWith('/'))return target.slice(1);const parts=(base+'/'+target).split('/');const out=[];for(const p of parts){if(!p||p==='.')continue;if(p==='..')out.pop();else out.push(p);}return out.join('/');}
+async function pptxParse(blob){
+ const zip=await JSZip.loadAsync(blob); const get=async p=>{const z=zip.file(p);return z?z.async('text'):null};
+ const pres=await get('ppt/presentation.xml');if(!pres)throw Error('Fichier PPTX invalide');const pd=pptxXml(pres);const rels=await get('ppt/_rels/presentation.xml.rels');const rd=pptxXml(rels||'<Relationships/>');const relMap={};Array.from(rd.documentElement.children).forEach(r=>relMap[r.getAttribute('Id')]=r.getAttribute('Target'));
+ const ids=Array.from(pd.getElementsByTagName('p:sldId'));const slidePaths=ids.map(x=>pptxTarget('ppt',relMap[x.getAttribute('r:id')]||'')).filter(Boolean);if(!slidePaths.length)throw Error('Aucune diapositive trouvée');
+ const sizeEl=pd.getElementsByTagName('p:sldSz')[0];const sw=pptxNum(sizeEl?.getAttribute('cx'))||12192000,sh=pptxNum(sizeEl?.getAttribute('cy'))||6858000;
+ const slides=[];
+ for(const path of slidePaths){const xml=await get(path);const doc=pptxXml(xml||'');const relPath=path.replace(/slides\/([^/]+)$/,'slides/_rels/$1.rels');const rr=pptxXml(await get(relPath)||'<Relationships/>');const map={};Array.from(rr.documentElement.children).forEach(r=>map[r.getAttribute('Id')]=pptxTarget(path.replace(/\/[^/]+$/,''),r.getAttribute('Target')||''));const root=doc.documentElement;let bg='#ffffff';const srgb=root.querySelector('p\\:bg a\\:srgbClr');if(srgb)bg='#'+srgb.getAttribute('val');const items=[];
+   Array.from(root.querySelectorAll('p\\:sp')).forEach(sp=>{const x=sp.querySelector('a\\:off'),e=sp.querySelector('a\\:ext');if(!x||!e)return;const tx=pptxText(sp);if(!tx)return;const pr=sp.querySelector('a\\:rPr, a\\:defRPr');const sz=pptxNum(pr?.getAttribute('sz'))||2200;const clr=pr?.querySelector('a\\:srgbClr')?.getAttribute('val');const bold=pr?.getAttribute('b')==='1';items.push({type:'text',x:pptxNum(x.getAttribute('x')),y:pptxNum(x.getAttribute('y')),w:pptxNum(e.getAttribute('cx')),h:pptxNum(e.getAttribute('cy')),text:tx,size:sz/100,color:clr?'#'+clr:'#172033',bold});});
+   for(const pic of Array.from(root.querySelectorAll('p\\:pic'))){const x=pic.querySelector('a\\:off'),e=pic.querySelector('a\\:ext'),blip=pic.querySelector('a\\:blip');if(!x||!e||!blip)continue;const target=map[blip.getAttribute('r:embed')];if(!target)continue;const z=zip.file(target);if(!z)continue;const bytes=await z.async('uint8array');const mime=target.endsWith('.png')?'image/png':target.endsWith('.gif')?'image/gif':'image/jpeg';const url=URL.createObjectURL(new Blob([bytes],{type:mime}));items.push({type:'image',x:pptxNum(x.getAttribute('x')),y:pptxNum(x.getAttribute('y')),w:pptxNum(e.getAttribute('cx')),h:pptxNum(e.getAttribute('cy')),url});}
+   slides.push({bg,items});
+ }
+ return {sw,sh,slides};
+}
+function pptxRenderSlide(i){if(!pptxSlides.length)return;pptxCurrent=Math.max(0,Math.min(i,pptxSlides.length-1));const s=pptxSlides[pptxCurrent],stage=document.getElementById('pptxStage');if(!stage)return;stage.innerHTML='';const slide=document.createElement('div');slide.className='pptx-slide';slide.style.background=s.bg;const sx=960/pptxMeta.sw,sy=540/pptxMeta.sh;for(const it of s.items){if(it.type==='text'){const d=document.createElement('div');d.className='pptx-text';d.textContent=it.text;d.style.left=(it.x*sx)+'px';d.style.top=(it.y*sy)+'px';d.style.width=(it.w*sx)+'px';d.style.height=(it.h*sy)+'px';d.style.fontSize=Math.max(8,it.size*sx*.72)+'px';d.style.color=it.color;d.style.fontWeight=it.bold?'800':'400';slide.appendChild(d);}else{const im=document.createElement('img');im.src=it.url;im.style.left=(it.x*sx)+'px';im.style.top=(it.y*sy)+'px';im.style.width=(it.w*sx)+'px';im.style.height=(it.h*sy)+'px';slide.appendChild(im);}}stage.appendChild(slide);document.getElementById('pptxCounter').textContent=(pptxCurrent+1)+' / '+pptxSlides.length;pptxRenderThumbs();}
+let pptxMeta={sw:12192000,sh:6858000};
+function pptxRenderThumbs(){const rail=document.getElementById('pptxThumbsRail');if(!rail)return;rail.innerHTML='';pptxSlides.forEach((s,i)=>{const b=document.createElement('button');b.className='pptx-thumb'+(i===pptxCurrent?' active':'');b.type='button';b.onclick=()=>pptxRenderSlide(i);const p=document.createElement('div');p.className='pptx-thumb-preview';const sl=document.createElement('div');sl.className='pptx-slide';sl.style.transform='scale(.0917)';sl.style.transformOrigin='top left';sl.style.background=s.bg;s.items.forEach(it=>{if(it.type==='text'){const d=document.createElement('div');d.className='pptx-text';d.textContent=it.text;d.style.left=(it.x*(960/pptxMeta.sw))+'px';d.style.top=(it.y*(540/pptxMeta.sh))+'px';d.style.width=(it.w*(960/pptxMeta.sw))+'px';d.style.height=(it.h*(540/pptxMeta.sh))+'px';d.style.fontSize=Math.max(6,it.size*(960/pptxMeta.sw)*.72)+'px';d.style.color=it.color;d.style.fontWeight=it.bold?'800':'400';sl.appendChild(d);}});p.appendChild(sl);b.appendChild(p);const sm=document.createElement('div');sm.className='pptx-thumb-label';sm.textContent=i+1;b.appendChild(sm);rail.appendChild(b);});}
+async function pptxOpen(id){const f=await pptxGet(id);if(!f)return;const reader=document.getElementById('pptxReader');reader.classList.add('show');reader.setAttribute('aria-hidden','false');document.getElementById('pptxReaderName').textContent=f.name;document.getElementById('pptxReaderMeta').textContent=fmtPptxSize(f.size)+' · PowerPoint';document.getElementById('pptxStage').innerHTML='<div class="pptx-loading">⏳ Lecture de la présentation…</div>';try{const parsed=await pptxParse(f.blob);pptxMeta={sw:parsed.sw,sh:parsed.sh};pptxSlides=parsed.slides;pptxCurrent=0;pptxRenderSlide(0);}catch(e){document.getElementById('pptxStage').innerHTML='<div class="pptx-error">⚠️ Impossible de lire cette présentation dans le lecteur intégré.<br>Vous pouvez télécharger le fichier et l’ouvrir avec PowerPoint.</div>';console.error(e);}}
+function pptxCloseReader(){const r=document.getElementById('pptxReader');r.classList.remove('show');r.setAttribute('aria-hidden','true');pptxSlides.forEach(s=>s.items.filter(x=>x.url).forEach(x=>URL.revokeObjectURL(x.url)));pptxSlides=[];}
+function pptxPrev(){if(pptxCurrent>0)pptxRenderSlide(pptxCurrent-1)}function pptxNext(){if(pptxCurrent<pptxSlides.length-1)pptxRenderSlide(pptxCurrent+1)}
+function pptxToggleFullscreen(){const el=document.getElementById('pptxReader');if(document.fullscreenElement)document.exitFullscreen?.();else el.requestFullscreen?.().catch(()=>{});}
+document.addEventListener('keydown',e=>{const r=document.getElementById('pptxReader');if(!r?.classList.contains('show'))return;if(e.key==='ArrowRight'||e.key==='PageDown')pptxNext();if(e.key==='ArrowLeft'||e.key==='PageUp')pptxPrev();if(e.key==='Escape'&&!document.fullscreenElement)pptxCloseReader();});
+
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
 function openOneDriveInBrowser(){
   try{
@@ -839,6 +900,7 @@ function renderCourses(){
  const panel=document.getElementById('onedrivePanel'); if(panel)panel.style.display=currentInstitution==='sidi'?'flex':'none';
  const box=document.getElementById('courseList');if(!box)return;
  box.innerHTML=data.courses.length?data.courses.map(c=>`<div class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(c.className)} · ${esc(c.skill)}</p><b>Objectif :</b> ${esc(c.objective)}<p class="muted">${esc(c.content)}</p></div>`).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun cours enregistré.</div>';
+ renderPptxLibrary();
 }
 function addCourse(){
  const title=document.getElementById('courseTitle').value.trim(),className=document.getElementById('courseClass').value.trim(),objective=document.getElementById('courseObjective').value.trim(),skill=document.getElementById('courseSkill').value.trim(),content=document.getElementById('courseContent').value.trim();
@@ -1690,51 +1752,7 @@ function updateChosenFileName(input){
   .mobile-menu-toggle{font-size:32px !important;color:#fff !important;}
 }
 </style>
-
-<style id="v67-compact-menu">
-/* V67 — compact, elegant navigation */
-.sidebar{width:230px!important;padding:18px 11px!important}
-.brand{padding:6px 8px 15px!important;margin-bottom:8px!important}
-.brand-mark{width:42px!important;height:42px!important;border-radius:13px!important;font-size:15px!important}
-.brand-text b{font-size:18px!important}
-.brand-text span{font-size:8px!important}
-.nav{gap:5px!important}
-.nav button{min-height:45px!important;padding:9px 11px!important;border-radius:12px!important;font-size:13px!important;gap:8px!important}
-@media(max-width:800px){
-  .sidebar{width:min(250px,78vw)!important;padding:14px 9px 16px!important}
-  .brand{padding:5px 7px 13px!important;margin-bottom:6px!important}
-  .brand-mark{width:40px!important;height:40px!important;border-radius:12px!important}
-  .brand-text b{font-size:17px!important}
-  .brand-text span{font-size:8px!important}
-  .nav{gap:5px!important}
-  .nav button{min-height:45px!important;padding:8px 9px!important;border-radius:11px!important;font-size:12px!important;gap:7px!important}
-}
-</style>
 </body>
-
-<style id="v68-narrow-menu">
-/* V68 — narrower mobile drawer, without changing the menu content */
-@media (max-width:800px){
-  .sidebar{width:205px!important;max-width:205px!important;padding:10px 8px 16px!important;}
-  .sidebar .brand{padding:6px 5px 14px 52px!important;gap:8px!important;margin-bottom:10px!important;min-height:58px!important;}
-  .sidebar .brand-mark{width:40px!important;height:40px!important;flex:0 0 40px!important;border-radius:12px!important;}
-  .sidebar .brand-text b{font-size:17px!important;}
-  .sidebar .brand-text span{font-size:8px!important;}
-  .nav{gap:5px!important;}
-  .nav button{min-height:44px!important;padding:8px 8px!important;border-radius:11px!important;font-size:11.5px!important;gap:6px!important;}
-}
-</style>
-
-
-<style id="v69-menu-content-width">
-/* V69 — menu items use only the width needed by their content */
-@media(max-width:800px){
-  .sidebar{width:max-content!important;min-width:0!important;max-width:86vw!important;padding-left:8px!important;padding-right:8px!important;}
-  .sidebar .nav{width:max-content!important;max-width:100%!important;align-items:flex-start!important;}
-  .sidebar .nav button{width:max-content!important;max-width:100%!important;min-width:0!important;align-self:flex-start!important;white-space:nowrap!important;padding-left:10px!important;padding-right:14px!important;}
-}
-</style>
-
 </html>
 <style id="v47-mobile-topbar">
 /* V47 — mobile header inspired by a professional Android app bar */
@@ -1847,36 +1865,5 @@ function updateChosenFileName(input){
   }
   .sidebar .brand-text b{font-size:20px !important;}
   .sidebar .brand-text span{font-size:10px !important;margin-top:5px !important;}
-}
-</style>
-
-<style id="v70-sidebar-background-width">
-/* V70 — the dark-blue drawer itself hugs the menu content */
-@media (max-width:800px){
-  .sidebar{
-    width:max-content !important;
-    min-width:0 !important;
-    max-width:88vw !important;
-    box-sizing:border-box !important;
-    padding-left:8px !important;
-    padding-right:8px !important;
-  }
-  .sidebar .brand{
-    width:max-content !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-  }
-  .sidebar .nav{
-    width:max-content !important;
-    max-width:100% !important;
-    align-items:flex-start !important;
-  }
-  .sidebar .nav button{
-    width:max-content !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    align-self:flex-start !important;
-    white-space:nowrap !important;
-  }
 }
 </style>
