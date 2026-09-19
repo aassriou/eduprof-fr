@@ -29,128 +29,11 @@
 
 .grade-big{font-size:28px;font-weight:800;margin:5px 0}
 \n
-/* V21: mobile layout — content LEFT, full navigation RIGHT */
+/* V20 MOBILE RIGHT SIDEBAR */
 @media (max-width:800px){
-  .app{display:flex !important; flex-direction:row !important; width:100% !important; min-height:100vh !important;}
-  .main{order:1 !important; flex:1 1 auto !important; width:auto !important; min-width:0 !important; margin:0 !important;}
-  .sidebar{order:2 !important; flex:0 0 72px !important; width:72px !important; position:static !important; margin:0 !important;}
-}
-
-/* V22 — séparation claire des classes dans Mes élèves */
-.class-group-title td{
-  background:#eaf0ff;
-  color:#172033;
-  font-weight:700;
-  padding:12px 14px;
-  border-top:2px solid #315efb;
-}
-.class-group-title td span{
-  color:#687386;
-  font-weight:600;
-}
-
-
-/* V23 — une classe à la fois dans Mes élèves */
-#studentClassFilter{font-weight:700;font-size:16px;min-height:46px;width:100%;}
-
-/* V24 — suivi comportement */
-.behavior-table th,.behavior-table td{vertical-align:middle;white-space:nowrap}
-.behavior-table input[type="number"]{width:70px;min-width:70px;padding:8px}
-.behavior-table select{min-width:120px;padding:8px}
-.behavior-note{min-width:180px;padding:8px}
-.behavior-name{font-weight:700;min-width:150px}
-
-
-/* V33 — OneDrive élégant pour Lycée collégial Sidi bouafif */
-.onedrive-hero{position:relative;overflow:hidden;display:flex;align-items:center;gap:22px;padding:26px;border-radius:22px;background:linear-gradient(135deg,#f7fbff,#eef6ff);border:1px solid #d8e8f8;box-shadow:0 12px 30px rgba(25,75,120,.10);margin-top:8px}
-.onedrive-hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-65px;top:-70px;background:rgba(0,120,212,.08)}
-.onedrive-icon{position:relative;z-index:1;width:68px;height:68px;min-width:68px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;background:#fff;box-shadow:0 8px 20px rgba(0,0,0,.08)}
-.onedrive-content{position:relative;z-index:1}
-.onedrive-kicker{font-size:12px;font-weight:800;letter-spacing:1.2px;color:#1671c5;margin-bottom:4px}
-.onedrive-content h2{margin:0 0 7px;font-size:25px}
-.onedrive-content p{margin:0 0 17px;line-height:1.6;color:#5e6b7c}
-.onedrive-btn{border:0;border-radius:12px;padding:12px 17px;font-weight:800;font-size:14px;cursor:pointer;background:#1671c5;color:#fff;box-shadow:0 7px 16px rgba(22,113,197,.24)}
-.onedrive-btn span{margin-left:7px}
-@media(max-width:700px){.onedrive-hero{padding:20px;gap:15px}.onedrive-icon{width:54px;height:54px;min-width:54px;font-size:27px}.onedrive-content h2{font-size:21px}.onedrive-content p{font-size:13px}.onedrive-btn{width:100%}}
-
-
-/* V36 — Premium visual redesign: interface only, data/functions preserved */
-:root{--bg:#f4f7fc;--card:#ffffff;--text:#13213a;--muted:#718096;--accent:#4f46e5;--accent2:#2563eb;--border:#e6eaf2;--dark:#111a31}
-body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 15% 0%,#eef2ff 0,transparent 30%),radial-gradient(circle at 90% 15%,#e0f2fe 0,transparent 25%),var(--bg);color:var(--text)}
-.app{min-height:100vh;background:transparent}
-.sidebar{background:linear-gradient(180deg,#111a31 0%,#18264a 55%,#202b57 100%);width:252px;padding:22px 14px;box-shadow:12px 0 35px rgba(17,24,39,.10);position:relative;z-index:5}
-.brand{display:flex;align-items:center;gap:11px;padding:6px 10px 22px;margin-bottom:10px}.brand-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;font-weight:900;box-shadow:0 10px 25px rgba(79,70,229,.35)}.brand-text{display:flex;flex-direction:column;line-height:1.15}.brand-text b{font-size:20px;letter-spacing:-.5px}.brand-text span{font-size:10px;color:#aab7d5;margin-top:4px;letter-spacing:.7px;text-transform:uppercase}
-.nav{display:flex;flex-direction:column;gap:3px}.nav button{border:1px solid transparent;color:#cbd5e7;text-align:left;padding:12px 13px;border-radius:13px;margin:0;font-size:14px;transition:.18s ease;display:flex;align-items:center;gap:9px}.nav button:hover{background:rgba(255,255,255,.08);transform:translateX(2px)}.nav button.active{background:linear-gradient(90deg,rgba(99,102,241,.30),rgba(37,99,235,.16));border-color:rgba(129,140,248,.18);color:#fff;box-shadow:inset 3px 0 0 #818cf8}
-.main{max-width:none;padding:22px 30px 40px}.institution-bar{background:rgba(255,255,255,.78)!important;border:1px solid rgba(226,232,240,.9)!important;box-shadow:0 8px 30px rgba(30,41,59,.06)!important;backdrop-filter:blur(16px)}
-.card{border:1px solid rgba(226,232,240,.9);border-radius:20px;box-shadow:0 10px 35px rgba(30,41,59,.06)}.btn{border-radius:12px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 8px 18px rgba(37,99,235,.20);transition:.18s}.btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px rgba(37,99,235,.24)}
-.hero-dashboard{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;min-height:245px;padding:34px 38px;border-radius:28px;background:linear-gradient(120deg,#111a31 0%,#27356b 48%,#315fd7 100%);color:#fff;box-shadow:0 22px 45px rgba(30,41,80,.22);margin-bottom:20px}.hero-dashboard:before,.hero-dashboard:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12)}.hero-dashboard:before{width:320px;height:320px;right:-100px;top:-140px}.hero-dashboard:after{width:180px;height:180px;right:120px;bottom:-100px}.hero-copy{position:relative;z-index:2;max-width:720px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.7px;color:#b9c7ff;margin-bottom:9px}.hero-copy h1{font-size:38px;letter-spacing:-1.3px;margin:0 0 10px}.hero-copy p{margin:0;max-width:650px;color:#d7def4;line-height:1.65}.hero-actions{display:flex;gap:10px;margin-top:20px}.btn-light{background:#fff;color:#1e2a57;box-shadow:none}.btn-ghost{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);box-shadow:none}.hero-orb{position:relative;z-index:2;margin-right:60px}.orb-ring{width:130px;height:130px;border-radius:38px;display:grid;place-items:center;font-size:36px;font-weight:900;background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.25);box-shadow:0 20px 45px rgba(0,0,0,.16);transform:rotate(-7deg)}
-.dashboard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:18px}.stat-card{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--border);border-radius:18px;padding:17px 18px;box-shadow:0 8px 25px rgba(30,41,59,.05)}.stat-card span{display:block;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}.stat-card strong{display:block;font-size:28px;margin-top:3px}.stat-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:22px}.stat-indigo .stat-icon{background:#eef2ff}.stat-blue .stat-icon{background:#e0f2fe}.stat-violet .stat-icon{background:#f3e8ff}.stat-green .stat-icon{background:#dcfce7}.dashboard-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.modern-card{padding:22px}.card-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.card-heading h2{margin:4px 0 0;font-size:18px}.section-kicker{font-size:10px;font-weight:900;letter-spacing:1.4px;color:#7c83a5}.live-dot{font-size:11px;color:#16a34a;background:#f0fdf4;padding:6px 9px;border-radius:99px}.overview-content{margin-top:22px;padding:18px;border-radius:15px;background:linear-gradient(135deg,#f8faff,#f5f7ff);color:#526078;line-height:1.8}.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.quick-actions button{border:1px solid #e7eaf2;background:#fbfcff;border-radius:15px;padding:14px;text-align:left;cursor:pointer;transition:.18s;display:grid;grid-template-columns:32px 1fr;column-gap:9px}.quick-actions button:hover{background:#f4f6ff;border-color:#cfd6ff;transform:translateY(-1px)}.quick-actions span{grid-row:span 2;font-size:22px}.quick-actions b{font-size:13px}.quick-actions small{color:#7a8497;font-size:10px;margin-top:3px}
-.top h1{letter-spacing:-.5px}.table{border-radius:16px;overflow:hidden}.table th{background:#f7f8fc;color:#667085}.field input,.field select,select{border-radius:11px!important;border:1px solid #dfe4ee!important;background:#fff!important}.modalbox{border-radius:22px;box-shadow:0 25px 70px rgba(15,23,42,.22)}
-@media(max-width:900px){.main{padding:16px}.hero-dashboard{padding:28px;min-height:225px}.hero-orb{margin-right:10px}.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
-@media(max-width:800px){.sidebar{width:72px;padding:16px 8px}.brand{justify-content:center;padding:4px 0 18px}.brand-text{display:none}.brand-mark{width:42px}.nav button{font-size:0;justify-content:center;padding:12px 8px}.nav button::first-letter{font-size:20px}.main{padding:14px 12px}.hero-dashboard{min-height:250px;padding:24px 20px}.hero-copy h1{font-size:29px}.hero-copy p{font-size:13px}.hero-orb{display:none}.hero-actions{flex-wrap:wrap}.dashboard-stats{gap:10px}.stat-card{padding:13px}.stat-card strong{font-size:24px}.quick-actions{grid-template-columns:1fr}}
-@media(max-width:480px){.dashboard-stats{grid-template-columns:1fr 1fr}.stat-card{min-width:0}.stat-card span{font-size:10px}.stat-card strong{font-size:22px}.hero-dashboard{border-radius:22px}.hero-copy h1{font-size:26px}.hero-actions .btn{width:100%}}
-
-/* V37 — mobile navigation fixed on the RIGHT */
-@media (max-width:800px){
-  html,body{width:100%;min-width:0;overflow-x:hidden}
-  .app{display:block !important;position:relative !important;width:100% !important;min-height:100vh !important}
-  .main{display:block !important;width:calc(100% - 78px) !important;max-width:none !important;margin:0 !important;padding:14px 12px !important;margin-right:78px !important;min-width:0 !important}
-  .sidebar{display:block !important;position:fixed !important;right:0 !important;top:0 !important;bottom:0 !important;width:78px !important;height:100vh !important;padding:16px 7px !important;margin:0 !important;z-index:9999 !important;overflow-y:auto !important;overflow-x:hidden !important;order:initial !important}
-  .brand{justify-content:center !important;padding:4px 0 18px !important}
-  .brand-text{display:none !important}
-  .brand-mark{width:44px !important;height:44px !important}
-  .nav{width:100% !important}
-  .nav button{width:100% !important;height:48px !important;padding:10px 4px !important;justify-content:center !important;text-align:center !important;font-size:0 !important;gap:0 !important;transform:none !important}
-  .nav button::first-letter{font-size:21px !important}
-  .nav button:hover{transform:none !important}
-}
-
-
-/* V59 — emploi du temps Sidi Bouafif : design premium */
-.sidi-timetable-card{margin-top:18px;background:linear-gradient(145deg,#ffffff 0%,#f7f9ff 100%);border:1px solid rgba(70,92,220,.14);border-radius:26px;padding:20px;box-shadow:0 14px 40px rgba(24,40,90,.10)}
-.sidi-timetable-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
-.sidi-timetable-title{margin:0;font-size:24px;color:#15213d}.sidi-timetable-sub{margin:4px 0 0;color:#71809d}
-.sidi-hours{display:flex;gap:8px;flex-wrap:wrap}.sidi-hour-badge{padding:8px 12px;border-radius:999px;background:#eef2ff;color:#3047bd;font-weight:800;font-size:13px}
-.sidi-day-block{margin-top:18px}.sidi-day-label{display:flex;align-items:center;gap:9px;font-weight:900;color:#263556;margin:0 0 10px}.sidi-day-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#5865f2,#2d73ea);box-shadow:0 0 0 5px rgba(74,92,230,.10)}
-.sidi-scroll{overflow-x:auto;padding-bottom:4px}.sidi-grid{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;min-width:620px}
-.sidi-slot{background:#fff;border:1px solid #e4e9f4;border-radius:17px;overflow:hidden;box-shadow:0 6px 18px rgba(31,45,90,.06)}.sidi-slot-time{padding:9px 10px;background:linear-gradient(135deg,#eef2ff,#f6f8ff);font-size:12px;font-weight:900;color:#53617b;text-align:center}
-.sidi-slot-body{min-height:68px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.sidi-class{font-size:17px;font-weight:900;color:#1d2b4d}.sidi-room{font-size:12px;color:#7a879e;margin-top:4px}.sidi-empty{color:#a3aec1;font-weight:700}
-.sidi-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.sidi-summary strong{font-size:17px}
-@media(max-width:600px){.sidi-timetable-card{padding:14px;border-radius:20px}.sidi-timetable-title{font-size:20px}.sidi-grid{min-width:590px}.sidi-slot-body{min-height:64px}}
-/* V59 — emploi du temps Institut Manarat Rif */
-.manarat-timetable-card{margin-top:18px;background:linear-gradient(145deg,#ffffff 0%,#f7f9ff 100%);border:1px solid rgba(70,92,220,.14);border-radius:26px;padding:20px;box-shadow:0 14px 40px rgba(24,40,90,.10)}
-.manarat-timetable-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
-.manarat-timetable-title{margin:0;font-size:24px;color:#15213d}.manarat-timetable-sub{margin:4px 0 0;color:#71809d}
-.manarat-hours{display:flex;gap:8px;flex-wrap:wrap}.manarat-hour-badge{padding:8px 12px;border-radius:999px;background:#eef2ff;color:#3047bd;font-weight:800;font-size:13px}
-.manarat-day-block{margin-top:18px}.manarat-day-label{display:flex;align-items:center;gap:9px;font-weight:900;color:#263556;margin:0 0 10px}.manarat-day-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#5865f2,#2d73ea);box-shadow:0 0 0 5px rgba(74,92,230,.10)}
-.manarat-scroll{overflow-x:auto;padding-bottom:4px}.manarat-grid{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;min-width:620px}
-.manarat-grid.afternoon{grid-template-columns:repeat(2,minmax(145px,1fr));min-width:310px}
-.manarat-slot{background:#fff;border:1px solid #e4e9f4;border-radius:17px;overflow:hidden;box-shadow:0 6px 18px rgba(31,45,90,.06)}.manarat-slot-time{padding:9px 10px;background:linear-gradient(135deg,#eef2ff,#f6f8ff);font-size:12px;font-weight:900;color:#53617b;text-align:center}
-.manarat-slot-body{min-height:72px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.manarat-class{font-size:17px;font-weight:900}.manarat-class.c1{color:#e33d43}.manarat-class.c2{color:#ef7f17}.manarat-subject{font-size:11px;color:#7a879e;margin-top:4px;font-weight:700}.manarat-empty{color:#a3aec1;font-weight:700}
-.manarat-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.manarat-summary strong{font-size:17px}
-@media(max-width:600px){.manarat-timetable-card{padding:14px;border-radius:20px}.manarat-timetable-title{font-size:20px}.manarat-grid{min-width:590px}.manarat-grid.afternoon{min-width:310px}.manarat-slot-body{min-height:64px}}
-</style>
-
-<style id="v40-mobile-layout">
-/* V40 — mobile: right navigation + content always fits its column */
-@media (max-width:800px){
-  html,body{width:100% !important;max-width:100% !important;overflow-x:hidden !important;}
-  .app{display:flex !important;flex-direction:row !important;width:100% !important;min-width:0 !important;}
-  .main{order:1 !important;flex:1 1 auto !important;width:auto !important;min-width:0 !important;max-width:none !important;margin:0 !important;padding:14px 10px 32px !important;box-sizing:border-box !important;overflow-x:hidden !important;}
-  .sidebar{order:2 !important;position:fixed !important;top:0 !important;right:0 !important;bottom:0 !important;width:176px !important;height:100vh !important;box-sizing:border-box !important;z-index:10000 !important;overflow-y:auto !important;overflow-x:hidden !important;}
-  .page{width:100% !important;min-width:0 !important;max-width:100% !important;box-sizing:border-box !important;}
-  .grid,.dashboard-grid,.dashboard-stats{grid-template-columns:1fr !important;width:100% !important;min-width:0 !important;}
-  .card,.section,.institution-bar,.hero-dashboard{width:100% !important;min-width:0 !important;max-width:100% !important;box-sizing:border-box !important;}
-  .top{flex-wrap:wrap !important;width:100% !important;min-width:0 !important;}
-  .top h1{max-width:100% !important;overflow-wrap:anywhere !important;}
-  input,select,textarea,button{max-width:100% !important;box-sizing:border-box !important;}
-  .table-wrap,.table-responsive{width:100% !important;max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;}
-  table{min-width:520px;}
-}
-@media (max-width:480px){
-  .sidebar{width:176px !important;}
-  .main{padding:12px 8px 28px !important;}
-  .nav button{font-size:11px !important;}
+  .app{display:flex !important;flex-direction:row-reverse !important;min-height:100vh !important;}
+  .app > .sidebar{order:2 !important;flex:0 0 72px !important;width:72px !important;}
+  .app > .main{order:1 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
 }
 </style>
 
@@ -160,116 +43,15 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
-
-
-<style id="v39-mobile-professional">
-/* V39 — professional mobile navigation: content left, navigation right */
-@media (max-width:800px){
-  .app{display:flex !important; flex-direction:row !important; width:100% !important; min-height:100vh !important;}
-  .main{order:1 !important; margin:0 !important; width:calc(100% - 176px) !important; min-width:0 !important; padding:16px 12px 32px !important;}
-  .sidebar{order:2 !important; position:fixed !important; top:0 !important; right:0 !important; bottom:0 !important; width:176px !important; height:100vh !important; box-sizing:border-box !important; z-index:1000 !important; overflow-y:auto !important; overflow-x:hidden !important; padding:14px 10px 18px !important; background:linear-gradient(180deg,#111c3a 0%,#172a56 55%,#203b78 100%) !important; border-left:1px solid rgba(255,255,255,.12) !important; box-shadow:-12px 0 30px rgba(12,25,55,.28) !important;}
-  .brand{display:flex !important; align-items:center !important; justify-content:center !important; padding:4px 0 18px !important; border-bottom:1px solid rgba(255,255,255,.12) !important; margin-bottom:14px !important;}
-  .brand-text{display:block !important; color:#fff !important; text-align:center !important;}
-  .brand-text b{display:block !important; font-size:16px !important; letter-spacing:.2px !important;}
-  .brand-text span{display:block !important; font-size:10px !important; opacity:.7 !important; margin-top:2px !important;}
-  .brand-mark{width:44px !important; height:44px !important; margin:0 0 0 8px !important; flex:none !important;}
-  .nav{display:flex !important; flex-direction:column !important; gap:8px !important;}
-  .nav button{width:100% !important; min-height:52px !important; box-sizing:border-box !important; display:flex !important; align-items:center !important; justify-content:flex-start !important; gap:9px !important; padding:9px 10px !important; border-radius:14px !important; color:#eef4ff !important; background:rgba(255,255,255,.075) !important; border:1px solid rgba(255,255,255,.10) !important; font-size:11px !important; line-height:1.2 !important; font-weight:700 !important; text-align:right !important; white-space:normal !important; transition:all .18s ease !important;}
-  .nav button:hover{background:rgba(255,255,255,.13) !important; transform:translateX(-2px) !important;}
-  .nav button.active{background:linear-gradient(135deg,#6366f1,#2563eb) !important; border-color:rgba(255,255,255,.3) !important; box-shadow:0 8px 20px rgba(37,99,235,.32) !important; color:#fff !important;}
-  .nav button::first-letter{font-size:19px !important;}
-  .institution-bar{margin-top:2px !important;}
-  .top h1{font-size:27px !important; line-height:1.1 !important;}
-}
-</style>
-
-<style id="v41-mobile-sidebar-left">
-/* V41: mobile sidebar LEFT, content RIGHT */
-@media (max-width:800px){
-  .app{display:block !important; width:100% !important; min-height:100vh !important;}
-  .sidebar{position:fixed !important; left:0 !important; right:auto !important; top:0 !important; bottom:0 !important; width:176px !important; height:100vh !important; box-sizing:border-box !important; z-index:10000 !important; overflow-y:auto !important; overflow-x:hidden !important; padding:14px 10px 18px !important; background:linear-gradient(180deg,#111c3a 0%,#172a56 55%,#203b78 100%) !important; border-right:1px solid rgba(255,255,255,.14) !important; border-left:0 !important; box-shadow:12px 0 30px rgba(12,25,55,.28) !important;}
-  .main{display:block !important; width:calc(100% - 176px) !important; max-width:none !important; min-width:0 !important; margin:0 0 0 176px !important; padding:16px 12px 32px !important; box-sizing:border-box !important; overflow-x:hidden !important;}
-  .sidebar .brand-text{display:block !important;}
-  .sidebar .brand{justify-content:flex-start !important; padding:4px 4px 18px !important;}
-  .sidebar .nav button{font-size:12px !important; width:100% !important; min-height:50px !important; padding:8px 7px !important; display:flex !important; align-items:center !important; justify-content:flex-start !important; gap:7px !important; white-space:normal !important; text-align:left !important;}
-}
-</style>
-
-<style id="v46-institution-fix">
-.institution-current{min-width:220px}
-.institution-picker{min-width:280px;display:flex;flex-direction:column;gap:6px}
-.institution-picker label{font-size:12px;font-weight:800;color:#68758b}
-.institution-picker select{width:100%!important;min-height:50px!important;padding:0 14px!important;border:1px solid #d7dfec!important;border-radius:14px!important;background:#fff!important;color:#17233b!important;font-weight:800!important;cursor:pointer!important;position:relative!important;z-index:20!important;pointer-events:auto!important}
-@media(max-width:480px){.institution-current,.institution-picker{min-width:100%;width:100%}.institution-picker select{min-height:52px!important}}
-</style>
-
-<style id="v48-institution-switcher">
-.institution-quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.institution-choice{appearance:none;border:1px solid #dbe3f0;background:#f8fafc;color:#17233b;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(15,23,42,.05);transition:.18s;touch-action:manipulation}
-.institution-choice:hover{transform:translateY(-1px);border-color:#93c5fd}
-.institution-choice.active{background:linear-gradient(135deg,#4f46e5,#2563eb);color:#fff;border-color:#4f46e5;box-shadow:0 7px 16px rgba(37,99,235,.22)}
-@media(max-width:480px){.institution-picker select{display:none!important}.institution-quick{display:grid;grid-template-columns:1fr;gap:8px}.institution-choice{width:100%;min-height:48px;text-align:left;font-size:13px}.institution-bar{position:relative;z-index:30!important}}
-</style>
-
-<style id="v56-logo-beside-menu">
-/* V56 — mobile: hamburger and EP on the same top row; EduProf underneath */
-@media (max-width:800px){
-  .sidebar .brand{
-    position:relative !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
-    gap:8px !important;
-    padding:14px 8px 18px !important;
-    margin-bottom:14px !important;
-    border-bottom:1px solid rgba(255,255,255,.12) !important;
-    min-height:150px !important;
-    box-sizing:border-box !important;
-  }
-  .sidebar .brand-mark{
-    width:48px !important;
-    height:48px !important;
-    margin:0 !important;
-    border-radius:15px !important;
-    font-size:17px !important;
-  }
-  .sidebar .brand-text{
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:center !important;
-    text-align:center !important;
-    line-height:1.1 !important;
-  }
-  .sidebar .brand-text b{font-size:19px !important;}
-  .sidebar .brand-text span{font-size:9px !important; margin-top:4px !important;}
-  .mobile-menu-toggle{
-    display:flex !important;
-    left:14px !important;
-    top:14px !important;
-    width:48px !important;
-    height:48px !important;
-    z-index:10020 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    border-radius:12px !important;
-    color:#fff !important;
-    font-size:32px !important;
-  }
-  .app:not(.mobile-menu-closed) .mobile-menu-toggle{display:flex !important;}
-  .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
-}
-</style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
-  <div class="brand"><div class="brand-mark">EP</div><div class="brand-text"><b>EduProf</b><span>FR · Professeur</span></div></div>
+  <div class="logo">Edu<span>Prof</span> FR</div>
   <div class="nav">
     <button class="active" onclick="showPage('dashboard',this)">🏠 Tableau de bord</button>
     <button onclick="showPage('classes',this)">🏫 Mes classes</button>
     <button onclick="showPage('eleves',this)">👨‍🎓 Mes élèves</button>
-<button onclick="showPage('suivi',this)">🧭 Suivi & comportement</button>
 <button onclick="showPage('profils',this)">👤 Profils élèves</button>
 <button onclick="showPage('emploi',this)">🗓️ Emploi du temps</button>
 <button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
@@ -277,48 +59,21 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
     <button onclick="showPage('exercices',this)">📝 Exercices</button>
     <button onclick="showPage('evaluations',this)">✅ Évaluations</button>
     <button onclick="showPage('resultats',this)">📊 Résultats</button>
-<button type="button" onclick="showPage('import',this); closeMobileMenu();">📥 Import Excel</button>
+<button onclick="showPage('import',this)">📥 Import Excel</button>
   </div>
 </aside>
 
 <main class="main">
-<div class="institution-bar card" style="margin-bottom:18px;padding:16px;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap">
-  <div class="institution-current"><div class="muted">🏫 Institution active</div><strong id="activeInstitutionName">Institut Manarat Rif</strong></div>
-  <div class="institution-picker">
-    <label for="institutionSelect">Changer d’institution</label>
-    <select id="institutionSelect" aria-label="Choisir l’institution" onchange="switchInstitution(this.value)">
-      <option value="manarat">Institut Manarat Rif</option>
-      <option value="sidi">Lycée collégial Sidi bouafif</option>
-    </select>
-    <div class="institution-quick" aria-label="Institutions">
-      <button type="button" class="institution-choice" data-inst="manarat" onclick="return switchInstitution('manarat')">🏫 <span>Institut Manarat Rif</span></button>
-      <button type="button" class="institution-choice" data-inst="sidi" onclick="return switchInstitution('sidi')">🏫 <span>Lycée collégial Sidi bouafif</span></button>
-    </div>
-  </div>
-</div>
 <section id="dashboard" class="page active">
-  <div class="hero-dashboard">
-    <div class="hero-copy">
-      <div class="eyebrow">ESPACE ENSEIGNANT · EDUPROF FR</div>
-      <h1>Bonjour, Professeur 👋</h1>
-      <p>Gérez vos classes, vos élèves, vos évaluations et vos ressources pédagogiques depuis un seul espace.</p>
-      <div class="hero-actions">
-        <button class="btn btn-light" onclick="showPage('classes',document.querySelectorAll('.nav button')[1])">＋ Nouvelle classe</button>
-        <button class="btn btn-ghost" onclick="showPage('eleves',document.querySelectorAll('.nav button')[2])">👨‍🎓 Mes élèves</button>
-      </div>
-    </div>
-    <div class="hero-orb"><div class="orb-ring">EP</div></div>
+  <div class="top"><div><h1>Bonjour, Professeur 👋</h1><p class="muted">Votre espace de gestion pédagogique.</p></div></div>
+  <div class="grid">
+    <div class="card"><div class="muted">Classes</div><div class="stat" id="statClasses">0</div></div>
+    <div class="card"><div class="muted">Élèves</div><div class="stat" id="statEleves">0</div></div>
+    <div class="card"><div class="muted">Cours</div><div class="stat">0</div></div>
+    <div class="card"><div class="muted">Évaluations</div><div class="stat">0</div></div>
   </div>
-  <div class="dashboard-stats">
-    <div class="stat-card stat-indigo"><div class="stat-icon">🏫</div><div><span>Classes</span><strong id="statClasses">0</strong></div></div>
-    <div class="stat-card stat-blue"><div class="stat-icon">👨‍🎓</div><div><span>Élèves</span><strong id="statEleves">0</strong></div></div>
-    <div class="stat-card stat-violet"><div class="stat-icon">📚</div><div><span>Cours</span><strong id="statCourses">0</strong></div></div>
-    <div class="stat-card stat-green"><div class="stat-icon">📊</div><div><span>Évaluations</span><strong id="statGradesDash">0</strong></div></div>
-  </div>
-  <div class="dashboard-grid">
-    <div class="card modern-card overview-card"><div class="card-heading"><div><span class="section-kicker">APERÇU</span><h2>📈 Vue d’ensemble</h2></div><span class="live-dot">● Actif</span></div><div id="dashboardSummary" class="overview-content"></div></div>
-    <div class="card modern-card quick-card"><div class="card-heading"><div><span class="section-kicker">ACCÈS RAPIDE</span><h2>⚡ Actions</h2></div></div><div class="quick-actions"><button onclick="showPage('suivi',document.querySelectorAll('.nav button')[3])"><span>🧭</span><b>Suivi du jour</b><small>Absences & comportement</small></button><button onclick="showPage('resultats',document.querySelectorAll('.nav button')[9])"><span>📊</span><b>Notes & moyennes</b><small>Consulter les résultats</small></button><button onclick="showPage('cours',document.querySelectorAll('.nav button')[7])"><span>📚</span><b>Mes cours</b><small>Ressources pédagogiques</small></button><button onclick="showPage('assistant',document.querySelectorAll('.nav button')[6])"><span>🤖</span><b>Assistant IA</b><small>Créer une activité</small></button></div></div>
-  </div>
+  <div class="section card"><h2>Démarrage rapide</h2><p class="muted">Commencez par créer une classe et ajouter vos élèves.</p><button class="btn" onclick="showPage('classes',document.querySelectorAll('.nav button')[1])">+ Ajouter une classe</button></div>
+<div class="section card"><h2>📈 Vue d’ensemble</h2><div id="dashboardSummary" class="muted"></div></div>
 </section>
 
 <section id="classes" class="page">
@@ -329,68 +84,14 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <section id="eleves" class="page">
   <div class="top"><h1>Mes élèves</h1><div><button class="btn cancel" onclick="exportStudentsCSV()">📥 Exporter</button> <button class="btn" onclick="openModal('studentModal')">+ Ajouter un élève</button></div></div>
   <div class="card">
-  <div class="field">
-  <label>📚 Choisir une classe</label>
-  <select id="studentClassFilter" onchange="renderStudents()"></select>
-</div>
-<div class="field">
-  <label>🔎 Rechercher un élève</label>
-  <input id="studentSearch" oninput="renderStudents()" placeholder="Nom ou prénom...">
-</div>
+  <div class="field"><label>🔎 Rechercher un élève</label><input id="studentSearch" oninput="renderStudents()" placeholder="Nom, prénom ou classe..."></div>
   <div style="overflow:auto"><table class="table"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Actions</th></tr></thead><tbody id="studentTable"></tbody></table></div>
 </div>
 </section>
 
-<section id="suivi" class="page">
-  <div class="top">
-    <h1>🧭 Suivi & comportement</h1>
-  </div>
-  <div class="card">
-    <div class="grid" style="grid-template-columns:repeat(2,1fr)">
-      <div class="field">
-        <label>📚 Choisir une classe</label>
-        <select id="behaviorClassFilter" onchange="renderBehavior()"></select>
-      </div>
-      <div class="field">
-        <label>📅 Date du suivi</label>
-        <input id="behaviorDateFilter" type="date" onchange="renderBehavior()">
-      </div>
-    </div>
-    <div class="muted" style="margin-bottom:14px">
-      Chaque absence, retard, participation, devoir, comportement et effort est maintenant enregistré <b>par date</b>. Choisissez la date pour consulter ou modifier le suivi de cette journée.
-    </div>
-    <div style="overflow:auto">
-      <table class="table behavior-table">
-        <thead>
-          <tr>
-            <th>Élève</th>
-            <th>Absences</th>
-            <th>Retards</th>
-            <th>Participation</th>
-            <th>Devoirs non faits</th>
-            <th>Comportement</th>
-            <th>Effort</th>
-            <th>Observation</th>
-          </tr>
-        </thead>
-        <tbody id="behaviorTable"></tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
 <section id="cours" class="page">
-<div class="top"><div><h1>📚 Mes cours</h1><p class="muted" id="courseInstitutionLabel">Lycée collégial Sidi bouafif</p></div><button class="btn" onclick="openModal('courseModal')">+ Nouveau cours</button></div>
-<div id="onedrivePanel" class="onedrive-hero">
-  <div class="onedrive-icon">☁️</div>
-  <div class="onedrive-content">
-    <div class="onedrive-kicker">BIBLIOTHÈQUE PÉDAGOGIQUE</div>
-    <h2>Mes cours Google Drive</h2>
-    <p>Retrouvez vos cours, fiches pédagogiques et documents du <b>Lycée collégial Sidi bouafif</b> dans votre bibliothèque Google Drive.</p>
-    <button class="onedrive-btn" onclick="openOneDriveInBrowser()">🌐 Ouvrir mes cours dans Browser <span>↗</span></button>
-  </div>
-</div>
-<div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr);margin-top:18px"></div>
+<div class="top"><h1>📚 Cours & fiches pédagogiques</h1><button class="btn" onclick="openModal('courseModal')">+ Nouveau cours</button></div>
+<div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr)"></div>
 </section>
 <section id="exercices" class="page">
 <div class="top"><h1>📝 Exercices & tests interactifs</h1><button class="btn" onclick="openModal('exerciseModal')">+ Nouvel exercice</button></div>
@@ -416,7 +117,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 </div>
 <div class="card section">
   <div class="grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="field"><label>Classe</label><select id="gradeClassFilter" onchange="renderGradesPage(); renderBehavior();renderGradebook()"><option value="">Toutes les classes</option></select></div>
+    <div class="field"><label>Classe</label><select id="gradeClassFilter" onchange="renderGradesPage();renderGradebook()"><option value="">Toutes les classes</option></select></div>
     <div class="field"><label>Élève</label><select id="gradeStudentFilter" onchange="renderGradesPage()"><option value="">Tous les élèves</option></select></div>
   </div>
 </div>
@@ -442,14 +143,10 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   <div class="top"><h1>📥 Importer les élèves</h1></div>
   <div class="card">
     <p class="muted">Importez directement votre fichier <b>Excel (.xlsx)</b> ou CSV. Colonnes attendues : <b>Nom, Prénom, Classe</b>. Les doublons sont automatiquement ignorés.</p>
-    <div class="file-picker-box">
-      <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" onchange="updateChosenFileName(this)">
-      <label for="csvFile" class="file-picker-button">📂 Choisir un fichier</label>
-      <span id="chosenFileName" class="file-picker-name">Aucun fichier choisi</span>
-    </div>
+    <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="field">
     <div class="actions" style="justify-content:flex-start">
-      <button type="button" class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
-      <button type="button" class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
+      <button class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
+      <button class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
     </div>
     <p id="importMsg" class="muted"></p>
   </div>
@@ -474,7 +171,6 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 
 <section id="emploi" class="page">
 <div class="top"><h1>🗓️ Emploi du temps</h1><button class="btn" onclick="openModal('scheduleModal')">+ Ajouter une séance</button></div>
-<div id="sidiTimetablePanel"></div>
 <div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Jour</th><th>Horaire</th><th>Classe</th><th>Activité</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
 </section>
 
@@ -559,70 +255,17 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const key='eduprof_fr_data';
-const workspaceKey='eduprof_fr_workspaces_v1';
-const EMPTY_DATA={classes:[],students:[],exercises:[],grades:[],courses:[],schedule:[]};
-const INSTITUTIONS={manarat:'Institut Manarat Rif',sidi:'Lycée collégial Sidi bouafif'};
-let currentInstitution=localStorage.getItem(workspaceKey+'_active')||'manarat';
-let workspaces=null;
-try{workspaces=JSON.parse(localStorage.getItem(workspaceKey)||'null')}catch(e){workspaces=null}
-if(!workspaces||!workspaces.institutions){
-  let legacy=null;
-  try{legacy=JSON.parse(localStorage.getItem(key)||'null')}catch(e){legacy=null}
-  workspaces={institutions:{manarat:legacy&&Array.isArray(legacy.students)?legacy:JSON.parse(JSON.stringify(EMPTY_DATA)),sidi:JSON.parse(JSON.stringify(EMPTY_DATA))}};
-  localStorage.setItem(workspaceKey,JSON.stringify(workspaces));
-}
-workspaces.institutions=workspaces.institutions||{};
-for(const id of Object.keys(INSTITUTIONS)){workspaces.institutions[id]=workspaces.institutions[id]||JSON.parse(JSON.stringify(EMPTY_DATA));}
-if(!INSTITUTIONS[currentInstitution])currentInstitution='manarat';
-function normalizeData(d){
- d=d||JSON.parse(JSON.stringify(EMPTY_DATA)); d.classes=d.classes||[]; d.students=d.students||[]; d.exercises=d.exercises||[]; d.grades=d.grades||[]; d.courses=d.courses||[]; d.schedule=d.schedule||[];
- d.exercises=d.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'}});
- d.grades=d.grades.map(g=>({...g,coef:Number(g.coef)||1}));
- d.students=d.students.map(s=>({...s,behavior:{absences:Number(s.behavior?.absences)||0,retards:Number(s.behavior?.retards)||0,participation:Number(s.behavior?.participation)||0,homework:Number(s.behavior?.homework)||0,comportement:s.behavior?.comportement||'Bien',effort:s.behavior?.effort||'Bon',observation:s.behavior?.observation||'',history:s.behavior?.history||{}}}));
- return d;
-}
-let data=normalizeData(workspaces.institutions[currentInstitution]);
-workspaces.institutions[currentInstitution]=data;
-function persistWorkspaces(){workspaces.institutions[currentInstitution]=data;localStorage.setItem(workspaceKey,JSON.stringify(workspaces));localStorage.setItem(workspaceKey+'_active',currentInstitution);}
-function save(){persistWorkspaces();render()}
-function switchInstitution(id){
- id=String(id||'').trim();
- if(!INSTITUTIONS[id]) return false;
- if(id===currentInstitution){ updateInstitutionUI(); return true; }
- persistWorkspaces();
- currentInstitution=id;
- workspaces.institutions[id]=normalizeData(workspaces.institutions[id]||JSON.parse(JSON.stringify(EMPTY_DATA)));
- data=workspaces.institutions[id];
- persistWorkspaces();
- updateInstitutionUI();
- render();
- if(typeof closeMobileMenu==='function') closeMobileMenu();
- return true;
-}
-function updateInstitutionUI(){
- const sel=document.getElementById('institutionSelect');
- if(sel){ sel.value=currentInstitution; }
- const name=document.getElementById('activeInstitutionName');
- if(name) name.textContent=INSTITUTIONS[currentInstitution];
- const label=document.getElementById('courseInstitutionLabel');
- if(label) label.textContent=INSTITUTIONS[currentInstitution];
- document.querySelectorAll('.institution-choice').forEach(function(btn){
-   const active=btn.getAttribute('data-inst')===currentInstitution;
-   btn.classList.toggle('active',active);
-   btn.setAttribute('aria-pressed',active?'true':'false');
- });
-}
+let data=JSON.parse(localStorage.getItem(key)||'{"classes":[],"students":[],"exercises":[],"grades":[],"courses":[],"schedule":[]}'); data.exercises=data.exercises||[]; data.courses=data.courses||[]; data.schedule=data.schedule||[]; data.exercises=data.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'};}); data.grades=(data.grades||[]).map(g=>({...g,coef:Number(g.coef)||1}));
+function save(){localStorage.setItem(key,JSON.stringify(data));render()}
+
+
 function renderEvaluationSelectors(){
  const s=document.getElementById('evalStudent'),e=document.getElementById('evalExercise'); if(!s||!e)return;
  s.innerHTML=data.students.length?data.students.map((x,i)=>`<option value="${i}">${esc(x.last)} ${esc(x.first)} — ${esc(x.className)}</option>`).join(''):'<option value="">Aucun élève</option>';
  e.innerHTML=data.exercises.length?data.exercises.map((x,i)=>`<option value="${i}">${esc(x.title)}</option>`).join(''):'<option value="">Aucun test</option>';
 }
 function renderStatistics(){
- const cf=document.getElementById('gradeClassFilter')?.value||'';
- const valid=data.grades.filter(g=>{
-   const s=data.students[g.student];
-   return s && (!cf || studentClassMatches(s.className,cf)) && Number.isFinite(Number(g.score20));
- });
+ const valid=data.grades.filter(g=>Number.isFinite(Number(g.score20)));
  const n=valid.length;
  document.getElementById('statGrades').textContent=n;
  const w=valid.reduce((a,g)=>a+gradeCoef(g),0);
@@ -706,27 +349,10 @@ function exportResultsCSV(){
 function renderDashboardSummary(){
  const box=document.getElementById('dashboardSummary');if(!box)return;
  const n=data.grades.length,avg=n?data.grades.reduce((a,g)=>a+g.score20,0)/n:0;
- const sc=document.getElementById('statCourses'),sg=document.getElementById('statGradesDash');
- if(sc)sc.textContent=data.courses.length; if(sg)sg.textContent=n;
  box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
 }
 
-const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
-function openOneDriveInBrowser(){
-  try{
-    if(/Android/i.test(navigator.userAgent)){
-      const u=ONE_DRIVE_URL.replace(/^https?:\/\//,'');
-      window.location.href='intent://'+u+'#Intent;scheme=https;package=com.sec.android.app.sbrowser;end';
-      setTimeout(()=>window.open(ONE_DRIVE_URL,'_blank','noopener,noreferrer'),1200);
-    }else{
-      window.open(ONE_DRIVE_URL,'_blank','noopener,noreferrer');
-    }
-  }catch(e){ window.open(ONE_DRIVE_URL,'_blank'); }
-}
-
 function renderCourses(){
- const label=document.getElementById('courseInstitutionLabel'); if(label)label.textContent=INSTITUTIONS[currentInstitution];
- const panel=document.getElementById('onedrivePanel'); if(panel)panel.style.display=currentInstitution==='sidi'?'flex':'none';
  const box=document.getElementById('courseList');if(!box)return;
  box.innerHTML=data.courses.length?data.courses.map(c=>`<div class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(c.className)} · ${esc(c.skill)}</p><b>Objectif :</b> ${esc(c.objective)}<p class="muted">${esc(c.content)}</p></div>`).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun cours enregistré.</div>';
 }
@@ -736,55 +362,7 @@ function addCourse(){
  data.courses.push({title,className:className||'—',objective:objective||'—',skill:skill||'—',content:content||'—'});save();closeModal('courseModal');
  ['courseTitle','courseClass','courseObjective','courseSkill','courseContent'].forEach(id=>document.getElementById(id).value='');
 }
-function renderManaratTimetable(){
- const panel=document.getElementById('sidiTimetablePanel'); if(!panel||currentInstitution!=='manarat')return;
- const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
- const morningTimes=['09:00 – 10:00','10:00 – 11:00','11:00 – 12:00','12:00 – 13:00'];
- const afternoonTimes=['13:30 – 14:30','14:30 – 15:30'];
- const byDay={
-  'Lundi':{morning:['—','—','—','—'],afternoon:['1APIC-2','1APIC-1']},
-  'Mardi':{morning:['1APIC-1','1APIC-1','1APIC-2','1APIC-2'],afternoon:['—','—']},
-  'Mercredi':{morning:['—','—','—','—'],afternoon:['1APIC-2','1APIC-1']},
-  'Jeudi':{morning:['—','—','—','—'],afternoon:['—','—']},
-  'Vendredi':{morning:['—','—','—','—'],afternoon:['—','—']}
- };
- const slot=(time,cl)=>`<div class="manarat-slot"><div class="manarat-slot-time">${time}</div><div class="manarat-slot-body">${cl==='—'?'<span class="manarat-empty">—</span>':`<span class="manarat-class ${cl==='1APIC-1'?'c1':'c2'}">${cl}</span><span class="manarat-subject">FRANÇAIS</span>`}</div></div>`;
- panel.innerHTML=`<div class="manarat-timetable-card">
-   <div class="manarat-timetable-head">
-     <div><h2 class="manarat-timetable-title">🏫 Institut Manarat Rif</h2><p class="manarat-timetable-sub">Emploi du temps — Français · année scolaire 2026/2027</p></div>
-     <div class="manarat-hours"><span class="manarat-hour-badge">☀️ 09:00 → 13:00</span><span class="manarat-hour-badge">🌙 13:30 → 15:30</span></div>
-   </div>
-   ${days.map(d=>`<div class="manarat-day-block">
-     <h3 class="manarat-day-label"><span class="manarat-day-dot"></span>${d}</h3>
-     <div class="manarat-scroll"><div class="manarat-grid">${byDay[d].morning.map((c,i)=>slot(morningTimes[i],c)).join('')}</div></div>
-     <div class="manarat-scroll" style="margin-top:10px"><div class="manarat-grid afternoon">${byDay[d].afternoon.map((c,i)=>slot(afternoonTimes[i],c)).join('')}</div></div>
-   </div>`).join('')}
-   <div class="manarat-summary"><span>📚 Sections concernées</span><strong>1APIC-1 + 1APIC-2</strong></div>
- </div>`;
-}
-function renderSidiTimetable(){
- const panel=document.getElementById('sidiTimetablePanel'); if(!panel)return;
- if(currentInstitution!=='sidi'){renderManaratTimetable();return;}
- const morningByDay={
-  'Lundi':[['08:00 – 09:00','3APIC-2'],['09:00 – 10:00','3APIC-3'],['10:00 – 11:00','3APIC-1'],['11:00 – 12:00','1APIC-5']],
-  'Mardi':[['08:00 – 09:00','—'],['09:00 – 10:00','—'],['10:00 – 11:00','—'],['11:00 – 12:00','—']],
-  'Mercredi':[['08:00 – 09:00','3APIC-1'],['09:00 – 10:00','3APIC-2'],['10:00 – 11:00','1APIC-5'],['11:00 – 12:00','1APIC-4']],
-  'Jeudi':[['08:00 – 09:00','—'],['09:00 – 10:00','—'],['10:00 – 11:00','—'],['11:00 – 12:00','—']],
-  'Vendredi':[['08:00 – 09:00','1APIC-4'],['09:00 – 10:00','1APIC-5'],['10:00 – 11:00','3APIC-3'],['11:00 – 12:00','3APIC-1']]
- };
- const afternoonByDay={
-  'Lundi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']],
-  'Mardi':[['14:00 – 15:00','3APIC-3'],['15:00 – 16:00','1APIC-4'],['16:00 – 17:00','3APIC-1'],['17:00 – 18:00','3APIC-2']],
-  'Mercredi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']],
-  'Jeudi':[['14:00 – 15:00','1APIC-5'],['15:00 – 16:00','1APIC-4'],['16:00 – 17:00','3APIC-3'],['17:00 – 18:00','3APIC-2']],
-  'Vendredi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']]
- };
- const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
- const grid=items=>items.map(x=>`<div class="sidi-slot"><div class="sidi-slot-time">${x[0]}</div><div class="sidi-slot-body">${x[1]==='—'?'<span class="sidi-empty">—</span>':`<span class="sidi-class">${x[1]}</span><span class="sidi-room">Salle 5</span>`}</div></div>`).join('');
- panel.innerHTML=`<div class="sidi-timetable-card"><div class="sidi-timetable-head"><div><h2 class="sidi-timetable-title">🏫 Lycée collégial Sidi Bouafif</h2><p class="sidi-timetable-sub">Emploi du temps — Français · année scolaire 2026/2027</p></div><div class="sidi-hours"><span class="sidi-hour-badge">☀️ 08:00 → 12:00</span><span class="sidi-hour-badge">🌙 14:00 → 18:00</span></div></div>${days.map(d=>`<div class="sidi-day-block"><h3 class="sidi-day-label"><span class="sidi-day-dot"></span>${d}</h3><div class="sidi-scroll"><div class="sidi-grid">${grid(morningByDay[d])}</div></div><div class="sidi-scroll" style="margin-top:10px"><div class="sidi-grid">${grid(afternoonByDay[d])}</div></div></div>`).join('')}<div class="sidi-summary"><span>⏱️ Volume hebdomadaire</span><strong>20 h</strong></div></div>`;
-}
 function renderSchedule(){
- renderSidiTimetable();
  const box=document.getElementById('scheduleTable');if(!box)return;
  const order=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
  const rows=data.schedule.slice().sort((a,b)=>order.indexOf(a.day)-order.indexOf(b.day));
@@ -960,7 +538,6 @@ function renderGradebook(){
 }
 
 function render(){
- updateInstitutionUI();
  document.getElementById('statClasses').textContent=data.classes.length;
  document.getElementById('statEleves').textContent=data.students.length;
  const ct=document.getElementById('classTable');
@@ -970,128 +547,13 @@ function render(){
  renderExercises();
  renderEvaluationSelectors(); renderStatistics(); renderProfileSelectors(); renderDashboardSummary(); renderCourses(); renderSchedule();
  renderGradesPage();
- renderBehavior();
  renderStudents();
 }
-
-
-function bindInstitutionSelector(){
- const sel=document.getElementById('institutionSelect');
- if(sel && !sel.dataset.bound){
-   sel.dataset.bound='1';
-   sel.addEventListener('change',function(e){ e.stopPropagation(); switchInstitution(this.value); },{passive:false});
- }
- updateInstitutionUI();
-}
-
-function behaviorDefault(b){
- return {absences:Number(b?.absences)||0,retards:Number(b?.retards)||0,participation:Number(b?.participation)||0,homework:Number(b?.homework)||0,comportement:b?.comportement||'Bien',effort:b?.effort||'Bon',observation:b?.observation||''};
-}
-function todayISO(){
- const d=new Date(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0'); return `${d.getFullYear()}-${m}-${day}`;
-}
-function renderBehavior(){
- const box=document.getElementById('behaviorTable'); if(!box)return;
- const sel=document.getElementById('behaviorClassFilter');
- const dateInput=document.getElementById('behaviorDateFilter');
- if(dateInput && !dateInput.value) dateInput.value=todayISO();
- const date=dateInput?.value||todayISO();
- const classes=(data.classes||[]).map(c=>c.name).filter(Boolean);
- const names=[...new Set(classes)];
- const old=sel?.value||'';
- if(sel){
-   sel.innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
-   if(names.includes(old)) sel.value=old; else if(names[0]) sel.value=names[0];
- }
- const chosen=sel?.value||'';
- const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!chosen||classKey(s.className||'')===classKey(chosen));
- if(!rows.length){
-   box.innerHTML='<tr><td colspan="8" class="empty">Aucun élève dans cette classe.</td></tr>'; return;
- }
- box.innerHTML=rows.map(({s,i})=>{
-   s.behavior=s.behavior||behaviorDefault();
-   s.behavior.history=s.behavior.history||{};
-   const b=s.behavior;
-   const d=Object.prototype.hasOwnProperty.call(b.history,date) ? {...behaviorDefault(),...b.history[date]} : behaviorDefault(b);
-   return `<tr>
-     <td class="behavior-name">${esc(s.last)} ${esc(s.first)}</td>
-     <td><input type="number" min="0" value="${Number(d.absences)||0}" onchange="updateBehaviorDaily(${i},'absences',this.value)"></td>
-     <td><input type="number" min="0" value="${Number(d.retards)||0}" onchange="updateBehaviorDaily(${i},'retards',this.value)"></td>
-     <td><select onchange="updateBehaviorDaily(${i},'participation',this.value)">
-       ${[0,1,2,3,4,5].map(v=>`<option value="${v}" ${Number(d.participation)==v?'selected':''}>${v}/5</option>`).join('')}
-     </select></td>
-     <td><input type="number" min="0" value="${Number(d.homework)||0}" onchange="updateBehaviorDaily(${i},'homework',this.value)"></td>
-     <td><select onchange="updateBehaviorDaily(${i},'comportement',this.value)">
-       ${['Très bien','Bien','Moyen','À améliorer'].map(v=>`<option ${d.comportement===v?'selected':''}>${v}</option>`).join('')}
-     </select></td>
-     <td><select onchange="updateBehaviorDaily(${i},'effort',this.value)">
-       ${['Excellent','Bon','Moyen','À améliorer'].map(v=>`<option ${d.effort===v?'selected':''}>${v}</option>`).join('')}
-     </select></td>
-     <td><input class="behavior-note" value="${esc(d.observation||'')}" onchange="updateBehaviorDaily(${i},'observation',this.value)" placeholder="Observation..."></td>
-   </tr>`;
- }).join('');
-}
-function updateBehaviorDaily(i,field,value){
- if(!data.students[i])return;
- const date=document.getElementById('behaviorDateFilter')?.value||todayISO();
- data.students[i].behavior=data.students[i].behavior||behaviorDefault();
- data.students[i].behavior.history=data.students[i].behavior.history||{};
- const current=Object.prototype.hasOwnProperty.call(data.students[i].behavior.history,date) ? {...behaviorDefault(),...data.students[i].behavior.history[date]} : behaviorDefault(data.students[i].behavior);
- if(['absences','retards','participation','homework'].includes(field)) value=Math.max(0,Number(value)||0);
- current[field]=value;
- data.students[i].behavior.history[date]=current;
- persistWorkspaces();
- renderBehavior();
-}
-function updateBehavior(i,field,value){
- // Keep compatibility with older data/actions; new entries are saved by date.
- updateBehaviorDaily(i,field,value);
-}
-
 function renderStudents(){
  const st=document.getElementById('studentTable'); if(!st)return;
- const sel=document.getElementById('studentClassFilter');
  const q=(document.getElementById('studentSearch')?.value||'').trim().toLowerCase();
-
- // Build the class list once, preserving the existing class order.
- const classes=(data.classes||[]).map(c=>c.name).filter(Boolean);
- const names=[...new Set(classes)];
- const current=sel?.value || names[0] || '';
-
- if(sel){
-   const old=sel.value;
-   sel.innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
-   if(names.includes(old)) sel.value=old;
-   else if(current) sel.value=current;
- }
-
- const chosen=sel?.value || '';
- const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>{
-   const same=!chosen || classKey(s.className||'')===classKey(chosen);
-   const match=!q || `${s.last} ${s.first}`.toLowerCase().includes(q);
-   return same && match;
- });
-
- if(!rows.length){
-   st.innerHTML='<tr><td colspan="4" class="empty">Aucun élève dans cette classe.</td></tr>';
-   return;
- }
-
- st.innerHTML=`
-   <tr class="class-group-title">
-     <td colspan="4"><strong>📚 ${esc(chosen)}</strong><span style="float:right">${rows.length} élève(s)</span></td>
-   </tr>
-   ${rows.map(({s,i})=>`
-     <tr>
-       <td>${esc(s.last)}</td>
-       <td>${esc(s.first)}</td>
-       <td>${esc(s.className)}</td>
-       <td>
-         <button class="btn cancel" onclick="editStudent(${i})">✏️</button>
-         <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button>
-       </td>
-     </tr>`).join('')}
- `;
+ const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!q||`${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q));
+ st.innerHTML=rows.length?rows.map(({s,i})=>`<tr><td>${esc(s.last)}</td><td>${esc(s.first)}</td><td>${esc(s.className)}</td><td><button class="btn cancel" onclick="editStudent(${i})">✏️</button> <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
 }
 function editClass(i){
  const c=data.classes[i]; if(!c)return;
@@ -1133,7 +595,7 @@ function restoreData(event){
    if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw new Error();
    if(!confirm('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.'))return;
    data={classes:x.classes||[],students:x.students||[],exercises:x.exercises||[],grades:x.grades||[],courses:x.courses||[],schedule:x.schedule||[]};
-   persistWorkspaces(); render(); alert('Sauvegarde restaurée avec succès.');
+   localStorage.setItem(key,JSON.stringify(data)); render(); alert('Sauvegarde restaurée avec succès.');
  }catch(e){alert('Fichier de sauvegarde invalide.');}}; r.readAsText(f,'UTF-8'); event.target.value='';
 }
 function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
@@ -1248,8 +710,7 @@ function importStudentsFile(){
 }
 function importCSV(){importStudentsFile();}
 
-function showPage(id,btn){
- if(id==='suivi') renderBehavior();document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 function openModal(id){document.getElementById(id).classList.add('show')}
 function closeModal(id){document.getElementById(id).classList.remove('show')}
 function addClass(){let n=document.getElementById('className').value.trim(),l=document.getElementById('classLevel').value.trim();if(!n)return alert('Veuillez saisir le nom de la classe.');data.classes.push({name:n,level:l||'—'});save();closeModal('classModal');document.getElementById('className').value='';document.getElementById('classLevel').value=''}
@@ -1262,436 +723,5 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
 </script>
-
-<script>
-(function(){
-  function placeMobileNav(){
-    if (window.innerWidth <= 800) {
-      var app=document.querySelector('.app');
-      var side=app && app.querySelector('.sidebar');
-      var main=app && app.querySelector('.main');
-      if(app && side && main && app.lastElementChild !== side){
-        app.appendChild(side);
-      }
-    }
-  }
-  window.addEventListener('load', placeMobileNav);
-  window.addEventListener('resize', placeMobileNav);
-})();
-</script>
-
-<style id="v42-mobile-menu-drawer">
-/* V42: mobile — menu opens/closes; content becomes full width */
-.mobile-menu-toggle{display:none}
-@media (max-width:800px){
-  .mobile-menu-toggle{
-    display:flex !important; position:fixed !important; left:12px !important; top:12px !important;
-    width:48px !important; height:48px !important; border:0 !important; border-radius:15px !important;
-    align-items:center !important; justify-content:center !important;
-    background:linear-gradient(135deg,#4f46e5,#2563eb) !important; color:#fff !important;
-    box-shadow:0 8px 24px rgba(37,99,235,.30) !important; z-index:10002 !important;
-    font-size:24px !important; cursor:pointer !important;
-  }
-  .app.mobile-menu-closed .sidebar{display:none !important}
-  .app.mobile-menu-closed .main{
-    margin-left:0 !important; width:100% !important; max-width:none !important;
-    padding:18px 14px 28px !important; box-sizing:border-box !important;
-  }
-  .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important}
-  .app:not(.mobile-menu-closed) .mobile-menu-toggle{display:none !important}
-  .app.mobile-menu-closed .page{max-width:none !important}
-}
-@media (min-width:801px){.mobile-menu-toggle{display:none !important}}
-</style>
-<script id="v42-mobile-menu-script">
-(function(){
-  function appEl(){return document.querySelector('.app');}
-  window.toggleMobileMenu=function(){
-    var app=appEl(); if(!app) return;
-    app.classList.toggle('mobile-menu-closed');
-    var b=document.querySelector('.mobile-menu-toggle');
-    if(b) b.setAttribute('aria-label', app.classList.contains('mobile-menu-closed') ? 'Ouvrir le menu' : 'Fermer le menu');
-  };
-  window.closeMobileMenu=function(){
-    if(window.innerWidth<=800){
-      var app=appEl(); if(app) app.classList.add('mobile-menu-closed');
-    }
-  };
-  var oldShow=window.showPage;
-  window.showPage=function(id,btn){
-    oldShow(id,btn);
-    closeMobileMenu();
-  };
-  function setup(){
-    var app=appEl(); if(!app) return;
-    if(!document.querySelector('.mobile-menu-toggle')){
-      var b=document.createElement('button');
-      b.className='mobile-menu-toggle'; b.type='button'; b.textContent='☰';
-      b.setAttribute('aria-label','Ouvrir le menu'); b.title='Menu';
-      b.onclick=toggleMobileMenu; document.body.appendChild(b);
-    }
-    if(window.innerWidth>800) app.classList.remove('mobile-menu-closed');
-  }
-  window.addEventListener('load',setup);
-  window.addEventListener('resize',function(){
-    var app=appEl(); if(!app) return;
-    if(window.innerWidth>800) app.classList.remove('mobile-menu-closed');
-  });
-})();
-</script>
-
-<style id="v43-premium-ui">
-/* V43 — premium professional UI: visual layer only */
-:root{
-  --bg:#f4f7fb;--surface:#fff;--surface2:#f8faff;--ink:#17233b;--muted:#738099;
-  --line:#e4e9f2;--primary:#4f46e5;--primary2:#2563eb;--navy:#101a35;
-}
-html{scroll-behavior:smooth}
-body{background:radial-gradient(circle at 8% 0%,rgba(99,102,241,.10),transparent 26%),radial-gradient(circle at 100% 8%,rgba(14,165,233,.09),transparent 25%),var(--bg);color:var(--ink)}
-button,input,select,textarea{font:inherit}
-.sidebar{background:linear-gradient(180deg,#0d1730 0%,#15264d 55%,#1b3b7a 100%)!important;border-right:1px solid rgba(255,255,255,.12)!important;box-shadow:16px 0 42px rgba(15,23,42,.16)!important}
-.brand{padding:8px 10px 20px!important;margin-bottom:12px!important}
-.brand-mark{width:48px!important;height:48px!important;border-radius:16px!important;background:linear-gradient(135deg,#7c3aed,#2563eb)!important;box-shadow:0 12px 30px rgba(79,70,229,.35)!important;font-size:17px!important}
-.brand-text b{font-size:20px!important}.brand-text span{letter-spacing:1px!important;color:#aebce0!important}
-.nav{gap:8px!important}
-.nav button{position:relative!important;min-height:50px!important;border:1px solid rgba(255,255,255,.08)!important;border-radius:15px!important;background:rgba(255,255,255,.055)!important;color:#e9efff!important;padding:12px 14px!important;font-weight:750!important;transition:transform .18s ease,background .18s ease,box-shadow .18s ease,border-color .18s ease!important}
-.nav button:hover{background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.16)!important;transform:translateX(3px)!important}
-.nav button.active{background:linear-gradient(135deg,#5b5cf0,#2563eb)!important;border-color:rgba(255,255,255,.25)!important;box-shadow:0 10px 24px rgba(37,99,235,.30),inset 3px 0 0 rgba(255,255,255,.8)!important}
-.main{padding:26px 30px 44px!important}
-.institution-bar{border-radius:22px!important;padding:17px 20px!important;background:rgba(255,255,255,.86)!important;box-shadow:0 12px 34px rgba(31,41,55,.07)!important}
-.institution-bar select{min-height:48px!important;padding:0 14px!important;font-weight:750!important}
-.card{border-radius:22px!important;box-shadow:0 12px 34px rgba(30,41,59,.065)!important}
-.top{margin-bottom:22px!important}.top h1{font-size:30px!important;letter-spacing:-.8px!important}
-.btn{min-height:44px!important;border-radius:13px!important;background:linear-gradient(135deg,#5b55ea,#2563eb)!important;box-shadow:0 9px 20px rgba(37,99,235,.20)!important}
-.btn:hover{transform:translateY(-2px)!important}
-.field label{color:#34415a!important;font-size:12px!important;letter-spacing:.2px}
-.field input,.field select,input,select,textarea{min-height:46px!important;border:1px solid #dce3ef!important;box-shadow:0 2px 7px rgba(15,23,42,.025)!important}
-.field input:focus,.field select:focus,input:focus,select:focus,textarea:focus{outline:none!important;border-color:#7c83ff!important;box-shadow:0 0 0 4px rgba(99,102,241,.12)!important}
-.table{box-shadow:0 10px 30px rgba(30,41,59,.05)!important}.table th{font-weight:800!important;color:#5d6b82!important}.table td{color:#26344e!important}
-.modal{backdrop-filter:blur(5px)!important}.modalbox{border:1px solid #e5e9f2!important}
-/* Mobile drawer: elegant overlay, full-width content underneath */
-@media(max-width:800px){
-  .main{width:100%!important;margin:0!important;padding:14px 14px 34px!important;min-height:100vh!important}
-  .sidebar{left:0!important;right:auto!important;width:min(292px,86vw)!important;height:100vh!important;transform:translateX(0)!important;transition:transform .24s ease!important;box-shadow:18px 0 50px rgba(15,23,42,.28)!important}
-  .app.mobile-menu-closed .sidebar{display:block!important;transform:translateX(-105%)!important;visibility:hidden!important}
-  .app:not(.mobile-menu-closed) .sidebar{visibility:visible!important}
-  .mobile-menu-toggle{left:14px!important;top:14px!important;width:48px!important;height:48px!important;border-radius:16px!important;background:linear-gradient(135deg,#5b55ea,#2563eb)!important;box-shadow:0 12px 28px rgba(37,99,235,.30)!important}
-  .mobile-menu-backdrop{display:block;position:fixed;inset:0;background:rgba(7,15,35,.12);backdrop-filter:none;z-index:9998;opacity:1;transition:opacity .2s ease}
-  .app.mobile-menu-closed .mobile-menu-backdrop{display:none}
-  .brand{padding:8px 10px 20px!important}.brand-text{display:block!important}.brand-mark{width:46px!important;height:46px!important}
-  .nav button{font-size:13px!important;min-height:54px!important;justify-content:flex-start!important;text-align:left!important}
-  .hero-dashboard{border-radius:24px!important;padding:24px 20px!important}.hero-copy h1{font-size:28px!important}
-  .dashboard-stats{grid-template-columns:1fr 1fr!important}.dashboard-grid{grid-template-columns:1fr!important}
-  .top h1{font-size:25px!important}.top{gap:10px!important}
-}
-@media(max-width:480px){
-  .main{padding:12px 10px 30px!important}.dashboard-stats{grid-template-columns:1fr 1fr!important}.stat-card{border-radius:17px!important}
-  .institution-bar{padding:15px!important}.institution-bar .field{min-width:100%!important}
-}
-</style>
-
-<style id="v44-mobile-professional-final">
-/* V44 — clean professional drawer: content stays sharp and readable */
-@media (max-width:800px){
-  .mobile-menu-backdrop{
-    background:rgba(15,23,42,.10) !important;
-    backdrop-filter:none !important;
-    -webkit-backdrop-filter:none !important;
-  }
-  .app:not(.mobile-menu-closed) .main{
-    filter:none !important;
-    opacity:1 !important;
-  }
-  .app:not(.mobile-menu-closed) .page,
-  .app:not(.mobile-menu-closed) .main *{
-    filter:none !important;
-  }
-  .sidebar{
-    width:min(300px,82vw) !important;
-    border-right:1px solid rgba(255,255,255,.14) !important;
-    box-shadow:18px 0 48px rgba(15,23,42,.32) !important;
-  }
-  .mobile-menu-toggle{
-    z-index:10001 !important;
-  }
-}
-</style>
-<style id="v45-compact-menu">
-/* V45 — compact professional mobile menu */
-@media (max-width:800px){
-  .sidebar{
-    width:230px !important;
-    max-width:78vw !important;
-    padding:14px 10px 18px !important;
-  }
-  .brand{padding:6px 8px 16px !important;}
-  .nav{gap:7px !important;}
-  .nav button{
-    min-height:48px !important;
-    padding:9px 11px !important;
-    border-radius:13px !important;
-    font-size:12.5px !important;
-  }
-  .mobile-menu-toggle{
-    width:50px !important;
-    height:50px !important;
-    border-radius:15px !important;
-    background:#ffffff !important;
-    color:#17233b !important;
-    border:1px solid #e3e8f2 !important;
-    box-shadow:0 10px 24px rgba(15,23,42,.18) !important;
-    font-size:0 !important;
-  }
-  .mobile-menu-toggle::before{
-    content:'☰';
-    font-size:28px !important;
-    line-height:1 !important;
-    color:#2563eb !important;
-    font-weight:800 !important;
-  }
-}
-</style>
-
-<script id="v43-mobile-drawer">
-(function(){
-  function appEl(){return document.querySelector('.app');}
-  function setupDrawer(){
-    var app=appEl(); if(!app) return;
-    if(!document.querySelector('.mobile-menu-backdrop')){
-      var bd=document.createElement('div'); bd.className='mobile-menu-backdrop'; bd.onclick=function(){window.closeMobileMenu&&window.closeMobileMenu();}; document.body.appendChild(bd);
-    }
-  }
-  window.addEventListener('load',setupDrawer);
-  window.addEventListener('resize',setupDrawer);
-})();
-
-try{bindInstitutionSelector();}catch(e){}
-try{updateInstitutionUI();}catch(e){}
-</script>
-
-
-<style id="v49-interaction-fix">
-/* V49 — interaction fix: modal and controls must stay clickable above the mobile backdrop */
-.modal{z-index:10050 !important;pointer-events:auto !important;}
-.modal.show{display:flex !important;}
-.modalbox{position:relative;z-index:10051 !important;pointer-events:auto !important;}
-.modalbox input,.modalbox select,.modalbox textarea,.modalbox button{pointer-events:auto !important;}
-.institution-bar{position:relative;z-index:10010 !important;}
-.institution-picker,.institution-picker select,.institution-choice{position:relative;z-index:10011 !important;pointer-events:auto !important;}
-@media(max-width:800px){
-  .mobile-menu-backdrop{z-index:9998 !important;}
-  .mobile-menu-toggle{z-index:10020 !important;}
-}
-</style>
-<script id="v49-interaction-fix-script">
-(function(){
-  function bind(){
-    var sel=document.getElementById('institutionSelect');
-    if(sel){ sel.onchange=function(){ return window.switchInstitution ? window.switchInstitution(this.value) : false; }; }
-    var addClassBtn=document.querySelector('#classes .top .btn');
-    if(addClassBtn){ addClassBtn.type='button'; addClassBtn.onclick=function(){ if(window.openModal) window.openModal('classModal'); }; }
-    var addStudentBtn=document.querySelector('#eleves .top .btn');
-    if(addStudentBtn){ addStudentBtn.type='button'; addStudentBtn.onclick=function(){ if(window.openModal) window.openModal('studentModal'); }; }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
-  window.addEventListener('load',bind);
-})();
-</script>
-
-
-<style id="v50-file-picker">
-.file-picker-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0;padding:10px;border:1px solid #dbe3f0;border-radius:16px;background:#f8fafc;position:relative;z-index:10020!important}
-.file-picker-box input[type=file]{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
-.file-picker-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:14px;background:linear-gradient(135deg,#4055c7,#2563eb);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(37,99,235,.22);position:relative;z-index:10021!important}
-.file-picker-button:active{transform:scale(.98)}
-.file-picker-name{font-size:14px;color:#64748b;font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media(max-width:480px){.file-picker-box{align-items:stretch;flex-direction:column}.file-picker-button{width:100%;box-sizing:border-box}.file-picker-name{text-align:center;padding:4px 2px}}
-</style>
-<script id="v50-file-picker-script">
-function updateChosenFileName(input){
-  var el=document.getElementById('chosenFileName');
-  if(el) el.textContent=input && input.files && input.files[0] ? input.files[0].name : 'Aucun fichier choisi';
-}
-</script>
-
-
-<style id="v51-robust-controls">
-@media(max-width:800px){
-  .institution-bar,.institution-quick,.institution-choice,.institution-picker{pointer-events:auto!important;touch-action:manipulation!important;}
-  .mobile-menu-backdrop{pointer-events:none!important;}
-  .app:not(.mobile-menu-closed) .mobile-menu-backdrop{pointer-events:auto!important;}
-  .mobile-menu-backdrop{display:none!important;}
-  .app:not(.mobile-menu-closed) .mobile-menu-backdrop{display:block!important;}
-}
-</style>
-<script id="v51-robust-controls-script">
-(function(){
-  function bindRobust(){
-    if(typeof renderSidiTimetable==='function') renderSidiTimetable();
-  document.querySelectorAll('.institution-choice').forEach(function(btn){
-      if(btn.dataset.v51Bound)return;
-      btn.dataset.v51Bound='1';
-      btn.addEventListener('click',function(e){
-        e.preventDefault(); e.stopPropagation();
-        var id=btn.getAttribute('data-inst');
-        if(window.switchInstitution) window.switchInstitution(id);
-      },true);
-    });
-    var sel=document.getElementById('institutionSelect');
-    if(sel && !sel.dataset.v51Bound){
-      sel.dataset.v51Bound='1';
-      sel.addEventListener('change',function(e){
-        e.stopPropagation();
-        if(window.switchInstitution) window.switchInstitution(this.value);
-      },true);
-    }
-    var app=document.querySelector('.app');
-    if(app && window.innerWidth<=800 && !app.classList.contains('mobile-menu-closed')) app.classList.add('mobile-menu-closed');
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindRobust);
-  else bindRobust();
-  window.addEventListener('load',bindRobust);
-})();
-</script>
-
-<style id="v52-import-mobile-fix">
-/* V52: when Import Excel is selected on mobile, close the drawer and give the importer full width */
-@media(max-width:800px){
-  .page#import{position:relative!important;z-index:1!important;width:100%!important;box-sizing:border-box!important;}
-  .page#import .file-picker-box{width:100%!important;box-sizing:border-box!important;position:relative!important;z-index:2!important;}
-  .page#import .file-picker-button{position:relative!important;z-index:3!important;touch-action:manipulation!important;}
-  .page#import input[type=file]{pointer-events:auto!important;}
-}
-</style>
-<script id="v52-import-mobile-fix-script">
-(function(){
-  function fixImport(){
-    var b=[].slice.call(document.querySelectorAll('.nav button')).find(function(x){return (x.textContent||'').indexOf('Import Excel')!==-1;});
-    if(b){ b.addEventListener('click', function(){ if(window.closeMobileMenu) window.closeMobileMenu(); }, {passive:true}); }
-  }
-  window.addEventListener('load',fixImport);
-})();
-</script>
-
-<style id="v57-single-hamburger">
-/* V57 — prevent duplicate hamburger icon */
-@media (max-width:800px){
-  .mobile-menu-toggle::before{content:none !important;display:none !important;}
-  .mobile-menu-toggle{font-size:32px !important;color:#fff !important;}
-}
-</style>
 </body>
 </html>
-<style id="v47-mobile-topbar">
-/* V47 — mobile header inspired by a professional Android app bar */
-@media(max-width:800px){
-  body{padding-top:64px !important;}
-  .mobile-menu-toggle{
-    display:flex !important;
-    position:fixed !important;
-    left:0 !important;
-    top:0 !important;
-    width:64px !important;
-    height:64px !important;
-    margin:0 !important;
-    border:0 !important;
-    border-radius:0 !important;
-    background:transparent !important;
-    color:#fff !important;
-    box-shadow:none !important;
-    z-index:10003 !important;
-    align-items:center !important;
-    justify-content:center !important;
-    font-size:0 !important;
-  }
-  .mobile-menu-toggle::before{
-    content:'☰' !important;
-    font-family:Arial,sans-serif !important;
-    font-size:32px !important;
-    line-height:1 !important;
-    color:#fff !important;
-    font-weight:400 !important;
-  }
-  body::before{
-    content:'EduProf' !important;
-    position:fixed !important;
-    left:64px !important;
-    right:0 !important;
-    top:0 !important;
-    height:64px !important;
-    padding:0 18px !important;
-    display:flex !important;
-    align-items:center !important;
-    box-sizing:border-box !important;
-    background:linear-gradient(135deg,#4055c7,#5368dc) !important;
-    color:#fff !important;
-    font-size:21px !important;
-    font-weight:800 !important;
-    letter-spacing:.1px !important;
-    z-index:10001 !important;
-    box-shadow:0 3px 14px rgba(15,23,42,.18) !important;
-  }
-  /* extend the bar behind the hamburger */
-  .app::before{
-    content:'' !important;
-    position:fixed !important;
-    left:0 !important;
-    top:0 !important;
-    width:64px !important;
-    height:64px !important;
-    background:linear-gradient(135deg,#4055c7,#5368dc) !important;
-    z-index:10002 !important;
-  }
-  .main{padding-top:14px !important;}
-  .sidebar{z-index:10010 !important;}
-  .mobile-menu-toggle{z-index:10020 !important;}
-}
-@media(min-width:801px){body{padding-top:0 !important;}}
-</style>
-
-<style id="v56-mobile-brand-next-to-menu">
-/* V56 — mobile: hamburger and EduProf branding on the same top row */
-@media (max-width:800px){
-  .mobile-menu-toggle{
-    display:flex !important;
-    position:fixed !important;
-    left:12px !important;
-    top:12px !important;
-    width:48px !important;
-    height:48px !important;
-    z-index:10030 !important;
-    background:transparent !important;
-    color:#fff !important;
-    border:0 !important;
-    border-radius:12px !important;
-    box-shadow:none !important;
-    font-size:32px !important;
-    line-height:1 !important;
-  }
-  .app:not(.mobile-menu-closed) .mobile-menu-toggle{display:flex !important;}
-  .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
-  .sidebar{width:min(292px,86vw)!important;padding:10px 12px 18px!important;}
-  .sidebar .brand{
-    display:flex !important;
-    flex-direction:row !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
-    gap:12px !important;
-    padding:8px 8px 18px 68px !important;
-    margin:0 0 14px !important;
-    border-bottom:1px solid rgba(255,255,255,.12) !important;
-    min-height:64px !important;
-  }
-  .sidebar .brand-mark{
-    width:48px !important;height:48px !important;margin:0 !important;
-    border-radius:15px !important;flex:0 0 48px !important;
-  }
-  .sidebar .brand-text{
-    display:flex !important;flex-direction:column !important;
-    align-items:flex-start !important;text-align:left !important;
-    line-height:1.05 !important;
-  }
-  .sidebar .brand-text b{font-size:20px !important;}
-  .sidebar .brand-text span{font-size:10px !important;margin-top:5px !important;}
-}
-</style>
