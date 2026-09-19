@@ -862,7 +862,8 @@ function importStudentsFile(){
 }
 function importCSV(){importStudentsFile();}
 
-function showPage(id,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function showPage(id,btn){
+ if(id==='suivi') renderBehavior();document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
 function openModal(id){document.getElementById(id).classList.add('show')}
 function closeModal(id){document.getElementById(id).classList.remove('show')}
 function addClass(){let n=document.getElementById('className').value.trim(),l=document.getElementById('classLevel').value.trim();if(!n)return alert('Veuillez saisir le nom de la classe.');data.classes.push({name:n,level:l||'—'});save();closeModal('classModal');document.getElementById('className').value='';document.getElementById('classLevel').value=''}
