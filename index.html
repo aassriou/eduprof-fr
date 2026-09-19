@@ -107,6 +107,29 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 
 </style>
 
+<style id="v40-mobile-layout">
+/* V40 — mobile: right navigation + content always fits its column */
+@media (max-width:800px){
+  html,body{width:100% !important;max-width:100% !important;overflow-x:hidden !important;}
+  .app{display:flex !important;flex-direction:row !important;width:100% !important;min-width:0 !important;}
+  .main{order:1 !important;flex:1 1 auto !important;width:auto !important;min-width:0 !important;max-width:none !important;margin:0 !important;padding:14px 10px 32px !important;box-sizing:border-box !important;overflow-x:hidden !important;}
+  .sidebar{order:2 !important;position:fixed !important;top:0 !important;right:0 !important;bottom:0 !important;width:176px !important;height:100vh !important;box-sizing:border-box !important;z-index:10000 !important;overflow-y:auto !important;overflow-x:hidden !important;}
+  .page{width:100% !important;min-width:0 !important;max-width:100% !important;box-sizing:border-box !important;}
+  .grid,.dashboard-grid,.dashboard-stats{grid-template-columns:1fr !important;width:100% !important;min-width:0 !important;}
+  .card,.section,.institution-bar,.hero-dashboard{width:100% !important;min-width:0 !important;max-width:100% !important;box-sizing:border-box !important;}
+  .top{flex-wrap:wrap !important;width:100% !important;min-width:0 !important;}
+  .top h1{max-width:100% !important;overflow-wrap:anywhere !important;}
+  input,select,textarea,button{max-width:100% !important;box-sizing:border-box !important;}
+  .table-wrap,.table-responsive{width:100% !important;max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;}
+  table{min-width:520px;}
+}
+@media (max-width:480px){
+  .sidebar{width:176px !important;}
+  .main{padding:12px 8px 28px !important;}
+  .nav button{font-size:11px !important;}
+}
+</style>
+
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#16243d">
 <meta name="mobile-web-app-capable" content="yes">
@@ -133,6 +156,18 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .nav button::first-letter{font-size:19px !important;}
   .institution-bar{margin-top:2px !important;}
   .top h1{font-size:27px !important; line-height:1.1 !important;}
+}
+</style>
+
+<style id="v41-mobile-sidebar-left">
+/* V41: mobile sidebar LEFT, content RIGHT */
+@media (max-width:800px){
+  .app{display:block !important; width:100% !important; min-height:100vh !important;}
+  .sidebar{position:fixed !important; left:0 !important; right:auto !important; top:0 !important; bottom:0 !important; width:176px !important; height:100vh !important; box-sizing:border-box !important; z-index:10000 !important; overflow-y:auto !important; overflow-x:hidden !important; padding:14px 10px 18px !important; background:linear-gradient(180deg,#111c3a 0%,#172a56 55%,#203b78 100%) !important; border-right:1px solid rgba(255,255,255,.14) !important; border-left:0 !important; box-shadow:12px 0 30px rgba(12,25,55,.28) !important;}
+  .main{display:block !important; width:calc(100% - 176px) !important; max-width:none !important; min-width:0 !important; margin:0 0 0 176px !important; padding:16px 12px 32px !important; box-sizing:border-box !important; overflow-x:hidden !important;}
+  .sidebar .brand-text{display:block !important;}
+  .sidebar .brand{justify-content:flex-start !important; padding:4px 4px 18px !important;}
+  .sidebar .nav button{font-size:12px !important; width:100% !important; min-height:50px !important; padding:8px 7px !important; display:flex !important; align-items:center !important; justify-content:flex-start !important; gap:7px !important; white-space:normal !important; text-align:left !important;}
 }
 </style>
 </head>
