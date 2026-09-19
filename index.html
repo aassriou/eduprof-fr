@@ -90,6 +90,10 @@
 </aside>
 
 <main class="main">
+<div class="institution-bar card" style="margin-bottom:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
+  <div><div class="muted">🏫 Institution active</div><strong id="activeInstitutionName">Institut Manarat Rif</strong></div>
+  <div class="field" style="margin:0;min-width:260px"><select id="institutionSelect" onchange="switchInstitution(this.value)" style="width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;font-weight:700"><option value="manarat">Institut Manarat Rif</option><option value="sidi">Lycée collégial Sidi bouafif</option></select></div>
+</div>
 <section id="dashboard" class="page active">
   <div class="top"><div><h1>Bonjour, Professeur 👋</h1><p class="muted">Votre espace de gestion pédagogique.</p></div></div>
   <div class="grid">
@@ -161,7 +165,7 @@
 </section>
 
 <section id="cours" class="page">
-<div class="top"><h1>📚 Cours & fiches pédagogiques</h1><div><a class="btn" href="https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK" target="_blank" rel="noopener">🌐 Mes cours OneDrive</a> <button class="btn" onclick="openModal('courseModal')">+ Nouveau cours</button></div></div>
+<div class="top"><h1>📚 Cours & fiches pédagogiques</h1><div><a class="btn" href="https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK" target="_blank" rel="noopener">🌐 Mes cours Google Drive</a> <button class="btn" onclick="openModal('courseModal')">+ Nouveau cours</button></div></div>
 <div class="card" style="margin-bottom:16px"><h3>🌐 Bibliothèque de mes cours</h3><p class="muted">افتح مكتبة الدروس الخاصة بك على OneDrive لتحميل الدروس والوثائق.</p><a class="btn" href="https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK" target="_blank" rel="noopener">📥 فتح مكتبة الدروس</a></div>
 <div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr)"></div>
 </section>
@@ -327,11 +331,37 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const key='eduprof_fr_data';
-let data=JSON.parse(localStorage.getItem(key)||'{"classes":[],"students":[],"exercises":[],"grades":[],"courses":[],"schedule":[]}'); data.exercises=data.exercises||[]; data.courses=data.courses||[]; data.schedule=data.schedule||[]; data.exercises=data.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'};}); data.grades=(data.grades||[]).map(g=>({...g,coef:Number(g.coef)||1}));
-data.students=(data.students||[]).map(s=>({...s,behavior:{absences:Number(s.behavior?.absences)||0,retards:Number(s.behavior?.retards)||0,participation:Number(s.behavior?.participation)||0,homework:Number(s.behavior?.homework)||0,comportement:s.behavior?.comportement||'Bien',effort:s.behavior?.effort||'Bon',observation:s.behavior?.observation||'',history:s.behavior?.history||{}}}));
-function save(){localStorage.setItem(key,JSON.stringify(data));render()}
-
-
+const workspaceKey='eduprof_fr_workspaces_v1';
+const EMPTY_DATA={classes:[],students:[],exercises:[],grades:[],courses:[],schedule:[]};
+const INSTITUTIONS={manarat:'Institut Manarat Rif',sidi:'Lycée collégial Sidi bouafif'};
+let currentInstitution=localStorage.getItem(workspaceKey+'_active')||'manarat';
+let workspaces=null;
+try{workspaces=JSON.parse(localStorage.getItem(workspaceKey)||'null')}catch(e){workspaces=null}
+if(!workspaces||!workspaces.institutions){
+  let legacy=null;
+  try{legacy=JSON.parse(localStorage.getItem(key)||'null')}catch(e){legacy=null}
+  workspaces={institutions:{manarat:legacy&&Array.isArray(legacy.students)?legacy:JSON.parse(JSON.stringify(EMPTY_DATA)),sidi:JSON.parse(JSON.stringify(EMPTY_DATA))}};
+  localStorage.setItem(workspaceKey,JSON.stringify(workspaces));
+}
+workspaces.institutions=workspaces.institutions||{};
+for(const id of Object.keys(INSTITUTIONS)){workspaces.institutions[id]=workspaces.institutions[id]||JSON.parse(JSON.stringify(EMPTY_DATA));}
+if(!INSTITUTIONS[currentInstitution])currentInstitution='manarat';
+function normalizeData(d){
+ d=d||JSON.parse(JSON.stringify(EMPTY_DATA)); d.classes=d.classes||[]; d.students=d.students||[]; d.exercises=d.exercises||[]; d.grades=d.grades||[]; d.courses=d.courses||[]; d.schedule=d.schedule||[];
+ d.exercises=d.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'}});
+ d.grades=d.grades.map(g=>({...g,coef:Number(g.coef)||1}));
+ d.students=d.students.map(s=>({...s,behavior:{absences:Number(s.behavior?.absences)||0,retards:Number(s.behavior?.retards)||0,participation:Number(s.behavior?.participation)||0,homework:Number(s.behavior?.homework)||0,comportement:s.behavior?.comportement||'Bien',effort:s.behavior?.effort||'Bon',observation:s.behavior?.observation||'',history:s.behavior?.history||{}}}));
+ return d;
+}
+let data=normalizeData(workspaces.institutions[currentInstitution]);
+workspaces.institutions[currentInstitution]=data;
+function persistWorkspaces(){workspaces.institutions[currentInstitution]=data;localStorage.setItem(workspaceKey,JSON.stringify(workspaces));localStorage.setItem(workspaceKey+'_active',currentInstitution);}
+function save(){persistWorkspaces();render()}
+function switchInstitution(id){
+ if(!INSTITUTIONS[id]||id===currentInstitution)return;
+ persistWorkspaces(); currentInstitution=id; data=normalizeData(workspaces.institutions[id]); workspaces.institutions[id]=data; persistWorkspaces(); render();
+}
+function updateInstitutionUI(){const sel=document.getElementById('institutionSelect');if(sel)sel.value=currentInstitution;const name=document.getElementById('activeInstitutionName');if(name)name.textContent=INSTITUTIONS[currentInstitution];}
 function renderEvaluationSelectors(){
  const s=document.getElementById('evalStudent'),e=document.getElementById('evalExercise'); if(!s||!e)return;
  s.innerHTML=data.students.length?data.students.map((x,i)=>`<option value="${i}">${esc(x.last)} ${esc(x.first)} — ${esc(x.className)}</option>`).join(''):'<option value="">Aucun élève</option>';
@@ -430,6 +460,7 @@ function renderDashboardSummary(){
 }
 
 function renderCourses(){
+ const cin=document.getElementById('courseInstitutionName'); if(cin)cin.textContent=INSTITUTIONS[currentInstitution];
  const box=document.getElementById('courseList');if(!box)return;
  box.innerHTML=data.courses.length?data.courses.map(c=>`<div class="card"><h3>${esc(c.title)}</h3><p class="muted">${esc(c.className)} · ${esc(c.skill)}</p><b>Objectif :</b> ${esc(c.objective)}<p class="muted">${esc(c.content)}</p></div>`).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun cours enregistré.</div>';
 }
@@ -615,6 +646,7 @@ function renderGradebook(){
 }
 
 function render(){
+ updateInstitutionUI();
  document.getElementById('statClasses').textContent=data.classes.length;
  document.getElementById('statEleves').textContent=data.students.length;
  const ct=document.getElementById('classTable');
@@ -684,7 +716,7 @@ function updateBehaviorDaily(i,field,value){
  if(['absences','retards','participation','homework'].includes(field)) value=Math.max(0,Number(value)||0);
  current[field]=value;
  data.students[i].behavior.history[date]=current;
- localStorage.setItem(key,JSON.stringify(data));
+ persistWorkspaces();
  renderBehavior();
 }
 function updateBehavior(i,field,value){
@@ -777,7 +809,7 @@ function restoreData(event){
    if(!x||!Array.isArray(x.classes)||!Array.isArray(x.students))throw new Error();
    if(!confirm('Restaurer cette sauvegarde ? Les données actuelles seront remplacées.'))return;
    data={classes:x.classes||[],students:x.students||[],exercises:x.exercises||[],grades:x.grades||[],courses:x.courses||[],schedule:x.schedule||[]};
-   localStorage.setItem(key,JSON.stringify(data)); render(); alert('Sauvegarde restaurée avec succès.');
+   persistWorkspaces(); render(); alert('Sauvegarde restaurée avec succès.');
  }catch(e){alert('Fichier de sauvegarde invalide.');}}; r.readAsText(f,'UTF-8'); event.target.value='';
 }
 function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
