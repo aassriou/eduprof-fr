@@ -148,15 +148,21 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .fiches-viewer-card{margin-top:18px;padding:18px;border-radius:26px;background:#fff;border:1px solid #e4e9f4;box-shadow:0 12px 34px rgba(24,40,90,.08)}
 .fiches-viewer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 .fiches-viewer-head h2{margin:0;color:#15213d}
-.fiches-viewer{height:calc(100vh - 300px);min-height:620px;border-radius:20px;overflow:hidden;background:#eef2f7;border:1px solid #dfe5ef}
-.fiches-viewer iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.fiches-viewer{height:calc(100vh - 300px);min-height:620px;border-radius:20px;overflow:auto;background:#eef2f7;border:1px solid #dfe5ef;padding:14px;box-sizing:border-box}
+.fiches-pdf-toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px;margin:-2px -2px 12px;background:rgba(238,242,247,.96);backdrop-filter:blur(8px);border-radius:14px}
+.fiches-pdf-toolbar button,.fiches-pdf-toolbar input{min-height:40px;border:1px solid #d7deeb;border-radius:10px;background:#fff;padding:7px 11px;font-weight:800;color:#15213d}
+.fiches-pdf-toolbar input{width:64px;text-align:center}
+.fiches-pdf-stage{display:flex;justify-content:center;align-items:flex-start;min-height:100%;padding:6px}
+#fichesPdfCanvas{background:#fff;box-shadow:0 8px 28px rgba(20,35,70,.18);max-width:100%;height:auto}
+.fiches-pdf-status{text-align:center;color:#64748b;font-weight:700;font-size:13px;padding:8px}
+
 #fichesNav{display:none}
 @media(max-width:800px){
   .fiches-hero{padding:17px;gap:14px;border-radius:21px}
   .fiches-icon{flex-basis:58px;width:58px;height:58px;border-radius:18px;font-size:29px}
   .fiches-hero h2{font-size:20px}
   .fiches-viewer-card{padding:12px;border-radius:21px}
-  .fiches-viewer{height:calc(100vh - 265px);min-height:520px;border-radius:16px}
+  .fiches-viewer{height:calc(100vh - 265px);min-height:520px;border-radius:16px;padding:8px}.fiches-pdf-toolbar{gap:5px;padding:8px}.fiches-pdf-toolbar button,.fiches-pdf-toolbar input{min-height:38px;padding:6px 8px}.fiches-pdf-stage{padding:4px}
 }
 
 </style>
@@ -291,6 +297,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 }
 </style>
 <meta name="eduprof-version" content="V61">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -533,7 +540,17 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
       </div>
     </div>
     <div class="fiches-viewer">
-      <iframe id="fichesPdfViewer" title="Fiches pédagogiques Parcours 1ASC" loading="lazy"></iframe>
+      <div class="fiches-pdf-toolbar">
+        <button type="button" onclick="fichesPrevPage()">◀</button>
+        <input id="fichesPageInput" type="number" min="1" value="1" onchange="fichesGoToPage(this.value)">
+        <span>/ <b id="fichesPageCount">130</b></span>
+        <button type="button" onclick="fichesNextPage()">▶</button>
+        <button type="button" onclick="fichesZoomOut()">−</button>
+        <span id="fichesZoomLabel">100%</span>
+        <button type="button" onclick="fichesZoomIn()">+</button>
+      </div>
+      <div id="fichesPdfStatus" class="fiches-pdf-status">⏳ Chargement du document…</div>
+      <div class="fiches-pdf-stage"><canvas id="fichesPdfCanvas"></canvas></div>
     </div>
   </div>
 </section>
@@ -808,10 +825,45 @@ function openFichesPDF(){
     }
   }catch(e){ window.open(url,'_blank'); }
 }
-function initFichesViewer(){
-  const frame=document.getElementById('fichesPdfViewer');
-  if(frame) frame.src=getFichesPdfUrl();
+let fichesPdfDoc=null, fichesPage=1, fichesScale=1.0, fichesRendering=false, fichesPending=null;
+function fichesSetStatus(msg){ const el=document.getElementById('fichesPdfStatus'); if(el) el.textContent=msg; }
+async function initFichesViewer(){
+  const canvas=document.getElementById('fichesPdfCanvas');
+  if(!canvas || typeof pdfjsLib==='undefined'){ fichesSetStatus('Lecteur PDF indisponible.'); return; }
+  try{
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    fichesSetStatus('⏳ Chargement des fiches…');
+    fichesPdfDoc=await pdfjsLib.getDocument({url:getFichesPdfUrl(),withCredentials:false}).promise;
+    const count=document.getElementById('fichesPageCount'); if(count) count.textContent=fichesPdfDoc.numPages;
+    const input=document.getElementById('fichesPageInput'); if(input) input.max=fichesPdfDoc.numPages;
+    await fichesRenderPage(1);
+  }catch(e){ console.error(e); fichesSetStatus('❌ Impossible de lire le PDF. Vérifiez que le fichier est bien publié sur GitHub Pages.'); }
 }
+async function fichesRenderPage(num){
+  if(!fichesPdfDoc)return;
+  num=Math.max(1,Math.min(fichesPdfDoc.numPages,Number(num)||1));
+  fichesPage=num;
+  const input=document.getElementById('fichesPageInput'); if(input) input.value=num;
+  if(fichesRendering){ fichesPending=num; return; }
+  fichesRendering=true;
+  try{
+    const page=await fichesPdfDoc.getPage(num);
+    const viewport=page.getViewport({scale:fichesScale});
+    const canvas=document.getElementById('fichesPdfCanvas'); const ctx=canvas.getContext('2d');
+    canvas.width=Math.ceil(viewport.width); canvas.height=Math.ceil(viewport.height);
+    await page.render({canvasContext:ctx,viewport}).promise;
+    const z=document.getElementById('fichesZoomLabel'); if(z) z.textContent=Math.round(fichesScale*100)+'%';
+    fichesSetStatus('Page '+num+' / '+fichesPdfDoc.numPages);
+  }finally{
+    fichesRendering=false;
+    if(fichesPending!==null){ const p=fichesPending; fichesPending=null; fichesRenderPage(p); }
+  }
+}
+function fichesPrevPage(){fichesRenderPage(fichesPage-1)}
+function fichesNextPage(){fichesRenderPage(fichesPage+1)}
+function fichesGoToPage(v){fichesRenderPage(v)}
+function fichesZoomIn(){fichesScale=Math.min(2.5,fichesScale+0.15);fichesRenderPage(fichesPage)}
+function fichesZoomOut(){fichesScale=Math.max(0.65,fichesScale-0.15);fichesRenderPage(fichesPage)}
 initFichesViewer();
 
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
