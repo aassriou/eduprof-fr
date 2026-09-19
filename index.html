@@ -182,7 +182,7 @@
 </div>
 <div class="card section">
   <div class="grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="field"><label>Classe</label><select id="gradeClassFilter" onchange="renderGradesPage(); renderBehavior();renderGradebook()"><option value="">Toutes les classes</option></select></div>
+    <div class="field"><label>Classe</label><select id="gradeClassFilter" onchange="renderGradesPage(); renderBehavior(); renderGradebook(); renderStatistics()"><option value="">Toutes les classes</option></select></div>
     <div class="field"><label>Élève</label><select id="gradeStudentFilter" onchange="renderGradesPage()"><option value="">Tous les élèves</option></select></div>
   </div>
 </div>
@@ -331,7 +331,11 @@ function renderEvaluationSelectors(){
  e.innerHTML=data.exercises.length?data.exercises.map((x,i)=>`<option value="${i}">${esc(x.title)}</option>`).join(''):'<option value="">Aucun test</option>';
 }
 function renderStatistics(){
- const valid=data.grades.filter(g=>Number.isFinite(Number(g.score20)));
+ const cf=document.getElementById('gradeClassFilter')?.value||'';
+ const valid=data.grades.filter(g=>{
+   const s=data.students[g.student];
+   return s && (!cf || studentClassMatches(s.className,cf)) && Number.isFinite(Number(g.score20));
+ });
  const n=valid.length;
  document.getElementById('statGrades').textContent=n;
  const w=valid.reduce((a,g)=>a+gradeCoef(g),0);
@@ -513,19 +517,38 @@ function renderGradeFilters(){
   const cf=document.getElementById('gradeClassFilter');
   const sf=document.getElementById('gradeStudentFilter');
   if(!cf||!sf)return;
-  const oldC=cf.value, oldS=sf.value;
-  const classes=[...new Map(data.classes.map(c=>[classKey(c.name),c])).values()];
-  cf.innerHTML='<option value="">Toutes les classes</option>'+classes.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
-  sf.innerHTML='<option value="">Tous les élèves</option>'+data.students.map((s,i)=>`<option value="${i}">${esc(s.last)} ${esc(s.first)} — ${esc(s.className)}</option>`).join('');
-  if([...cf.options].some(o=>o.value===oldC))cf.value=oldC;
-  if([...sf.options].some(o=>o.value===oldS))sf.value=oldS;
+
+  const classes=[...new Map((data.classes||[]).map(c=>[classKey(c.name),c])).values()];
+  const currentClass=cf.value;
+  const currentStudent=sf.value;
+
+  /* V28: Notes & moyennes — une seule classe à la fois.
+     Ne touche ni aux données, ni à Mes élèves, ni à Suivi & comportement. */
+  cf.innerHTML=classes.map(c=>`<option value="${esc(c.name)}">${esc(c.name)}</option>`).join('');
+
+  let chosenClass=currentClass;
+  if(!chosenClass || !classes.some(c=>studentClassMatches(c.name,chosenClass))){
+    chosenClass=classes[0]?.name||'';
+  }
+  cf.value=chosenClass;
+
+  const students=data.students.map((s,i)=>({s,i}))
+    .filter(({s})=>!chosenClass || studentClassMatches(s.className,chosenClass));
+
+  sf.innerHTML='<option value="">Tous les élèves</option>'+
+    students.map(({s,i})=>`<option value="${i}">${esc(s.last)} ${esc(s.first)}</option>`).join('');
+
+  if([...sf.options].some(o=>o.value===currentStudent)) sf.value=currentStudent;
+  else sf.value='';
 }
 
 function renderGradesPage(){
   renderGradeFilters();
+
   const cf=document.getElementById('gradeClassFilter')?.value||'';
   const sf=document.getElementById('gradeStudentFilter')?.value||'';
   const selectedStudent=sf===''?null:Number(sf);
+
   const rows=data.grades.map((g,i)=>({g,i})).filter(({g})=>{
     const s=data.students[g.student];
     if(!s)return false;
@@ -533,19 +556,22 @@ function renderGradesPage(){
     if(selectedStudent!==null && g.student!==selectedStudent)return false;
     return true;
   });
+
   const rt=document.getElementById('resultsTable');
   rt.innerHTML=rows.length?rows.slice().reverse().map(({g,i})=>{
     const s=data.students[g.student];
     return `<tr><td>${esc(s.last+' '+s.first)}</td><td>${esc(s.className)}</td><td>${esc(gradeTitle(g))}</td><td>${Number(g.score).toFixed(2)} / ${Number(g.max).toFixed(2)}</td><td><b>${Number(g.score20).toFixed(2)}</b></td><td>${gradeCoef(g)}</td><td>${gradeDate(g)}</td><td><button class="btn cancel" onclick="deleteGrade(${i})">🗑️</button></td></tr>`;
-  }).join(''):'<tr><td colspan="8" class="empty">Aucune note pour cette sélection.</td></tr>';
+  }).join(''):'<tr><td colspan="8" class="empty">Aucune note pour cette classe.</td></tr>';
 
   const box=document.getElementById('gradeStudentAverages');
   let studentsToShow;
   if(selectedStudent!==null) studentsToShow=[selectedStudent];
   else {
-    const classFiltered=data.students.map((s,i)=>({s,i})).filter(({s})=>!cf||studentClassMatches(s.className,cf));
-    studentsToShow=classFiltered.map(x=>x.i);
+    studentsToShow=data.students.map((s,i)=>({s,i}))
+      .filter(({s})=>!cf||studentClassMatches(s.className,cf))
+      .map(x=>x.i);
   }
+
   box.innerHTML=studentsToShow.length?studentsToShow.map(i=>{
     const s=data.students[i];
     const gs=data.grades.filter(g=>g.student===i && (!cf||studentClassMatches(s.className,cf)));
@@ -553,11 +579,12 @@ function renderGradesPage(){
     const weights=gs.reduce((a,g)=>a+gradeCoef(g),0);
     const avg=weights?weighted/weights:0;
     return `<div class="grade-card"><div class="muted">${esc(s.className)}</div><h3>${esc(s.first+' '+s.last)}</h3><div class="grade-big">${gs.length?avg.toFixed(2)+'/20':'—'}</div><div class="muted">${gs.length} note(s) · moyenne pondérée</div></div>`;
-  }).join(''):'<div class="card empty" style="grid-column:1/-1">Ajoutez des élèves pour voir les moyennes.</div>';
+  }).join(''):'<div class="card empty" style="grid-column:1/-1">Aucun élève dans cette classe.</div>';
+
+  renderStatistics();
 }
 
-
-  renderGradebook();
+renderGradebook();
 
 function gradebookEvaluations(className){
   const ids=new Set();
