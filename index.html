@@ -203,7 +203,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
     <button onclick="showPage('exercices',this)">📝 Exercices</button>
     <button onclick="showPage('evaluations',this)">✅ Évaluations</button>
     <button onclick="showPage('resultats',this)">📊 Résultats</button>
-<button onclick="showPage('import',this)">📥 Import Excel</button>
+<button type="button" onclick="showPage('import',this); closeMobileMenu();">📥 Import Excel</button>
   </div>
 </aside>
 
@@ -1427,6 +1427,25 @@ function updateChosenFileName(input){
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindRobust);
   else bindRobust();
   window.addEventListener('load',bindRobust);
+})();
+</script>
+
+<style id="v52-import-mobile-fix">
+/* V52: when Import Excel is selected on mobile, close the drawer and give the importer full width */
+@media(max-width:800px){
+  .page#import{position:relative!important;z-index:1!important;width:100%!important;box-sizing:border-box!important;}
+  .page#import .file-picker-box{width:100%!important;box-sizing:border-box!important;position:relative!important;z-index:2!important;}
+  .page#import .file-picker-button{position:relative!important;z-index:3!important;touch-action:manipulation!important;}
+  .page#import input[type=file]{pointer-events:auto!important;}
+}
+</style>
+<script id="v52-import-mobile-fix-script">
+(function(){
+  function fixImport(){
+    var b=[].slice.call(document.querySelectorAll('.nav button')).find(function(x){return (x.textContent||'').indexOf('Import Excel')!==-1;});
+    if(b){ b.addEventListener('click', function(){ if(window.closeMobileMenu) window.closeMobileMenu(); }, {passive:true}); }
+  }
+  window.addEventListener('load',fixImport);
 })();
 </script>
 </body>
