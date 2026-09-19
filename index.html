@@ -49,6 +49,9 @@
   font-weight:600;
 }
 
+
+/* V23 — une classe à la fois dans Mes élèves */
+#studentClassFilter{font-weight:700;font-size:16px;min-height:46px;width:100%;}
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
@@ -98,7 +101,14 @@
 <section id="eleves" class="page">
   <div class="top"><h1>Mes élèves</h1><div><button class="btn cancel" onclick="exportStudentsCSV()">📥 Exporter</button> <button class="btn" onclick="openModal('studentModal')">+ Ajouter un élève</button></div></div>
   <div class="card">
-  <div class="field"><label>🔎 Rechercher un élève</label><input id="studentSearch" oninput="renderStudents()" placeholder="Nom, prénom ou classe..."></div>
+  <div class="field">
+  <label>📚 Choisir une classe</label>
+  <select id="studentClassFilter" onchange="renderStudents()"></select>
+</div>
+<div class="field">
+  <label>🔎 Rechercher un élève</label>
+  <input id="studentSearch" oninput="renderStudents()" placeholder="Nom ou prénom...">
+</div>
   <div style="overflow:auto"><table class="table"><thead><tr><th>Nom</th><th>Prénom</th><th>Classe</th><th>Actions</th></tr></thead><tbody id="studentTable"></tbody></table></div>
 </div>
 </section>
@@ -565,40 +575,38 @@ function render(){
 }
 function renderStudents(){
  const st=document.getElementById('studentTable'); if(!st)return;
+ const sel=document.getElementById('studentClassFilter');
  const q=(document.getElementById('studentSearch')?.value||'').trim().toLowerCase();
 
- const filtered=data.students.map((s,i)=>({s,i})).filter(({s})=>
-   !q || `${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q)
- );
+ // Build the class list once, preserving the existing class order.
+ const classes=(data.classes||[]).map(c=>c.name).filter(Boolean);
+ const names=[...new Set(classes)];
+ const current=sel?.value || names[0] || '';
 
- if(!filtered.length){
-   st.innerHTML='<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
+ if(sel){
+   const old=sel.value;
+   sel.innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
+   if(names.includes(old)) sel.value=old;
+   else if(current) sel.value=current;
+ }
+
+ const chosen=sel?.value || '';
+ const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>{
+   const same=!chosen || classKey(s.className||'')===classKey(chosen);
+   const match=!q || `${s.last} ${s.first}`.toLowerCase().includes(q);
+   return same && match;
+ });
+
+ if(!rows.length){
+   st.innerHTML='<tr><td colspan="4" class="empty">Aucun élève dans cette classe.</td></tr>';
    return;
  }
 
- const groups=new Map();
- filtered.forEach(({s,i})=>{
-   const key=classKey(s.className||'Sans classe');
-   if(!groups.has(key)) groups.set(key,{name:s.className||'Sans classe',students:[]});
-   groups.get(key).students.push({s,i});
- });
-
- // Keep the same order as the class list, then append any unmatched class.
- const ordered=[];
- (data.classes||[]).forEach(c=>{
-   const key=classKey(c.name);
-   if(groups.has(key)){ ordered.push(groups.get(key)); groups.delete(key); }
- });
- groups.forEach(g=>ordered.push(g));
-
- st.innerHTML=ordered.map(g=>`
+ st.innerHTML=`
    <tr class="class-group-title">
-     <td colspan="4">
-       <strong>📚 ${esc(g.name)}</strong>
-       <span style="float:right">${g.students.length} élève(s)</span>
-     </td>
+     <td colspan="4"><strong>📚 ${esc(chosen)}</strong><span style="float:right">${rows.length} élève(s)</span></td>
    </tr>
-   ${g.students.map(({s,i})=>`
+   ${rows.map(({s,i})=>`
      <tr>
        <td>${esc(s.last)}</td>
        <td>${esc(s.first)}</td>
@@ -608,7 +616,7 @@ function renderStudents(){
          <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button>
        </td>
      </tr>`).join('')}
- `).join('');
+ `;
 }
 function editClass(i){
  const c=data.classes[i]; if(!c)return;
