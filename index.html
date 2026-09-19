@@ -131,40 +131,17 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 @media(max-width:600px){.manarat-timetable-card{padding:14px;border-radius:20px}.manarat-timetable-title{font-size:20px}.manarat-grid{min-width:590px}.manarat-grid.afternoon{min-width:310px}.manarat-slot-body{min-height:64px}}
 
 
-/* V63 — Fiches pédagogiques · Institut Manarat Rif */
-.fiches-hero{
-  margin-top:18px;display:flex;align-items:center;gap:20px;padding:22px;
-  border-radius:26px;background:linear-gradient(135deg,#eef2ff 0%,#ffffff 58%,#f4f7ff 100%);
-  border:1px solid rgba(70,92,220,.14);box-shadow:0 14px 40px rgba(24,40,90,.09)
-}
-.fiches-icon{
-  flex:0 0 72px;width:72px;height:72px;border-radius:22px;display:flex;align-items:center;justify-content:center;
-  font-size:36px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 12px 26px rgba(37,99,235,.24)
-}
-.fiches-hero h2{margin:4px 0 8px;color:#15213d;font-size:25px}
-.fiches-hero p{margin:0;line-height:1.6;color:#64748b}
-.fiches-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.fiches-meta span{padding:8px 11px;border-radius:999px;background:#fff;border:1px solid #e3e8f4;color:#40506f;font-weight:800;font-size:12px}
-.fiches-viewer-card{margin-top:18px;padding:18px;border-radius:26px;background:#fff;border:1px solid #e4e9f4;box-shadow:0 12px 34px rgba(24,40,90,.08)}
-.fiches-viewer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.fiches-viewer-head h2{margin:0;color:#15213d}
-.fiches-viewer{height:calc(100vh - 300px);min-height:620px;border-radius:20px;overflow:auto;background:#eef2f7;border:1px solid #dfe5ef;padding:14px;box-sizing:border-box}
-.fiches-pdf-toolbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px;margin:-2px -2px 12px;background:rgba(238,242,247,.96);backdrop-filter:blur(8px);border-radius:14px}
-.fiches-pdf-toolbar button,.fiches-pdf-toolbar input{min-height:40px;border:1px solid #d7deeb;border-radius:10px;background:#fff;padding:7px 11px;font-weight:800;color:#15213d}
-.fiches-pdf-toolbar input{width:64px;text-align:center}
-.fiches-pdf-stage{display:flex;justify-content:center;align-items:flex-start;min-height:100%;padding:6px}
-#fichesPdfCanvas{background:#fff;box-shadow:0 8px 28px rgba(20,35,70,.18);max-width:100%;height:auto}
-.fiches-pdf-status{text-align:center;color:#64748b;font-weight:700;font-size:13px;padding:8px}
-
+/* V65 — Premium PDF Reader · Institut Manarat Rif */
+.fiches-hero{margin-top:18px;display:flex;align-items:center;gap:18px;padding:20px;border-radius:26px;background:linear-gradient(135deg,#eef2ff,#fff 60%,#f5f7ff);border:1px solid rgba(70,92,220,.14);box-shadow:0 14px 40px rgba(24,40,90,.09)}
+.fiches-icon{flex:0 0 66px;width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:33px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 12px 26px rgba(37,99,235,.24)}
+.fiches-hero h2{margin:4px 0 7px;color:#15213d;font-size:24px}.fiches-hero p{margin:0;line-height:1.55;color:#64748b}.fiches-meta{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.fiches-meta span{padding:7px 10px;border-radius:999px;background:#fff;border:1px solid #e3e8f4;color:#40506f;font-weight:800;font-size:11px}
+.fiches-viewer-card{margin-top:18px;padding:0;border-radius:28px;background:#0d1831;border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 48px rgba(10,25,55,.18);overflow:hidden}
+.fiches-reader-top{padding:16px 18px;background:linear-gradient(135deg,#111d3b,#1c2c57);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.fiches-reader-title{display:flex;align-items:center;gap:11px}.fiches-reader-title .mini-book{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#6366f1,#2563eb);font-size:21px}.fiches-reader-title h2{margin:0;font-size:17px}.fiches-reader-title p{margin:3px 0 0;color:#b9c4dd;font-size:12px}.fiches-reader-actions{display:flex;gap:7px;flex-wrap:wrap}.fiches-reader-actions button,.fiches-reader-actions a{min-height:38px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(255,255,255,.08);color:#fff;padding:7px 11px;font-weight:800;text-decoration:none;cursor:pointer}.fiches-reader-actions .primary{background:linear-gradient(135deg,#5865f2,#2d73ea);border-color:transparent}
+.fiches-reader-body{position:relative;background:#dfe5ef;padding:12px}.fiches-pdf-stage{height:calc(100vh - 365px);min-height:520px;overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:24px 12px 88px;border-radius:20px;background:radial-gradient(circle at 50% 15%,#f8fafc 0,#e5eaf2 45%,#d8e0eb 100%);box-sizing:border-box}.fiches-pdf-stage canvas{background:#fff;box-shadow:0 14px 35px rgba(14,28,55,.24);border-radius:3px;display:block;max-width:none;height:auto}
+.fiches-bottom{position:absolute;left:18px;right:18px;bottom:18px;z-index:8;display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;padding:9px 10px;border-radius:17px;background:rgba(13,24,49,.94);box-shadow:0 12px 30px rgba(13,24,49,.25);backdrop-filter:blur(12px)}.fiches-bottom button,.fiches-bottom input{height:38px;min-width:38px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.08);color:#fff;font-weight:900;padding:0 10px}.fiches-bottom input{width:54px;text-align:center}.fiches-bottom button.primary{background:linear-gradient(135deg,#5865f2,#2d73ea);border-color:transparent}.fiches-bottom .zoom-label{color:#cbd5e9;font-size:12px;font-weight:900;min-width:44px;text-align:center}.fiches-pdf-status{text-align:center;color:#66758f;font-weight:800;font-size:12px;padding:8px}.fiches-thumbs{display:none;gap:9px;overflow-x:auto;padding:10px 4px 2px}.fiches-thumbs.show{display:flex}.fiches-thumb{flex:0 0 76px;padding:4px;border-radius:11px;background:#fff;border:2px solid transparent;box-shadow:0 5px 14px rgba(15,30,60,.12);cursor:pointer}.fiches-thumb.active{border-color:#4f46e5}.fiches-thumb canvas{display:block;width:100%;height:auto;border-radius:5px}.fiches-thumb small{display:block;text-align:center;color:#4b5a76;font-weight:900;font-size:10px;padding:3px 0 1px}
+.fiches-search{display:none;align-items:center;gap:7px;padding:9px 10px;background:#111d3b;border-top:1px solid rgba(255,255,255,.08)}.fiches-search.show{display:flex}.fiches-search input{flex:1;min-width:0;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;padding:0 11px}.fiches-search button{height:38px;border-radius:10px;border:0;background:#5865f2;color:#fff;padding:0 12px;font-weight:900}.fiches-empty{color:#cbd5e1;text-align:center;padding:18px}
 #fichesNav{display:none}
-@media(max-width:800px){
-  .fiches-hero{padding:17px;gap:14px;border-radius:21px}
-  .fiches-icon{flex-basis:58px;width:58px;height:58px;border-radius:18px;font-size:29px}
-  .fiches-hero h2{font-size:20px}
-  .fiches-viewer-card{padding:12px;border-radius:21px}
-  .fiches-viewer{height:calc(100vh - 265px);min-height:520px;border-radius:16px;padding:8px}.fiches-pdf-toolbar{gap:5px;padding:8px}.fiches-pdf-toolbar button,.fiches-pdf-toolbar input{min-height:38px;padding:6px 8px}.fiches-pdf-stage{padding:4px}
-}
-
+@media(max-width:800px){.fiches-hero{padding:16px;gap:12px;border-radius:21px}.fiches-icon{flex-basis:55px;width:55px;height:55px;border-radius:17px;font-size:27px}.fiches-hero h2{font-size:19px}.fiches-viewer-card{border-radius:22px}.fiches-reader-top{padding:13px}.fiches-reader-actions a{display:none}.fiches-reader-body{padding:7px}.fiches-pdf-stage{height:calc(100vh - 285px);min-height:460px;padding:16px 6px 82px;border-radius:16px}.fiches-bottom{left:10px;right:10px;bottom:10px;border-radius:15px}.fiches-bottom button,.fiches-bottom input{height:36px;min-width:36px;padding:0 8px}.fiches-thumb{flex-basis:67px}}
 </style>
 
 <style id="v40-mobile-layout">
@@ -296,7 +273,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
 }
 </style>
-<meta name="eduprof-version" content="V61">
+<meta name="eduprof-version" content="V65">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
@@ -505,53 +482,33 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 
 <section id="fiches" class="page">
   <div class="top">
-    <div>
-      <h1>📘 Fiches pédagogiques</h1>
-      <p class="muted">Institut Manarat Rif · Parcours · Première année (1ASC)</p>
-    </div>
-    <div class="actions">
-      <button class="btn" type="button" onclick="openFichesPDF()">🌐 Ouvrir dans le navigateur</button>
-    </div>
+    <div><h1>📘 Fiches pédagogiques</h1><p class="muted">Institut Manarat Rif · Parcours · Première année (1ASC)</p></div>
   </div>
-
   <div class="fiches-hero">
-    <div class="fiches-icon">📘</div>
-    <div>
-      <div class="section-kicker">RESSOURCE PÉDAGOGIQUE</div>
-      <h2>Fiches Parcours — 1ASC</h2>
-      <p>Guide pédagogique du manuel <b>Parcours</b>, Première année, Période I. Le document contient les fiches pédagogiques de la séquence et des activités.</p>
-      <div class="fiches-meta">
-        <span>📄 130 pages</span>
-        <span>🇫🇷 Français</span>
-        <span>🏫 Institut Manarat Rif</span>
-      </div>
+    <div class="fiches-icon">📘</div><div>
+      <div class="section-kicker">RESSOURCE PÉDAGOGIQUE</div><h2>Fiches Parcours — 1ASC</h2>
+      <p>Consultez le guide pédagogique directement dans EduProf, sans téléchargement.</p>
+      <div class="fiches-meta"><span>📄 130 pages</span><span>🇫🇷 Français</span><span>🏫 Institut Manarat Rif</span></div>
     </div>
   </div>
-
   <div class="fiches-viewer-card">
-    <div class="fiches-viewer-head">
-      <div>
-        <h2>📖 Consulter la fiche</h2>
-        <p class="muted">Le document s’ouvre avec un lecteur PDF compatible avec le téléphone.</p>
-      </div>
-      <div class="actions">
-        <button class="btn" type="button" onclick="openFichesPDF()">📖 Lire le PDF</button>
-        <a class="btn cancel" href="./fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir</a>
+    <div class="fiches-reader-top">
+      <div class="fiches-reader-title"><div class="mini-book">📖</div><div><h2>Lecteur des fiches</h2><p>Lecture plein écran · zoom · pages · miniatures</p></div></div>
+      <div class="fiches-reader-actions"><button class="primary" type="button" onclick="fichesFocusReader()">↗ Plein écran</button><button type="button" onclick="fichesToggleSearch()">🔎 Rechercher</button></div>
+    </div>
+    <div id="fichesSearch" class="fiches-search"><input id="fichesSearchInput" type="search" placeholder="Rechercher un mot dans le document…" onkeydown="if(event.key==='Enter')fichesSearchText()"><button type="button" onclick="fichesSearchText()">Rechercher</button></div>
+    <div class="fiches-reader-body">
+      <div id="fichesPdfStage" class="fiches-pdf-stage"><canvas id="fichesPdfCanvas"></canvas></div>
+      <div id="fichesThumbs" class="fiches-thumbs"></div>
+      <div class="fiches-bottom">
+        <button type="button" onclick="fichesPrevPage()" aria-label="Page précédente">‹</button>
+        <input id="fichesPageInput" type="number" min="1" value="1" onchange="fichesGoToPage(this.value)" aria-label="Numéro de page"><span class="zoom-label">/ <b id="fichesPageCount">130</b></span>
+        <button type="button" onclick="fichesNextPage()" aria-label="Page suivante">›</button>
+        <button type="button" onclick="fichesZoomOut()">−</button><span id="fichesZoomLabel" class="zoom-label">100%</span><button type="button" onclick="fichesZoomIn()">+</button>
+        <button class="primary" type="button" onclick="fichesToggleThumbs()">▦</button>
       </div>
     </div>
-    <div class="fiches-viewer">
-      <div class="fiches-pdf-toolbar">
-        <button type="button" onclick="fichesPrevPage()">◀</button>
-        <input id="fichesPageInput" type="number" min="1" value="1" onchange="fichesGoToPage(this.value)">
-        <span>/ <b id="fichesPageCount">130</b></span>
-        <button type="button" onclick="fichesNextPage()">▶</button>
-        <button type="button" onclick="fichesZoomOut()">−</button>
-        <span id="fichesZoomLabel">100%</span>
-        <button type="button" onclick="fichesZoomIn()">+</button>
-      </div>
-      <div id="fichesPdfStatus" class="fiches-pdf-status">⏳ Chargement du document…</div>
-      <div class="fiches-pdf-stage"><canvas id="fichesPdfCanvas"></canvas></div>
-    </div>
+    <div id="fichesPdfStatus" class="fiches-pdf-status">⏳ Chargement du document…</div>
   </div>
 </section>
 
@@ -810,60 +767,28 @@ function renderDashboardSummary(){
  box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
 }
 
-function getFichesPdfUrl(){
-  return new URL('./fiches-parcours-1asc.pdf', document.baseURI).href;
-}
-function openFichesPDF(){
-  const url=getFichesPdfUrl();
-  try{
-    if(/Android/i.test(navigator.userAgent)){
-      const clean=url.replace(/^https?:\/\//,'');
-      window.location.href='intent://'+clean+'#Intent;scheme=https;package=com.sec.android.app.sbrowser;end';
-      setTimeout(()=>window.open(url,'_blank','noopener,noreferrer'),1000);
-    }else{
-      window.open(url,'_blank','noopener,noreferrer');
-    }
-  }catch(e){ window.open(url,'_blank'); }
-}
+function getFichesPdfUrl(){ return new URL('./fiches-parcours-1asc.pdf', document.baseURI).href; }
+function openFichesPDF(){ fichesFocusReader(); }
 let fichesPdfDoc=null, fichesPage=1, fichesScale=1.0, fichesRendering=false, fichesPending=null;
 function fichesSetStatus(msg){ const el=document.getElementById('fichesPdfStatus'); if(el) el.textContent=msg; }
 async function initFichesViewer(){
-  const canvas=document.getElementById('fichesPdfCanvas');
-  if(!canvas || typeof pdfjsLib==='undefined'){ fichesSetStatus('Lecteur PDF indisponible.'); return; }
-  try{
-    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    fichesSetStatus('⏳ Chargement des fiches…');
-    fichesPdfDoc=await pdfjsLib.getDocument({url:getFichesPdfUrl(),withCredentials:false}).promise;
-    const count=document.getElementById('fichesPageCount'); if(count) count.textContent=fichesPdfDoc.numPages;
-    const input=document.getElementById('fichesPageInput'); if(input) input.max=fichesPdfDoc.numPages;
-    await fichesRenderPage(1);
-  }catch(e){ console.error(e); fichesSetStatus('❌ Impossible de lire le PDF. Vérifiez que le fichier est bien publié sur GitHub Pages.'); }
+ const canvas=document.getElementById('fichesPdfCanvas'); if(!canvas || typeof pdfjsLib==='undefined'){fichesSetStatus('Lecteur PDF indisponible.');return;}
+ try{ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; fichesSetStatus('⏳ Chargement des fiches…'); fichesPdfDoc=await pdfjsLib.getDocument({url:getFichesPdfUrl(),withCredentials:false}).promise; const c=document.getElementById('fichesPageCount');if(c)c.textContent=fichesPdfDoc.numPages;const i=document.getElementById('fichesPageInput');if(i)i.max=fichesPdfDoc.numPages;await fichesRenderPage(1); }
+ catch(e){console.error(e);fichesSetStatus('❌ Impossible de lire le PDF. Vérifiez la publication du fichier sur GitHub Pages.');}
 }
 async function fichesRenderPage(num){
-  if(!fichesPdfDoc)return;
-  num=Math.max(1,Math.min(fichesPdfDoc.numPages,Number(num)||1));
-  fichesPage=num;
-  const input=document.getElementById('fichesPageInput'); if(input) input.value=num;
-  if(fichesRendering){ fichesPending=num; return; }
-  fichesRendering=true;
-  try{
-    const page=await fichesPdfDoc.getPage(num);
-    const viewport=page.getViewport({scale:fichesScale});
-    const canvas=document.getElementById('fichesPdfCanvas'); const ctx=canvas.getContext('2d');
-    canvas.width=Math.ceil(viewport.width); canvas.height=Math.ceil(viewport.height);
-    await page.render({canvasContext:ctx,viewport}).promise;
-    const z=document.getElementById('fichesZoomLabel'); if(z) z.textContent=Math.round(fichesScale*100)+'%';
-    fichesSetStatus('Page '+num+' / '+fichesPdfDoc.numPages);
-  }finally{
-    fichesRendering=false;
-    if(fichesPending!==null){ const p=fichesPending; fichesPending=null; fichesRenderPage(p); }
-  }
+ if(!fichesPdfDoc)return; num=Math.max(1,Math.min(fichesPdfDoc.numPages,Number(num)||1)); fichesPage=num; const input=document.getElementById('fichesPageInput');if(input)input.value=num;
+ if(fichesRendering){fichesPending=num;return;} fichesRendering=true;
+ try{const page=await fichesPdfDoc.getPage(num);const stage=document.getElementById('fichesPdfStage');const canvas=document.getElementById('fichesPdfCanvas');let base=Math.min((stage?.clientWidth||800)/page.getViewport({scale:1}).width,1.18);const viewport=page.getViewport({scale:base*fichesScale});const ctx=canvas.getContext('2d',{alpha:false});canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);canvas.style.width=Math.ceil(viewport.width)+'px';await page.render({canvasContext:ctx,viewport}).promise;const z=document.getElementById('fichesZoomLabel');if(z)z.textContent=Math.round(fichesScale*100)+'%';fichesSetStatus('Page '+num+' / '+fichesPdfDoc.numPages);fichesUpdateThumbs();}
+ finally{fichesRendering=false;if(fichesPending!==null){const p=fichesPending;fichesPending=null;fichesRenderPage(p);}}
 }
-function fichesPrevPage(){fichesRenderPage(fichesPage-1)}
-function fichesNextPage(){fichesRenderPage(fichesPage+1)}
-function fichesGoToPage(v){fichesRenderPage(v)}
-function fichesZoomIn(){fichesScale=Math.min(2.5,fichesScale+0.15);fichesRenderPage(fichesPage)}
-function fichesZoomOut(){fichesScale=Math.max(0.65,fichesScale-0.15);fichesRenderPage(fichesPage)}
+function fichesPrevPage(){fichesRenderPage(fichesPage-1)} function fichesNextPage(){fichesRenderPage(fichesPage+1)} function fichesGoToPage(v){fichesRenderPage(v)}
+function fichesZoomIn(){fichesScale=Math.min(2.4,fichesScale+0.2);fichesRenderPage(fichesPage)} function fichesZoomOut(){fichesScale=Math.max(.75,fichesScale-.2);fichesRenderPage(fichesPage)}
+function fichesFocusReader(){const el=document.querySelector('.fiches-viewer-card');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+function fichesToggleThumbs(){const box=document.getElementById('fichesThumbs');if(!box)return;box.classList.toggle('show');if(box.classList.contains('show'))fichesUpdateThumbs(true);}
+async function fichesUpdateThumbs(force=false){const box=document.getElementById('fichesThumbs');if(!box||!fichesPdfDoc||(!box.classList.contains('show')&&!force))return;box.innerHTML='';const nums=[];for(let n=Math.max(1,fichesPage-2);n<=Math.min(fichesPdfDoc.numPages,fichesPage+2);n++)nums.push(n);for(const n of nums){try{const p=await fichesPdfDoc.getPage(n);const vp=p.getViewport({scale:.16});const c=document.createElement('canvas');c.width=Math.ceil(vp.width);c.height=Math.ceil(vp.height);const wrap=document.createElement('button');wrap.type='button';wrap.className='fiches-thumb'+(n===fichesPage?' active':'');wrap.title='Page '+n;wrap.onclick=()=>fichesRenderPage(n);await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;wrap.appendChild(c);const sm=document.createElement('small');sm.textContent=n;wrap.appendChild(sm);box.appendChild(wrap);}catch(e){}}
+}
+async function fichesSearchText(){const q=(document.getElementById('fichesSearchInput')?.value||'').trim().toLowerCase();if(!q||!fichesPdfDoc)return;fichesSetStatus('🔎 Recherche…');for(let n=fichesPage+1;n<=fichesPdfDoc.numPages;n++){const p=await fichesPdfDoc.getPage(n);const tc=await p.getTextContent();if(tc.items.some(x=>(x.str||'').toLowerCase().includes(q))){await fichesRenderPage(n);return;}}for(let n=1;n<=fichesPage;n++){const p=await fichesPdfDoc.getPage(n);const tc=await p.getTextContent();if(tc.items.some(x=>(x.str||'').toLowerCase().includes(q))){await fichesRenderPage(n);return;}}fichesSetStatus('Aucun résultat pour « '+q+' ».');}
 initFichesViewer();
 
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
