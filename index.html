@@ -170,6 +170,14 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .sidebar .nav button{font-size:12px !important; width:100% !important; min-height:50px !important; padding:8px 7px !important; display:flex !important; align-items:center !important; justify-content:flex-start !important; gap:7px !important; white-space:normal !important; text-align:left !important;}
 }
 </style>
+
+<style id="v46-institution-fix">
+.institution-current{min-width:220px}
+.institution-picker{min-width:280px;display:flex;flex-direction:column;gap:6px}
+.institution-picker label{font-size:12px;font-weight:800;color:#68758b}
+.institution-picker select{width:100%!important;min-height:50px!important;padding:0 14px!important;border:1px solid #d7dfec!important;border-radius:14px!important;background:#fff!important;color:#17233b!important;font-weight:800!important;cursor:pointer!important;position:relative!important;z-index:20!important;pointer-events:auto!important}
+@media(max-width:480px){.institution-current,.institution-picker{min-width:100%;width:100%}.institution-picker select{min-height:52px!important}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -192,9 +200,15 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 </aside>
 
 <main class="main">
-<div class="institution-bar card" style="margin-bottom:18px;padding:14px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap">
-  <div><div class="muted">🏫 Institution active</div><strong id="activeInstitutionName">Institut Manarat Rif</strong></div>
-  <div class="field" style="margin:0;min-width:260px"><select id="institutionSelect" onchange="switchInstitution(this.value)" style="width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;font-weight:700"><option value="manarat">Institut Manarat Rif</option><option value="sidi">Lycée collégial Sidi bouafif</option></select></div>
+<div class="institution-bar card" style="margin-bottom:18px;padding:16px;display:flex;align-items:center;gap:16px;justify-content:space-between;flex-wrap:wrap">
+  <div class="institution-current"><div class="muted">🏫 Institution active</div><strong id="activeInstitutionName">Institut Manarat Rif</strong></div>
+  <div class="institution-picker">
+    <label for="institutionSelect">Changer d’institution</label>
+    <select id="institutionSelect" aria-label="Choisir l’institution">
+      <option value="manarat">Institut Manarat Rif</option>
+      <option value="sidi">Lycée collégial Sidi bouafif</option>
+    </select>
+  </div>
 </div>
 <section id="dashboard" class="page active">
   <div class="hero-dashboard">
@@ -481,10 +495,27 @@ workspaces.institutions[currentInstitution]=data;
 function persistWorkspaces(){workspaces.institutions[currentInstitution]=data;localStorage.setItem(workspaceKey,JSON.stringify(workspaces));localStorage.setItem(workspaceKey+'_active',currentInstitution);}
 function save(){persistWorkspaces();render()}
 function switchInstitution(id){
- if(!INSTITUTIONS[id]||id===currentInstitution)return;
- persistWorkspaces(); currentInstitution=id; data=normalizeData(workspaces.institutions[id]); workspaces.institutions[id]=data; persistWorkspaces(); render();
+ id=String(id||'').trim();
+ if(!INSTITUTIONS[id]) return false;
+ if(id===currentInstitution){ updateInstitutionUI(); return true; }
+ persistWorkspaces();
+ currentInstitution=id;
+ workspaces.institutions[id]=normalizeData(workspaces.institutions[id]||JSON.parse(JSON.stringify(EMPTY_DATA)));
+ data=workspaces.institutions[id];
+ persistWorkspaces();
+ updateInstitutionUI();
+ render();
+ if(typeof closeMobileMenu==='function') closeMobileMenu();
+ return true;
 }
-function updateInstitutionUI(){const sel=document.getElementById('institutionSelect');if(sel)sel.value=currentInstitution;const name=document.getElementById('activeInstitutionName');if(name)name.textContent=INSTITUTIONS[currentInstitution];}
+function updateInstitutionUI(){
+ const sel=document.getElementById('institutionSelect');
+ if(sel){ sel.value=currentInstitution; sel.onchange=function(){ switchInstitution(this.value); }; }
+ const name=document.getElementById('activeInstitutionName');
+ if(name) name.textContent=INSTITUTIONS[currentInstitution];
+ const label=document.getElementById('courseInstitutionLabel');
+ if(label) label.textContent=INSTITUTIONS[currentInstitution];
+}
 function renderEvaluationSelectors(){
  const s=document.getElementById('evalStudent'),e=document.getElementById('evalExercise'); if(!s||!e)return;
  s.innerHTML=data.students.length?data.students.map((x,i)=>`<option value="${i}">${esc(x.last)} ${esc(x.first)} — ${esc(x.className)}</option>`).join(''):'<option value="">Aucun élève</option>';
@@ -797,6 +828,15 @@ function render(){
  renderGradesPage();
  renderBehavior();
  renderStudents();
+}
+
+
+function bindInstitutionSelector(){
+ const sel=document.getElementById('institutionSelect');
+ if(!sel) return;
+ sel.removeAttribute('onchange');
+ sel.addEventListener('change',function(){ switchInstitution(this.value); });
+ sel.addEventListener('input',function(){ if(this.value!==currentInstitution) switchInstitution(this.value); });
 }
 
 function behaviorDefault(b){
@@ -1279,6 +1319,8 @@ button,input,select,textarea{font:inherit}
   window.addEventListener('load',setupDrawer);
   window.addEventListener('resize',setupDrawer);
 })();
+
+try{bindInstitutionSelector();}catch(e){}
 </script>
 
 </body>
