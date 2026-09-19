@@ -186,6 +186,44 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .institution-choice.active{background:linear-gradient(135deg,#4f46e5,#2563eb);color:#fff;border-color:#4f46e5;box-shadow:0 7px 16px rgba(37,99,235,.22)}
 @media(max-width:480px){.institution-picker select{display:none!important}.institution-quick{display:grid;grid-template-columns:1fr;gap:8px}.institution-choice{width:100%;min-height:48px;text-align:left;font-size:13px}.institution-bar{position:relative;z-index:30!important}}
 </style>
+
+<style id="v53-logo-under-menu">
+/* V53 — mobile: EduProf logo sits clearly below the hamburger button */
+@media (max-width:800px){
+  .sidebar .brand{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:9px !important;
+    padding:72px 6px 18px !important;
+    margin-bottom:14px !important;
+    border-bottom:1px solid rgba(255,255,255,.12) !important;
+  }
+  .sidebar .brand-mark{
+    width:48px !important;
+    height:48px !important;
+    margin:0 !important;
+    border-radius:15px !important;
+    font-size:17px !important;
+  }
+  .sidebar .brand-text{
+    display:flex !important;
+    align-items:center !important;
+    text-align:center !important;
+    line-height:1.1 !important;
+  }
+  .sidebar .brand-text b{font-size:18px !important;}
+  .sidebar .brand-text span{font-size:9px !important; margin-top:3px !important;}
+  .mobile-menu-toggle{
+    left:14px !important;
+    top:14px !important;
+    width:50px !important;
+    height:50px !important;
+    z-index:10020 !important;
+  }
+}
+</style>
 </head>
 <body>
 <div class="app">
