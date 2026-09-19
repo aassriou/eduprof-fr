@@ -29,11 +29,11 @@
 
 .grade-big{font-size:28px;font-weight:800;margin:5px 0}
 \n
-/* V20 MOBILE RIGHT SIDEBAR */
+/* V21: mobile layout — content LEFT, full navigation RIGHT */
 @media (max-width:800px){
-  .app{display:flex !important;flex-direction:row-reverse !important;min-height:100vh !important;}
-  .app > .sidebar{order:2 !important;flex:0 0 72px !important;width:72px !important;}
-  .app > .main{order:1 !important;flex:1 1 auto !important;min-width:0 !important;width:auto !important;}
+  .app{display:flex !important; flex-direction:row !important; width:100% !important; min-height:100vh !important;}
+  .main{order:1 !important; flex:1 1 auto !important; width:auto !important; min-width:0 !important; margin:0 !important;}
+  .sidebar{order:2 !important; flex:0 0 72px !important; width:72px !important; position:static !important; margin:0 !important;}
 }
 </style>
 
@@ -722,6 +722,23 @@ render();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 }
+</script>
+
+<script>
+(function(){
+  function placeMobileNav(){
+    if (window.innerWidth <= 800) {
+      var app=document.querySelector('.app');
+      var side=app && app.querySelector('.sidebar');
+      var main=app && app.querySelector('.main');
+      if(app && side && main && app.lastElementChild !== side){
+        app.appendChild(side);
+      }
+    }
+  }
+  window.addEventListener('load', placeMobileNav);
+  window.addEventListener('resize', placeMobileNav);
+})();
 </script>
 </body>
 </html>
