@@ -29,30 +29,8 @@
 
 .grade-big{font-size:28px;font-weight:800;margin:5px 0}
 \n
-/* V19 — barre de navigation fixée à droite */
-.sidebar{
-  position:fixed;
-  top:0;
-  right:0;
-  bottom:0;
-  z-index:1000;
-  overflow-y:auto;
-}
-.main{
-  margin-left:0;
-  margin-right:245px;
-}
-@media(max-width:800px){
-  .sidebar{
-    right:0;
-    left:auto;
-    width:72px;
-  }
-  .main{
-    margin-left:0;
-    margin-right:72px;
-  }
-}
+/* V19 — téléphone : menu à droite, contenu à gauche */
+@media (max-width:800px){.app{display:block;min-height:100vh}.sidebar{position:fixed !important;top:0 !important;right:0 !important;left:auto !important;bottom:0 !important;width:72px !important;height:100vh !important;z-index:1000 !important;overflow-y:auto !important}.main{margin-left:0 !important;margin-right:72px !important;width:auto !important;min-width:0 !important}}
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
