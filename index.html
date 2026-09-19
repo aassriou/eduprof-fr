@@ -283,7 +283,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
 }
 </style>
-<meta name="eduprof-version" content="V65">
+<meta name="eduprof-version" content="V70">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
@@ -1847,5 +1847,36 @@ function updateChosenFileName(input){
   }
   .sidebar .brand-text b{font-size:20px !important;}
   .sidebar .brand-text span{font-size:10px !important;margin-top:5px !important;}
+}
+</style>
+
+<style id="v70-sidebar-background-width">
+/* V70 — the dark-blue drawer itself hugs the menu content */
+@media (max-width:800px){
+  .sidebar{
+    width:max-content !important;
+    min-width:0 !important;
+    max-width:88vw !important;
+    box-sizing:border-box !important;
+    padding-left:8px !important;
+    padding-right:8px !important;
+  }
+  .sidebar .brand{
+    width:max-content !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+  }
+  .sidebar .nav{
+    width:max-content !important;
+    max-width:100% !important;
+    align-items:flex-start !important;
+  }
+  .sidebar .nav button{
+    width:max-content !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    align-self:flex-start !important;
+    white-space:nowrap !important;
+  }
 }
 </style>
