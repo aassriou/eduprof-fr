@@ -224,6 +224,48 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   }
 }
 </style>
+
+<style id="v54-header-layout">
+/* V54 — mobile header: hamburger at top-left, EP beside it, EduProf underneath */
+@media (max-width:800px){
+  .sidebar{width:176px !important;}
+  .sidebar .brand{
+    position:relative !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:7px !important;
+    padding:18px 8px 18px 58px !important;
+    margin:0 0 14px !important;
+    min-height:116px !important;
+    box-sizing:border-box !important;
+  }
+  .sidebar .brand-mark{
+    width:48px !important; height:48px !important;
+    margin:0 !important; border-radius:15px !important;
+    font-size:17px !important;
+  }
+  .sidebar .brand-text{
+    display:flex !important; flex-direction:column !important;
+    align-items:center !important; justify-content:center !important;
+    text-align:center !important; line-height:1.05 !important;
+  }
+  .sidebar .brand-text b{font-size:20px !important; line-height:1.05 !important;}
+  .sidebar .brand-text span{font-size:9px !important; margin-top:4px !important; letter-spacing:1px !important;}
+  .mobile-menu-toggle{
+    left:12px !important; top:18px !important;
+    width:48px !important; height:48px !important;
+    border-radius:14px !important;
+    background:#fff !important; color:#2563eb !important;
+    border:1px solid rgba(37,99,235,.12) !important;
+    box-shadow:0 8px 22px rgba(15,23,42,.20) !important;
+    z-index:10020 !important;
+  }
+  .mobile-menu-toggle::first-letter{color:#2563eb !important;}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
