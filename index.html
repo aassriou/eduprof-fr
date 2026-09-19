@@ -142,16 +142,6 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .fiches-search{display:none;align-items:center;gap:7px;padding:9px 10px;background:#111d3b;border-top:1px solid rgba(255,255,255,.08)}.fiches-search.show{display:flex}.fiches-search input{flex:1;min-width:0;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;padding:0 11px}.fiches-search button{height:38px;border-radius:10px;border:0;background:#5865f2;color:#fff;padding:0 12px;font-weight:900}.fiches-empty{color:#cbd5e1;text-align:center;padding:18px}
 #fichesNav{display:none}
 @media(max-width:800px){.fiches-hero{padding:16px;gap:12px;border-radius:21px}.fiches-icon{flex-basis:55px;width:55px;height:55px;border-radius:17px;font-size:27px}.fiches-hero h2{font-size:19px}.fiches-viewer-card{border-radius:22px}.fiches-reader-top{padding:13px}.fiches-reader-actions a{display:none}.fiches-reader-body{padding:7px}.fiches-pdf-stage{height:calc(100vh - 285px);min-height:460px;padding:16px 6px 82px;border-radius:16px}.fiches-bottom{left:10px;right:10px;bottom:10px;border-radius:15px}.fiches-bottom button,.fiches-bottom input{height:36px;min-width:36px;padding:0 8px}.fiches-thumb{flex-basis:67px}}
-
-/* V66: reliable PDF reader fullscreen */
-.fiches-viewer-card:fullscreen{width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border-radius:0!important;background:#dfe5ef!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
-.fiches-viewer-card:fullscreen .fiches-reader-top{flex:0 0 auto}
-.fiches-viewer-card:fullscreen .fiches-reader-body{flex:1 1 auto;min-height:0;overflow:hidden}
-.fiches-viewer-card:fullscreen .fiches-pdf-stage{height:100%!important;min-height:0!important;border-radius:0!important}
-.fiches-reader-fullscreen{position:fixed!important;inset:0!important;z-index:99999!important;width:100vw!important;height:100vh!important;max-width:none!important;margin:0!important;border-radius:0!important;background:#dfe5ef!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
-.fiches-reader-fullscreen .fiches-reader-top{flex:0 0 auto}
-.fiches-reader-fullscreen .fiches-reader-body{flex:1 1 auto;min-height:0;overflow:hidden}
-.fiches-reader-fullscreen .fiches-pdf-stage{height:100%!important;min-height:0!important;border-radius:0!important}
 </style>
 
 <style id="v40-mobile-layout">
@@ -794,27 +784,7 @@ async function fichesRenderPage(num){
 }
 function fichesPrevPage(){fichesRenderPage(fichesPage-1)} function fichesNextPage(){fichesRenderPage(fichesPage+1)} function fichesGoToPage(v){fichesRenderPage(v)}
 function fichesZoomIn(){fichesScale=Math.min(2.4,fichesScale+0.2);fichesRenderPage(fichesPage)} function fichesZoomOut(){fichesScale=Math.max(.75,fichesScale-.2);fichesRenderPage(fichesPage)}
-async function fichesFocusReader(){
-  const el=document.querySelector('.fiches-viewer-card');
-  if(!el)return;
-  try{
-    if(document.fullscreenElement){
-      await document.exitFullscreen();
-      return;
-    }
-    if(el.requestFullscreen){
-      await el.requestFullscreen({navigationUI:'hide'});
-    }else if(el.webkitRequestFullscreen){
-      el.webkitRequestFullscreen();
-    }else{
-      el.classList.toggle('fiches-reader-fullscreen');
-    }
-  }catch(e){
-    el.classList.toggle('fiches-reader-fullscreen');
-  }
-}
-document.addEventListener('fullscreenchange',()=>{const b=document.querySelector('.fiches-reader-actions .primary');if(b)b.textContent=document.fullscreenElement?'↙ Quitter le plein écran':'↗ Plein écran';});
-
+function fichesFocusReader(){const el=document.querySelector('.fiches-viewer-card');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
 function fichesToggleThumbs(){const box=document.getElementById('fichesThumbs');if(!box)return;box.classList.toggle('show');if(box.classList.contains('show'))fichesUpdateThumbs(true);}
 async function fichesUpdateThumbs(force=false){const box=document.getElementById('fichesThumbs');if(!box||!fichesPdfDoc||(!box.classList.contains('show')&&!force))return;box.innerHTML='';const nums=[];for(let n=Math.max(1,fichesPage-2);n<=Math.min(fichesPdfDoc.numPages,fichesPage+2);n++)nums.push(n);for(const n of nums){try{const p=await fichesPdfDoc.getPage(n);const vp=p.getViewport({scale:.16});const c=document.createElement('canvas');c.width=Math.ceil(vp.width);c.height=Math.ceil(vp.height);const wrap=document.createElement('button');wrap.type='button';wrap.className='fiches-thumb'+(n===fichesPage?' active':'');wrap.title='Page '+n;wrap.onclick=()=>fichesRenderPage(n);await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;wrap.appendChild(c);const sm=document.createElement('small');sm.textContent=n;wrap.appendChild(sm);box.appendChild(wrap);}catch(e){}}
 }
@@ -1688,26 +1658,6 @@ function updateChosenFileName(input){
 @media (max-width:800px){
   .mobile-menu-toggle::before{content:none !important;display:none !important;}
   .mobile-menu-toggle{font-size:32px !important;color:#fff !important;}
-}
-</style>
-
-<style id="v67-compact-menu">
-/* V67 — compact, elegant navigation */
-.sidebar{width:230px!important;padding:18px 11px!important}
-.brand{padding:6px 8px 15px!important;margin-bottom:8px!important}
-.brand-mark{width:42px!important;height:42px!important;border-radius:13px!important;font-size:15px!important}
-.brand-text b{font-size:18px!important}
-.brand-text span{font-size:8px!important}
-.nav{gap:5px!important}
-.nav button{min-height:45px!important;padding:9px 11px!important;border-radius:12px!important;font-size:13px!important;gap:8px!important}
-@media(max-width:800px){
-  .sidebar{width:min(250px,78vw)!important;padding:14px 9px 16px!important}
-  .brand{padding:5px 7px 13px!important;margin-bottom:6px!important}
-  .brand-mark{width:40px!important;height:40px!important;border-radius:12px!important}
-  .brand-text b{font-size:17px!important}
-  .brand-text span{font-size:8px!important}
-  .nav{gap:5px!important}
-  .nav button{min-height:45px!important;padding:8px 9px!important;border-radius:11px!important;font-size:12px!important;gap:7px!important}
 }
 </style>
 </body>
