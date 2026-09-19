@@ -131,7 +131,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 @media(max-width:600px){.manarat-timetable-card{padding:14px;border-radius:20px}.manarat-timetable-title{font-size:20px}.manarat-grid{min-width:590px}.manarat-grid.afternoon{min-width:310px}.manarat-slot-body{min-height:64px}}
 
 
-/* V60 — Fiches pédagogiques · Institut Manarat Rif */
+/* V63 — Fiches pédagogiques · Institut Manarat Rif */
 .fiches-hero{
   margin-top:18px;display:flex;align-items:center;gap:20px;padding:22px;
   border-radius:26px;background:linear-gradient(135deg,#eef2ff 0%,#ffffff 58%,#f4f7ff 100%);
@@ -529,7 +529,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
       </div>
       <div class="actions">
         <button class="btn" type="button" onclick="openFichesPDF()">📖 Lire le PDF</button>
-        <a class="btn cancel" href="./assets/fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir</a>
+        <a class="btn cancel" href="./fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir</a>
       </div>
     </div>
     <div class="fiches-viewer">
@@ -794,7 +794,7 @@ function renderDashboardSummary(){
 }
 
 function getFichesPdfUrl(){
-  return new URL('./assets/fiches-parcours-1asc.pdf', document.baseURI).href;
+  return new URL('./fiches-parcours-1asc.pdf', document.baseURI).href;
 }
 function openFichesPDF(){
   const url=getFichesPdfUrl();
@@ -810,9 +810,7 @@ function openFichesPDF(){
 }
 function initFichesViewer(){
   const frame=document.getElementById('fichesPdfViewer');
-  if(!frame)return;
-  const pdf=getFichesPdfUrl();
-  frame.src='https://docs.google.com/gview?embedded=1&url='+encodeURIComponent(pdf);
+  if(frame) frame.src=getFichesPdfUrl();
 }
 initFichesViewer();
 
