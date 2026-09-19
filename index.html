@@ -1391,6 +1391,44 @@ function updateChosenFileName(input){
 }
 </script>
 
+
+<style id="v51-robust-controls">
+@media(max-width:800px){
+  .institution-bar,.institution-quick,.institution-choice,.institution-picker{pointer-events:auto!important;touch-action:manipulation!important;}
+  .mobile-menu-backdrop{pointer-events:none!important;}
+  .app:not(.mobile-menu-closed) .mobile-menu-backdrop{pointer-events:auto!important;}
+  .mobile-menu-backdrop{display:none!important;}
+  .app:not(.mobile-menu-closed) .mobile-menu-backdrop{display:block!important;}
+}
+</style>
+<script id="v51-robust-controls-script">
+(function(){
+  function bindRobust(){
+    document.querySelectorAll('.institution-choice').forEach(function(btn){
+      if(btn.dataset.v51Bound)return;
+      btn.dataset.v51Bound='1';
+      btn.addEventListener('click',function(e){
+        e.preventDefault(); e.stopPropagation();
+        var id=btn.getAttribute('data-inst');
+        if(window.switchInstitution) window.switchInstitution(id);
+      },true);
+    });
+    var sel=document.getElementById('institutionSelect');
+    if(sel && !sel.dataset.v51Bound){
+      sel.dataset.v51Bound='1';
+      sel.addEventListener('change',function(e){
+        e.stopPropagation();
+        if(window.switchInstitution) window.switchInstitution(this.value);
+      },true);
+    }
+    var app=document.querySelector('.app');
+    if(app && window.innerWidth<=800 && !app.classList.contains('mobile-menu-closed')) app.classList.add('mobile-menu-closed');
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindRobust);
+  else bindRobust();
+  window.addEventListener('load',bindRobust);
+})();
+</script>
 </body>
 </html>
 <style id="v47-mobile-topbar">
