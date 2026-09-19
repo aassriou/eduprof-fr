@@ -187,18 +187,21 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 @media(max-width:480px){.institution-picker select{display:none!important}.institution-quick{display:grid;grid-template-columns:1fr;gap:8px}.institution-choice{width:100%;min-height:48px;text-align:left;font-size:13px}.institution-bar{position:relative;z-index:30!important}}
 </style>
 
-<style id="v53-logo-under-menu">
-/* V53 — mobile: EduProf logo sits clearly below the hamburger button */
+<style id="v56-logo-beside-menu">
+/* V56 — mobile: hamburger and EP on the same top row; EduProf underneath */
 @media (max-width:800px){
   .sidebar .brand{
+    position:relative !important;
     display:flex !important;
     flex-direction:column !important;
     align-items:center !important;
-    justify-content:center !important;
-    gap:9px !important;
-    padding:58px 6px 18px !important;
+    justify-content:flex-start !important;
+    gap:8px !important;
+    padding:14px 8px 18px !important;
     margin-bottom:14px !important;
     border-bottom:1px solid rgba(255,255,255,.12) !important;
+    min-height:150px !important;
+    box-sizing:border-box !important;
   }
   .sidebar .brand-mark{
     width:48px !important;
@@ -209,19 +212,28 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   }
   .sidebar .brand-text{
     display:flex !important;
+    flex-direction:column !important;
     align-items:center !important;
     text-align:center !important;
     line-height:1.1 !important;
   }
-  .sidebar .brand-text b{font-size:18px !important;}
-  .sidebar .brand-text span{font-size:9px !important; margin-top:3px !important;}
+  .sidebar .brand-text b{font-size:19px !important;}
+  .sidebar .brand-text span{font-size:9px !important; margin-top:4px !important;}
   .mobile-menu-toggle{
-    left:12px !important;
-    top:10px !important;
-    width:50px !important;
-    height:50px !important;
+    display:flex !important;
+    left:14px !important;
+    top:14px !important;
+    width:48px !important;
+    height:48px !important;
     z-index:10020 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    border-radius:12px !important;
+    color:#fff !important;
+    font-size:32px !important;
   }
+  .app:not(.mobile-menu-closed) .mobile-menu-toggle{display:flex !important;}
+  .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
 }
 </style>
 </head>
@@ -1553,4 +1565,51 @@ function updateChosenFileName(input){
   .mobile-menu-toggle{z-index:10020 !important;}
 }
 @media(min-width:801px){body{padding-top:0 !important;}}
+</style>
+
+<style id="v56-mobile-brand-next-to-menu">
+/* V56 — mobile: hamburger and EduProf branding on the same top row */
+@media (max-width:800px){
+  .mobile-menu-toggle{
+    display:flex !important;
+    position:fixed !important;
+    left:12px !important;
+    top:12px !important;
+    width:48px !important;
+    height:48px !important;
+    z-index:10030 !important;
+    background:transparent !important;
+    color:#fff !important;
+    border:0 !important;
+    border-radius:12px !important;
+    box-shadow:none !important;
+    font-size:32px !important;
+    line-height:1 !important;
+  }
+  .app:not(.mobile-menu-closed) .mobile-menu-toggle{display:flex !important;}
+  .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
+  .sidebar{width:min(292px,86vw)!important;padding:10px 12px 18px!important;}
+  .sidebar .brand{
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:12px !important;
+    padding:8px 8px 18px 68px !important;
+    margin:0 0 14px !important;
+    border-bottom:1px solid rgba(255,255,255,.12) !important;
+    min-height:64px !important;
+  }
+  .sidebar .brand-mark{
+    width:48px !important;height:48px !important;margin:0 !important;
+    border-radius:15px !important;flex:0 0 48px !important;
+  }
+  .sidebar .brand-text{
+    display:flex !important;flex-direction:column !important;
+    align-items:flex-start !important;text-align:left !important;
+    line-height:1.05 !important;
+  }
+  .sidebar .brand-text b{font-size:20px !important;}
+  .sidebar .brand-text span{font-size:10px !important;margin-top:5px !important;}
+}
 </style>
