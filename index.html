@@ -127,12 +127,18 @@
     <h1>🧭 Suivi & comportement</h1>
   </div>
   <div class="card">
-    <div class="field">
-      <label>📚 Choisir une classe</label>
-      <select id="behaviorClassFilter" onchange="renderBehavior()"></select>
+    <div class="grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="field">
+        <label>📚 Choisir une classe</label>
+        <select id="behaviorClassFilter" onchange="renderBehavior()"></select>
+      </div>
+      <div class="field">
+        <label>📅 Date du suivi</label>
+        <input id="behaviorDateFilter" type="date" onchange="renderBehavior()">
+      </div>
     </div>
     <div class="muted" style="margin-bottom:14px">
-      Suivez l’assiduité, la participation, les devoirs, le comportement et l’effort de chaque élève.
+      Chaque absence, retard, participation, devoir, comportement et effort est maintenant enregistré <b>par date</b>. Choisissez la date pour consulter ou modifier le suivi de cette journée.
     </div>
     <div style="overflow:auto">
       <table class="table behavior-table">
@@ -321,7 +327,7 @@
 <script>
 const key='eduprof_fr_data';
 let data=JSON.parse(localStorage.getItem(key)||'{"classes":[],"students":[],"exercises":[],"grades":[],"courses":[],"schedule":[]}'); data.exercises=data.exercises||[]; data.courses=data.courses||[]; data.schedule=data.schedule||[]; data.exercises=data.exercises.map(e=>{if(Array.isArray(e.questions))return e; return {...e,questions:Array.from({length:e.questions||1},()=>({text:'Question à compléter',options:['A','B','C'],correct:0})),type:'qcm'};}); data.grades=(data.grades||[]).map(g=>({...g,coef:Number(g.coef)||1}));
-data.students=(data.students||[]).map(s=>({...s,behavior:{absences:Number(s.behavior?.absences)||0,retards:Number(s.behavior?.retards)||0,participation:Number(s.behavior?.participation)||0,homework:Number(s.behavior?.homework)||0,comportement:s.behavior?.comportement||'Bien',effort:s.behavior?.effort||'Bon',observation:s.behavior?.observation||''}}));
+data.students=(data.students||[]).map(s=>({...s,behavior:{absences:Number(s.behavior?.absences)||0,retards:Number(s.behavior?.retards)||0,participation:Number(s.behavior?.participation)||0,homework:Number(s.behavior?.homework)||0,comportement:s.behavior?.comportement||'Bien',effort:s.behavior?.effort||'Bon',observation:s.behavior?.observation||'',history:s.behavior?.history||{}}}));
 function save(){localStorage.setItem(key,JSON.stringify(data));render()}
 
 
@@ -621,50 +627,68 @@ function render(){
  renderStudents();
 }
 
+function behaviorDefault(b){
+ return {absences:Number(b?.absences)||0,retards:Number(b?.retards)||0,participation:Number(b?.participation)||0,homework:Number(b?.homework)||0,comportement:b?.comportement||'Bien',effort:b?.effort||'Bon',observation:b?.observation||''};
+}
+function todayISO(){
+ const d=new Date(); const m=String(d.getMonth()+1).padStart(2,'0'); const day=String(d.getDate()).padStart(2,'0'); return `${d.getFullYear()}-${m}-${day}`;
+}
 function renderBehavior(){
  const box=document.getElementById('behaviorTable'); if(!box)return;
  const sel=document.getElementById('behaviorClassFilter');
+ const dateInput=document.getElementById('behaviorDateFilter');
+ if(dateInput && !dateInput.value) dateInput.value=todayISO();
+ const date=dateInput?.value||todayISO();
  const classes=(data.classes||[]).map(c=>c.name).filter(Boolean);
  const names=[...new Set(classes)];
  const old=sel?.value||'';
  if(sel){
    sel.innerHTML=names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
-   if(names.includes(old)) sel.value=old;
-   else if(names[0]) sel.value=names[0];
+   if(names.includes(old)) sel.value=old; else if(names[0]) sel.value=names[0];
  }
  const chosen=sel?.value||'';
  const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!chosen||classKey(s.className||'')===classKey(chosen));
  if(!rows.length){
-   box.innerHTML='<tr><td colspan="8" class="empty">Aucun élève dans cette classe.</td></tr>';
-   return;
+   box.innerHTML='<tr><td colspan="8" class="empty">Aucun élève dans cette classe.</td></tr>'; return;
  }
  box.innerHTML=rows.map(({s,i})=>{
-   s.behavior=s.behavior||{absences:0,retards:0,participation:0,homework:0,comportement:'Bien',effort:'Bon',observation:''};
+   s.behavior=s.behavior||behaviorDefault();
+   s.behavior.history=s.behavior.history||{};
    const b=s.behavior;
+   const d=Object.prototype.hasOwnProperty.call(b.history,date) ? {...behaviorDefault(),...b.history[date]} : behaviorDefault(b);
    return `<tr>
      <td class="behavior-name">${esc(s.last)} ${esc(s.first)}</td>
-     <td><input type="number" min="0" value="${Number(b.absences)||0}" onchange="updateBehavior(${i},'absences',this.value)"></td>
-     <td><input type="number" min="0" value="${Number(b.retards)||0}" onchange="updateBehavior(${i},'retards',this.value)"></td>
-     <td><select onchange="updateBehavior(${i},'participation',this.value)">
-       ${[0,1,2,3,4,5].map(v=>`<option value="${v}" ${Number(b.participation)==v?'selected':''}>${v}/5</option>`).join('')}
+     <td><input type="number" min="0" value="${Number(d.absences)||0}" onchange="updateBehaviorDaily(${i},'absences',this.value)"></td>
+     <td><input type="number" min="0" value="${Number(d.retards)||0}" onchange="updateBehaviorDaily(${i},'retards',this.value)"></td>
+     <td><select onchange="updateBehaviorDaily(${i},'participation',this.value)">
+       ${[0,1,2,3,4,5].map(v=>`<option value="${v}" ${Number(d.participation)==v?'selected':''}>${v}/5</option>`).join('')}
      </select></td>
-     <td><input type="number" min="0" value="${Number(b.homework)||0}" onchange="updateBehavior(${i},'homework',this.value)"></td>
-     <td><select onchange="updateBehavior(${i},'comportement',this.value)">
-       ${['Très bien','Bien','Moyen','À améliorer'].map(v=>`<option ${b.comportement===v?'selected':''}>${v}</option>`).join('')}
+     <td><input type="number" min="0" value="${Number(d.homework)||0}" onchange="updateBehaviorDaily(${i},'homework',this.value)"></td>
+     <td><select onchange="updateBehaviorDaily(${i},'comportement',this.value)">
+       ${['Très bien','Bien','Moyen','À améliorer'].map(v=>`<option ${d.comportement===v?'selected':''}>${v}</option>`).join('')}
      </select></td>
-     <td><select onchange="updateBehavior(${i},'effort',this.value)">
-       ${['Excellent','Bon','Moyen','À améliorer'].map(v=>`<option ${b.effort===v?'selected':''}>${v}</option>`).join('')}
+     <td><select onchange="updateBehaviorDaily(${i},'effort',this.value)">
+       ${['Excellent','Bon','Moyen','À améliorer'].map(v=>`<option ${d.effort===v?'selected':''}>${v}</option>`).join('')}
      </select></td>
-     <td><input class="behavior-note" value="${esc(b.observation||'')}" onchange="updateBehavior(${i},'observation',this.value)" placeholder="Observation..."></td>
+     <td><input class="behavior-note" value="${esc(d.observation||'')}" onchange="updateBehaviorDaily(${i},'observation',this.value)" placeholder="Observation..."></td>
    </tr>`;
  }).join('');
 }
-function updateBehavior(i,field,value){
+function updateBehaviorDaily(i,field,value){
  if(!data.students[i])return;
- data.students[i].behavior=data.students[i].behavior||{absences:0,retards:0,participation:0,homework:0,comportement:'Bien',effort:'Bon',observation:''};
+ const date=document.getElementById('behaviorDateFilter')?.value||todayISO();
+ data.students[i].behavior=data.students[i].behavior||behaviorDefault();
+ data.students[i].behavior.history=data.students[i].behavior.history||{};
+ const current=Object.prototype.hasOwnProperty.call(data.students[i].behavior.history,date) ? {...behaviorDefault(),...data.students[i].behavior.history[date]} : behaviorDefault(data.students[i].behavior);
  if(['absences','retards','participation','homework'].includes(field)) value=Math.max(0,Number(value)||0);
- data.students[i].behavior[field]=value;
+ current[field]=value;
+ data.students[i].behavior.history[date]=current;
  localStorage.setItem(key,JSON.stringify(data));
+ renderBehavior();
+}
+function updateBehavior(i,field,value){
+ // Keep compatibility with older data/actions; new entries are saved by date.
+ updateBehaviorDaily(i,field,value);
 }
 
 function renderStudents(){
