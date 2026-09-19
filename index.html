@@ -129,6 +129,36 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .manarat-slot-body{min-height:72px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.manarat-class{font-size:17px;font-weight:900}.manarat-class.c1{color:#e33d43}.manarat-class.c2{color:#ef7f17}.manarat-subject{font-size:11px;color:#7a879e;margin-top:4px;font-weight:700}.manarat-empty{color:#a3aec1;font-weight:700}
 .manarat-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.manarat-summary strong{font-size:17px}
 @media(max-width:600px){.manarat-timetable-card{padding:14px;border-radius:20px}.manarat-timetable-title{font-size:20px}.manarat-grid{min-width:590px}.manarat-grid.afternoon{min-width:310px}.manarat-slot-body{min-height:64px}}
+
+
+/* V60 — Fiches pédagogiques · Institut Manarat Rif */
+.fiches-hero{
+  margin-top:18px;display:flex;align-items:center;gap:20px;padding:22px;
+  border-radius:26px;background:linear-gradient(135deg,#eef2ff 0%,#ffffff 58%,#f4f7ff 100%);
+  border:1px solid rgba(70,92,220,.14);box-shadow:0 14px 40px rgba(24,40,90,.09)
+}
+.fiches-icon{
+  flex:0 0 72px;width:72px;height:72px;border-radius:22px;display:flex;align-items:center;justify-content:center;
+  font-size:36px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 12px 26px rgba(37,99,235,.24)
+}
+.fiches-hero h2{margin:4px 0 8px;color:#15213d;font-size:25px}
+.fiches-hero p{margin:0;line-height:1.6;color:#64748b}
+.fiches-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.fiches-meta span{padding:8px 11px;border-radius:999px;background:#fff;border:1px solid #e3e8f4;color:#40506f;font-weight:800;font-size:12px}
+.fiches-viewer-card{margin-top:18px;padding:18px;border-radius:26px;background:#fff;border:1px solid #e4e9f4;box-shadow:0 12px 34px rgba(24,40,90,.08)}
+.fiches-viewer-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.fiches-viewer-head h2{margin:0;color:#15213d}
+.fiches-viewer{height:calc(100vh - 300px);min-height:620px;border-radius:20px;overflow:hidden;background:#eef2f7;border:1px solid #dfe5ef}
+.fiches-viewer iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+#fichesNav{display:none}
+@media(max-width:800px){
+  .fiches-hero{padding:17px;gap:14px;border-radius:21px}
+  .fiches-icon{flex-basis:58px;width:58px;height:58px;border-radius:18px;font-size:29px}
+  .fiches-hero h2{font-size:20px}
+  .fiches-viewer-card{padding:12px;border-radius:21px}
+  .fiches-viewer{height:calc(100vh - 265px);min-height:520px;border-radius:16px}
+}
+
 </style>
 
 <style id="v40-mobile-layout">
@@ -260,6 +290,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .app.mobile-menu-closed .mobile-menu-toggle{display:flex !important;}
 }
 </style>
+<meta name="eduprof-version" content="V61">
 </head>
 <body>
 <div class="app">
@@ -278,6 +309,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
     <button onclick="showPage('evaluations',this)">✅ Évaluations</button>
     <button onclick="showPage('resultats',this)">📊 Résultats</button>
 <button type="button" onclick="showPage('import',this); closeMobileMenu();">📥 Import Excel</button>
+    <button id="fichesNav" type="button" onclick="showPage('fiches',this); closeMobileMenu();">📘 Fiches pédagogiques</button>
   </div>
 </aside>
 
@@ -464,6 +496,45 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   </div>
 </section>
 
+<section id="fiches" class="page">
+  <div class="top">
+    <div>
+      <h1>📘 Fiches pédagogiques</h1>
+      <p class="muted">Institut Manarat Rif · Parcours · Première année (1ASC)</p>
+    </div>
+    <div class="actions">
+      <button class="btn" type="button" onclick="openFichesPDF()">🌐 Ouvrir dans le navigateur</button>
+    </div>
+  </div>
+
+  <div class="fiches-hero">
+    <div class="fiches-icon">📘</div>
+    <div>
+      <div class="section-kicker">RESSOURCE PÉDAGOGIQUE</div>
+      <h2>Fiches Parcours — 1ASC</h2>
+      <p>Guide pédagogique du manuel <b>Parcours</b>, Première année, Période I. Le document contient les fiches pédagogiques de la séquence et des activités.</p>
+      <div class="fiches-meta">
+        <span>📄 130 pages</span>
+        <span>🇫🇷 Français</span>
+        <span>🏫 Institut Manarat Rif</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="fiches-viewer-card">
+    <div class="fiches-viewer-head">
+      <div>
+        <h2>📖 Consulter la fiche</h2>
+        <p class="muted">Vous pouvez faire défiler les pages directement dans l’application.</p>
+      </div>
+      <a class="btn cancel" href="./assets/fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir le PDF</a>
+    </div>
+    <div class="fiches-viewer">
+      <iframe src="./assets/fiches-parcours-1asc.pdf#page=1" title="Fiches pédagogiques Parcours 1ASC"></iframe>
+    </div>
+  </div>
+</section>
+
 <section id="profils" class="page">
 <div class="top"><h1>👤 Profil élève</h1></div>
 <div class="card">
@@ -606,6 +677,14 @@ function updateInstitutionUI(){
  if(name) name.textContent=INSTITUTIONS[currentInstitution];
  const label=document.getElementById('courseInstitutionLabel');
  if(label) label.textContent=INSTITUTIONS[currentInstitution];
+ const fichesNav=document.getElementById('fichesNav');
+ if(fichesNav) fichesNav.style.display=currentInstitution==='manarat'?'flex':'none';
+ const fichesPage=document.getElementById('fiches');
+ if(fichesPage && currentInstitution!=='manarat' && fichesPage.classList.contains('active')){
+   fichesPage.classList.remove('active');
+   const dash=document.getElementById('dashboard');
+   if(dash) dash.classList.add('active');
+ }
  document.querySelectorAll('.institution-choice').forEach(function(btn){
    const active=btn.getAttribute('data-inst')===currentInstitution;
    btn.classList.toggle('active',active);
@@ -709,6 +788,11 @@ function renderDashboardSummary(){
  const sc=document.getElementById('statCourses'),sg=document.getElementById('statGradesDash');
  if(sc)sc.textContent=data.courses.length; if(sg)sg.textContent=n;
  box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
+}
+
+function openFichesPDF(){
+  const url='./assets/fiches-parcours-1asc.pdf';
+  window.open(url,'_blank','noopener,noreferrer');
 }
 
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
