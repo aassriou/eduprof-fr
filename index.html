@@ -105,6 +105,18 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   .nav button:hover{transform:none !important}
 }
 
+
+/* V58 — emploi du temps Sidi Bouafif : design premium */
+.sidi-timetable-card{margin-top:18px;background:linear-gradient(145deg,#ffffff 0%,#f7f9ff 100%);border:1px solid rgba(70,92,220,.14);border-radius:26px;padding:20px;box-shadow:0 14px 40px rgba(24,40,90,.10)}
+.sidi-timetable-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.sidi-timetable-title{margin:0;font-size:24px;color:#15213d}.sidi-timetable-sub{margin:4px 0 0;color:#71809d}
+.sidi-hours{display:flex;gap:8px;flex-wrap:wrap}.sidi-hour-badge{padding:8px 12px;border-radius:999px;background:#eef2ff;color:#3047bd;font-weight:800;font-size:13px}
+.sidi-day-block{margin-top:18px}.sidi-day-label{display:flex;align-items:center;gap:9px;font-weight:900;color:#263556;margin:0 0 10px}.sidi-day-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,#5865f2,#2d73ea);box-shadow:0 0 0 5px rgba(74,92,230,.10)}
+.sidi-scroll{overflow-x:auto;padding-bottom:4px}.sidi-grid{display:grid;grid-template-columns:repeat(4,minmax(145px,1fr));gap:10px;min-width:620px}
+.sidi-slot{background:#fff;border:1px solid #e4e9f4;border-radius:17px;overflow:hidden;box-shadow:0 6px 18px rgba(31,45,90,.06)}.sidi-slot-time{padding:9px 10px;background:linear-gradient(135deg,#eef2ff,#f6f8ff);font-size:12px;font-weight:900;color:#53617b;text-align:center}
+.sidi-slot-body{min-height:68px;padding:11px 9px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.sidi-class{font-size:17px;font-weight:900;color:#1d2b4d}.sidi-room{font-size:12px;color:#7a879e;margin-top:4px}.sidi-empty{color:#a3aec1;font-weight:700}
+.sidi-summary{margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-radius:16px;background:#15213d;color:#fff}.sidi-summary strong{font-size:17px}
+@media(max-width:600px){.sidi-timetable-card{padding:14px;border-radius:20px}.sidi-timetable-title{font-size:20px}.sidi-grid{min-width:590px}.sidi-slot-body{min-height:64px}}
 </style>
 
 <style id="v40-mobile-layout">
@@ -450,6 +462,7 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 
 <section id="emploi" class="page">
 <div class="top"><h1>🗓️ Emploi du temps</h1><button class="btn" onclick="openModal('scheduleModal')">+ Ajouter une séance</button></div>
+<div id="sidiTimetablePanel"></div>
 <div class="card" style="overflow:auto"><table class="table"><thead><tr><th>Jour</th><th>Horaire</th><th>Classe</th><th>Activité</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
 </section>
 
@@ -711,7 +724,29 @@ function addCourse(){
  data.courses.push({title,className:className||'—',objective:objective||'—',skill:skill||'—',content:content||'—'});save();closeModal('courseModal');
  ['courseTitle','courseClass','courseObjective','courseSkill','courseContent'].forEach(id=>document.getElementById(id).value='');
 }
+function renderSidiTimetable(){
+ const panel=document.getElementById('sidiTimetablePanel'); if(!panel)return;
+ if(currentInstitution!=='sidi'){panel.innerHTML='';return;}
+ const morningByDay={
+  'Lundi':[['08:00 – 09:00','3APIC-2'],['09:00 – 10:00','3APIC-3'],['10:00 – 11:00','3APIC-1'],['11:00 – 12:00','1APIC-5']],
+  'Mardi':[['08:00 – 09:00','—'],['09:00 – 10:00','—'],['10:00 – 11:00','—'],['11:00 – 12:00','—']],
+  'Mercredi':[['08:00 – 09:00','3APIC-1'],['09:00 – 10:00','3APIC-2'],['10:00 – 11:00','1APIC-5'],['11:00 – 12:00','1APIC-4']],
+  'Jeudi':[['08:00 – 09:00','—'],['09:00 – 10:00','—'],['10:00 – 11:00','—'],['11:00 – 12:00','—']],
+  'Vendredi':[['08:00 – 09:00','1APIC-4'],['09:00 – 10:00','1APIC-5'],['10:00 – 11:00','3APIC-3'],['11:00 – 12:00','3APIC-1']]
+ };
+ const afternoonByDay={
+  'Lundi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']],
+  'Mardi':[['14:00 – 15:00','3APIC-3'],['15:00 – 16:00','1APIC-4'],['16:00 – 17:00','3APIC-1'],['17:00 – 18:00','3APIC-2']],
+  'Mercredi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']],
+  'Jeudi':[['14:00 – 15:00','1APIC-5'],['15:00 – 16:00','1APIC-4'],['16:00 – 17:00','3APIC-3'],['17:00 – 18:00','3APIC-2']],
+  'Vendredi':[['14:00 – 15:00','—'],['15:00 – 16:00','—'],['16:00 – 17:00','—'],['17:00 – 18:00','—']]
+ };
+ const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi'];
+ const grid=items=>items.map(x=>`<div class="sidi-slot"><div class="sidi-slot-time">${x[0]}</div><div class="sidi-slot-body">${x[1]==='—'?'<span class="sidi-empty">—</span>':`<span class="sidi-class">${x[1]}</span><span class="sidi-room">Salle 5</span>`}</div></div>`).join('');
+ panel.innerHTML=`<div class="sidi-timetable-card"><div class="sidi-timetable-head"><div><h2 class="sidi-timetable-title">🏫 Lycée collégial Sidi Bouafif</h2><p class="sidi-timetable-sub">Emploi du temps — Français · année scolaire 2026/2027</p></div><div class="sidi-hours"><span class="sidi-hour-badge">☀️ 08:00 → 12:00</span><span class="sidi-hour-badge">🌙 14:00 → 18:00</span></div></div>${days.map(d=>`<div class="sidi-day-block"><h3 class="sidi-day-label"><span class="sidi-day-dot"></span>${d}</h3><div class="sidi-scroll"><div class="sidi-grid">${grid(morningByDay[d])}</div></div><div class="sidi-scroll" style="margin-top:10px"><div class="sidi-grid">${grid(afternoonByDay[d])}</div></div></div>`).join('')}<div class="sidi-summary"><span>⏱️ Volume hebdomadaire</span><strong>20 h</strong></div></div>`;
+}
 function renderSchedule(){
+ renderSidiTimetable();
  const box=document.getElementById('scheduleTable');if(!box)return;
  const order=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
  const rows=data.schedule.slice().sort((a,b)=>order.indexOf(a.day)-order.indexOf(b.day));
@@ -1454,7 +1489,8 @@ function updateChosenFileName(input){
 <script id="v51-robust-controls-script">
 (function(){
   function bindRobust(){
-    document.querySelectorAll('.institution-choice').forEach(function(btn){
+    if(typeof renderSidiTimetable==='function') renderSidiTimetable();
+  document.querySelectorAll('.institution-choice').forEach(function(btn){
       if(btn.dataset.v51Bound)return;
       btn.dataset.v51Bound='1';
       btn.addEventListener('click',function(e){
