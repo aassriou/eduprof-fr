@@ -73,6 +73,22 @@
 .onedrive-btn span{margin-left:7px}
 @media(max-width:700px){.onedrive-hero{padding:20px;gap:15px}.onedrive-icon{width:54px;height:54px;min-width:54px;font-size:27px}.onedrive-content h2{font-size:21px}.onedrive-content p{font-size:13px}.onedrive-btn{width:100%}}
 
+
+/* V36 — Premium visual redesign: interface only, data/functions preserved */
+:root{--bg:#f4f7fc;--card:#ffffff;--text:#13213a;--muted:#718096;--accent:#4f46e5;--accent2:#2563eb;--border:#e6eaf2;--dark:#111a31}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at 15% 0%,#eef2ff 0,transparent 30%),radial-gradient(circle at 90% 15%,#e0f2fe 0,transparent 25%),var(--bg);color:var(--text)}
+.app{min-height:100vh;background:transparent}
+.sidebar{background:linear-gradient(180deg,#111a31 0%,#18264a 55%,#202b57 100%);width:252px;padding:22px 14px;box-shadow:12px 0 35px rgba(17,24,39,.10);position:relative;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;padding:6px 10px 22px;margin-bottom:10px}.brand-mark{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;font-weight:900;box-shadow:0 10px 25px rgba(79,70,229,.35)}.brand-text{display:flex;flex-direction:column;line-height:1.15}.brand-text b{font-size:20px;letter-spacing:-.5px}.brand-text span{font-size:10px;color:#aab7d5;margin-top:4px;letter-spacing:.7px;text-transform:uppercase}
+.nav{display:flex;flex-direction:column;gap:3px}.nav button{border:1px solid transparent;color:#cbd5e7;text-align:left;padding:12px 13px;border-radius:13px;margin:0;font-size:14px;transition:.18s ease;display:flex;align-items:center;gap:9px}.nav button:hover{background:rgba(255,255,255,.08);transform:translateX(2px)}.nav button.active{background:linear-gradient(90deg,rgba(99,102,241,.30),rgba(37,99,235,.16));border-color:rgba(129,140,248,.18);color:#fff;box-shadow:inset 3px 0 0 #818cf8}
+.main{max-width:none;padding:22px 30px 40px}.institution-bar{background:rgba(255,255,255,.78)!important;border:1px solid rgba(226,232,240,.9)!important;box-shadow:0 8px 30px rgba(30,41,59,.06)!important;backdrop-filter:blur(16px)}
+.card{border:1px solid rgba(226,232,240,.9);border-radius:20px;box-shadow:0 10px 35px rgba(30,41,59,.06)}.btn{border-radius:12px;background:linear-gradient(135deg,#4f46e5,#2563eb);box-shadow:0 8px 18px rgba(37,99,235,.20);transition:.18s}.btn:hover{transform:translateY(-1px);box-shadow:0 12px 22px rgba(37,99,235,.24)}
+.hero-dashboard{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;min-height:245px;padding:34px 38px;border-radius:28px;background:linear-gradient(120deg,#111a31 0%,#27356b 48%,#315fd7 100%);color:#fff;box-shadow:0 22px 45px rgba(30,41,80,.22);margin-bottom:20px}.hero-dashboard:before,.hero-dashboard:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.12)}.hero-dashboard:before{width:320px;height:320px;right:-100px;top:-140px}.hero-dashboard:after{width:180px;height:180px;right:120px;bottom:-100px}.hero-copy{position:relative;z-index:2;max-width:720px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:1.7px;color:#b9c7ff;margin-bottom:9px}.hero-copy h1{font-size:38px;letter-spacing:-1.3px;margin:0 0 10px}.hero-copy p{margin:0;max-width:650px;color:#d7def4;line-height:1.65}.hero-actions{display:flex;gap:10px;margin-top:20px}.btn-light{background:#fff;color:#1e2a57;box-shadow:none}.btn-ghost{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);box-shadow:none}.hero-orb{position:relative;z-index:2;margin-right:60px}.orb-ring{width:130px;height:130px;border-radius:38px;display:grid;place-items:center;font-size:36px;font-weight:900;background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.25);box-shadow:0 20px 45px rgba(0,0,0,.16);transform:rotate(-7deg)}
+.dashboard-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:18px}.stat-card{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--border);border-radius:18px;padding:17px 18px;box-shadow:0 8px 25px rgba(30,41,59,.05)}.stat-card span{display:block;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}.stat-card strong{display:block;font-size:28px;margin-top:3px}.stat-icon{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:22px}.stat-indigo .stat-icon{background:#eef2ff}.stat-blue .stat-icon{background:#e0f2fe}.stat-violet .stat-icon{background:#f3e8ff}.stat-green .stat-icon{background:#dcfce7}.dashboard-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.modern-card{padding:22px}.card-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.card-heading h2{margin:4px 0 0;font-size:18px}.section-kicker{font-size:10px;font-weight:900;letter-spacing:1.4px;color:#7c83a5}.live-dot{font-size:11px;color:#16a34a;background:#f0fdf4;padding:6px 9px;border-radius:99px}.overview-content{margin-top:22px;padding:18px;border-radius:15px;background:linear-gradient(135deg,#f8faff,#f5f7ff);color:#526078;line-height:1.8}.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.quick-actions button{border:1px solid #e7eaf2;background:#fbfcff;border-radius:15px;padding:14px;text-align:left;cursor:pointer;transition:.18s;display:grid;grid-template-columns:32px 1fr;column-gap:9px}.quick-actions button:hover{background:#f4f6ff;border-color:#cfd6ff;transform:translateY(-1px)}.quick-actions span{grid-row:span 2;font-size:22px}.quick-actions b{font-size:13px}.quick-actions small{color:#7a8497;font-size:10px;margin-top:3px}
+.top h1{letter-spacing:-.5px}.table{border-radius:16px;overflow:hidden}.table th{background:#f7f8fc;color:#667085}.field input,.field select,select{border-radius:11px!important;border:1px solid #dfe4ee!important;background:#fff!important}.modalbox{border-radius:22px;box-shadow:0 25px 70px rgba(15,23,42,.22)}
+@media(max-width:900px){.main{padding:16px}.hero-dashboard{padding:28px;min-height:225px}.hero-orb{margin-right:10px}.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
+@media(max-width:800px){.sidebar{width:72px;padding:16px 8px}.brand{justify-content:center;padding:4px 0 18px}.brand-text{display:none}.brand-mark{width:42px}.nav button{font-size:0;justify-content:center;padding:12px 8px}.nav button::first-letter{font-size:20px}.main{padding:14px 12px}.hero-dashboard{min-height:250px;padding:24px 20px}.hero-copy h1{font-size:29px}.hero-copy p{font-size:13px}.hero-orb{display:none}.hero-actions{flex-wrap:wrap}.dashboard-stats{gap:10px}.stat-card{padding:13px}.stat-card strong{font-size:24px}.quick-actions{grid-template-columns:1fr}}
+@media(max-width:480px){.dashboard-stats{grid-template-columns:1fr 1fr}.stat-card{min-width:0}.stat-card span{font-size:10px}.stat-card strong{font-size:22px}.hero-dashboard{border-radius:22px}.hero-copy h1{font-size:26px}.hero-actions .btn{width:100%}}
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
@@ -85,7 +101,7 @@
 <body>
 <div class="app">
 <aside class="sidebar">
-  <div class="logo">Edu<span>Prof</span> FR</div>
+  <div class="brand"><div class="brand-mark">EP</div><div class="brand-text"><b>EduProf</b><span>FR · Professeur</span></div></div>
   <div class="nav">
     <button class="active" onclick="showPage('dashboard',this)">🏠 Tableau de bord</button>
     <button onclick="showPage('classes',this)">🏫 Mes classes</button>
@@ -108,15 +124,28 @@
   <div class="field" style="margin:0;min-width:260px"><select id="institutionSelect" onchange="switchInstitution(this.value)" style="width:100%;padding:11px;border:1px solid var(--border);border-radius:9px;font-weight:700"><option value="manarat">Institut Manarat Rif</option><option value="sidi">Lycée collégial Sidi bouafif</option></select></div>
 </div>
 <section id="dashboard" class="page active">
-  <div class="top"><div><h1>Bonjour, Professeur 👋</h1><p class="muted">Votre espace de gestion pédagogique.</p></div></div>
-  <div class="grid">
-    <div class="card"><div class="muted">Classes</div><div class="stat" id="statClasses">0</div></div>
-    <div class="card"><div class="muted">Élèves</div><div class="stat" id="statEleves">0</div></div>
-    <div class="card"><div class="muted">Cours</div><div class="stat">0</div></div>
-    <div class="card"><div class="muted">Évaluations</div><div class="stat">0</div></div>
+  <div class="hero-dashboard">
+    <div class="hero-copy">
+      <div class="eyebrow">ESPACE ENSEIGNANT · EDUPROF FR</div>
+      <h1>Bonjour, Professeur 👋</h1>
+      <p>Gérez vos classes, vos élèves, vos évaluations et vos ressources pédagogiques depuis un seul espace.</p>
+      <div class="hero-actions">
+        <button class="btn btn-light" onclick="showPage('classes',document.querySelectorAll('.nav button')[1])">＋ Nouvelle classe</button>
+        <button class="btn btn-ghost" onclick="showPage('eleves',document.querySelectorAll('.nav button')[2])">👨‍🎓 Mes élèves</button>
+      </div>
+    </div>
+    <div class="hero-orb"><div class="orb-ring">EP</div></div>
   </div>
-  <div class="section card"><h2>Démarrage rapide</h2><p class="muted">Commencez par créer une classe et ajouter vos élèves.</p><button class="btn" onclick="showPage('classes',document.querySelectorAll('.nav button')[1])">+ Ajouter une classe</button></div>
-<div class="section card"><h2>📈 Vue d’ensemble</h2><div id="dashboardSummary" class="muted"></div></div>
+  <div class="dashboard-stats">
+    <div class="stat-card stat-indigo"><div class="stat-icon">🏫</div><div><span>Classes</span><strong id="statClasses">0</strong></div></div>
+    <div class="stat-card stat-blue"><div class="stat-icon">👨‍🎓</div><div><span>Élèves</span><strong id="statEleves">0</strong></div></div>
+    <div class="stat-card stat-violet"><div class="stat-icon">📚</div><div><span>Cours</span><strong id="statCourses">0</strong></div></div>
+    <div class="stat-card stat-green"><div class="stat-icon">📊</div><div><span>Évaluations</span><strong id="statGradesDash">0</strong></div></div>
+  </div>
+  <div class="dashboard-grid">
+    <div class="card modern-card overview-card"><div class="card-heading"><div><span class="section-kicker">APERÇU</span><h2>📈 Vue d’ensemble</h2></div><span class="live-dot">● Actif</span></div><div id="dashboardSummary" class="overview-content"></div></div>
+    <div class="card modern-card quick-card"><div class="card-heading"><div><span class="section-kicker">ACCÈS RAPIDE</span><h2>⚡ Actions</h2></div></div><div class="quick-actions"><button onclick="showPage('suivi',document.querySelectorAll('.nav button')[3])"><span>🧭</span><b>Suivi du jour</b><small>Absences & comportement</small></button><button onclick="showPage('resultats',document.querySelectorAll('.nav button')[9])"><span>📊</span><b>Notes & moyennes</b><small>Consulter les résultats</small></button><button onclick="showPage('cours',document.querySelectorAll('.nav button')[7])"><span>📚</span><b>Mes cours</b><small>Ressources pédagogiques</small></button><button onclick="showPage('assistant',document.querySelectorAll('.nav button')[6])"><span>🤖</span><b>Assistant IA</b><small>Créer une activité</small></button></div></div>
+  </div>
 </section>
 
 <section id="classes" class="page">
@@ -477,6 +506,8 @@ function exportResultsCSV(){
 function renderDashboardSummary(){
  const box=document.getElementById('dashboardSummary');if(!box)return;
  const n=data.grades.length,avg=n?data.grades.reduce((a,g)=>a+g.score20,0)/n:0;
+ const sc=document.getElementById('statCourses'),sg=document.getElementById('statGradesDash');
+ if(sc)sc.textContent=data.courses.length; if(sg)sg.textContent=n;
  box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
 }
 
