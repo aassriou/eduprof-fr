@@ -525,12 +525,15 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
     <div class="fiches-viewer-head">
       <div>
         <h2>📖 Consulter la fiche</h2>
-        <p class="muted">Vous pouvez faire défiler les pages directement dans l’application.</p>
+        <p class="muted">Le document s’ouvre avec un lecteur PDF compatible avec le téléphone.</p>
       </div>
-      <a class="btn cancel" href="./assets/fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir le PDF</a>
+      <div class="actions">
+        <button class="btn" type="button" onclick="openFichesPDF()">📖 Lire le PDF</button>
+        <a class="btn cancel" href="./assets/fiches-parcours-1asc.pdf" target="_blank" rel="noopener">↗ Ouvrir</a>
+      </div>
     </div>
     <div class="fiches-viewer">
-      <iframe src="./assets/fiches-parcours-1asc.pdf#page=1" title="Fiches pédagogiques Parcours 1ASC"></iframe>
+      <iframe id="fichesPdfViewer" title="Fiches pédagogiques Parcours 1ASC" loading="lazy"></iframe>
     </div>
   </div>
 </section>
@@ -790,10 +793,28 @@ function renderDashboardSummary(){
  box.innerHTML=`<b>${data.classes.length}</b> classe(s) · <b>${data.students.length}</b> élève(s) · <b>${data.exercises.length}</b> exercice(s) · <b>${n}</b> note(s). ${n?`Moyenne générale : <b>${avg.toFixed(2)}/20</b>.`:'Aucune note enregistrée pour le moment.'}`;
 }
 
-function openFichesPDF(){
-  const url='./assets/fiches-parcours-1asc.pdf';
-  window.open(url,'_blank','noopener,noreferrer');
+function getFichesPdfUrl(){
+  return new URL('./assets/fiches-parcours-1asc.pdf', document.baseURI).href;
 }
+function openFichesPDF(){
+  const url=getFichesPdfUrl();
+  try{
+    if(/Android/i.test(navigator.userAgent)){
+      const clean=url.replace(/^https?:\/\//,'');
+      window.location.href='intent://'+clean+'#Intent;scheme=https;package=com.sec.android.app.sbrowser;end';
+      setTimeout(()=>window.open(url,'_blank','noopener,noreferrer'),1000);
+    }else{
+      window.open(url,'_blank','noopener,noreferrer');
+    }
+  }catch(e){ window.open(url,'_blank'); }
+}
+function initFichesViewer(){
+  const frame=document.getElementById('fichesPdfViewer');
+  if(!frame)return;
+  const pdf=getFichesPdfUrl();
+  frame.src='https://docs.google.com/gview?embedded=1&url='+encodeURIComponent(pdf);
+}
+initFichesViewer();
 
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
 function openOneDriveInBrowser(){
