@@ -35,6 +35,20 @@
   .main{order:1 !important; flex:1 1 auto !important; width:auto !important; min-width:0 !important; margin:0 !important;}
   .sidebar{order:2 !important; flex:0 0 72px !important; width:72px !important; position:static !important; margin:0 !important;}
 }
+
+/* V22 — séparation claire des classes dans Mes élèves */
+.class-group-title td{
+  background:#eaf0ff;
+  color:#172033;
+  font-weight:700;
+  padding:12px 14px;
+  border-top:2px solid #315efb;
+}
+.class-group-title td span{
+  color:#687386;
+  font-weight:600;
+}
+
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
@@ -552,8 +566,49 @@ function render(){
 function renderStudents(){
  const st=document.getElementById('studentTable'); if(!st)return;
  const q=(document.getElementById('studentSearch')?.value||'').trim().toLowerCase();
- const rows=data.students.map((s,i)=>({s,i})).filter(({s})=>!q||`${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q));
- st.innerHTML=rows.length?rows.map(({s,i})=>`<tr><td>${esc(s.last)}</td><td>${esc(s.first)}</td><td>${esc(s.className)}</td><td><button class="btn cancel" onclick="editStudent(${i})">✏️</button> <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button></td></tr>`).join(''):'<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
+
+ const filtered=data.students.map((s,i)=>({s,i})).filter(({s})=>
+   !q || `${s.last} ${s.first} ${s.className}`.toLowerCase().includes(q)
+ );
+
+ if(!filtered.length){
+   st.innerHTML='<tr><td colspan="4" class="empty">Aucun élève trouvé.</td></tr>';
+   return;
+ }
+
+ const groups=new Map();
+ filtered.forEach(({s,i})=>{
+   const key=classKey(s.className||'Sans classe');
+   if(!groups.has(key)) groups.set(key,{name:s.className||'Sans classe',students:[]});
+   groups.get(key).students.push({s,i});
+ });
+
+ // Keep the same order as the class list, then append any unmatched class.
+ const ordered=[];
+ (data.classes||[]).forEach(c=>{
+   const key=classKey(c.name);
+   if(groups.has(key)){ ordered.push(groups.get(key)); groups.delete(key); }
+ });
+ groups.forEach(g=>ordered.push(g));
+
+ st.innerHTML=ordered.map(g=>`
+   <tr class="class-group-title">
+     <td colspan="4">
+       <strong>📚 ${esc(g.name)}</strong>
+       <span style="float:right">${g.students.length} élève(s)</span>
+     </td>
+   </tr>
+   ${g.students.map(({s,i})=>`
+     <tr>
+       <td>${esc(s.last)}</td>
+       <td>${esc(s.first)}</td>
+       <td>${esc(s.className)}</td>
+       <td>
+         <button class="btn cancel" onclick="editStudent(${i})">✏️</button>
+         <button class="btn cancel" onclick="deleteStudent(${i})">🗑️</button>
+       </td>
+     </tr>`).join('')}
+ `).join('');
 }
 function editClass(i){
  const c=data.classes[i]; if(!c)return;
