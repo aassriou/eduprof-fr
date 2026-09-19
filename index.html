@@ -29,8 +29,13 @@
 
 .grade-big{font-size:28px;font-weight:800;margin:5px 0}
 \n
-/* V19 — téléphone : menu à droite, contenu à gauche */
-@media (max-width:800px){.app{display:block;min-height:100vh}.sidebar{position:fixed !important;top:0 !important;right:0 !important;left:auto !important;bottom:0 !important;width:72px !important;height:100vh !important;z-index:1000 !important;overflow-y:auto !important}.main{margin-left:0 !important;margin-right:72px !important;width:auto !important;min-width:0 !important}}
+/* V19 FIX — الهاتف: المحتوى يسار، القائمة يمين */
+@media screen and (max-width:800px){
+html,body{overflow-x:hidden!important}
+.app{display:block!important;position:relative!important;width:100%!important}
+.sidebar{position:fixed!important;top:0!important;right:0!important;left:auto!important;bottom:0!important;width:72px!important;height:100vh!important;z-index:9999!important;display:flex!important;flex-direction:column!important;overflow-y:auto!important;overflow-x:hidden!important}
+.main{position:relative!important;margin-left:0!important;margin-right:72px!important;width:calc(100% - 72px)!important;max-width:none!important;box-sizing:border-box!important}
+}
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
