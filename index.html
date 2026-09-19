@@ -114,44 +114,27 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 
-/* V38 — mobile sidebar visible and readable */
+
+<style id="v39-mobile-professional">
+/* V39 — professional mobile navigation: content left, navigation right */
 @media (max-width:800px){
-  .sidebar{
-    width:128px !important;
-    background:linear-gradient(180deg,#0b1633 0%,#132653 55%,#1d3470 100%) !important;
-    padding:14px 8px !important;
-    box-shadow:-8px 0 28px rgba(10,20,50,.28) !important;
-  }
-  .brand{padding:4px 0 14px !important;}
-  .brand-mark{width:46px !important;height:46px !important;margin:auto !important;}
-  .nav{gap:7px !important;}
-  .nav button{
-    width:100% !important;
-    min-height:56px !important;
-    height:auto !important;
-    padding:8px 5px !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    flex-direction:column !important;
-    gap:3px !important;
-    font-size:10px !important;
-    line-height:1.15 !important;
-    color:#ffffff !important;
-    background:rgba(255,255,255,.10) !important;
-    border:1px solid rgba(255,255,255,.16) !important;
-    border-radius:13px !important;
-    text-align:center !important;
-    white-space:normal !important;
-  }
-  .nav button.active{
-    background:linear-gradient(135deg,#6366f1,#2563eb) !important;
-    border-color:rgba(255,255,255,.35) !important;
-    box-shadow:0 7px 18px rgba(37,99,235,.38) !important;
-  }
-  .nav button::first-letter{font-size:20px !important;}
-  .main{margin-right:128px !important;padding:14px 12px !important;width:auto !important;}
+  .app{display:flex !important; flex-direction:row !important; width:100% !important; min-height:100vh !important;}
+  .main{order:1 !important; margin:0 !important; width:calc(100% - 176px) !important; min-width:0 !important; padding:16px 12px 32px !important;}
+  .sidebar{order:2 !important; position:fixed !important; top:0 !important; right:0 !important; bottom:0 !important; width:176px !important; height:100vh !important; box-sizing:border-box !important; z-index:1000 !important; overflow-y:auto !important; overflow-x:hidden !important; padding:14px 10px 18px !important; background:linear-gradient(180deg,#111c3a 0%,#172a56 55%,#203b78 100%) !important; border-left:1px solid rgba(255,255,255,.12) !important; box-shadow:-12px 0 30px rgba(12,25,55,.28) !important;}
+  .brand{display:flex !important; align-items:center !important; justify-content:center !important; padding:4px 0 18px !important; border-bottom:1px solid rgba(255,255,255,.12) !important; margin-bottom:14px !important;}
+  .brand-text{display:block !important; color:#fff !important; text-align:center !important;}
+  .brand-text b{display:block !important; font-size:16px !important; letter-spacing:.2px !important;}
+  .brand-text span{display:block !important; font-size:10px !important; opacity:.7 !important; margin-top:2px !important;}
+  .brand-mark{width:44px !important; height:44px !important; margin:0 0 0 8px !important; flex:none !important;}
+  .nav{display:flex !important; flex-direction:column !important; gap:8px !important;}
+  .nav button{width:100% !important; min-height:52px !important; box-sizing:border-box !important; display:flex !important; align-items:center !important; justify-content:flex-start !important; gap:9px !important; padding:9px 10px !important; border-radius:14px !important; color:#eef4ff !important; background:rgba(255,255,255,.075) !important; border:1px solid rgba(255,255,255,.10) !important; font-size:11px !important; line-height:1.2 !important; font-weight:700 !important; text-align:right !important; white-space:normal !important; transition:all .18s ease !important;}
+  .nav button:hover{background:rgba(255,255,255,.13) !important; transform:translateX(-2px) !important;}
+  .nav button.active{background:linear-gradient(135deg,#6366f1,#2563eb) !important; border-color:rgba(255,255,255,.3) !important; box-shadow:0 8px 20px rgba(37,99,235,.32) !important; color:#fff !important;}
+  .nav button::first-letter{font-size:19px !important;}
+  .institution-bar{margin-top:2px !important;}
+  .top h1{font-size:27px !important; line-height:1.1 !important;}
 }
+</style>
 </head>
 <body>
 <div class="app">
