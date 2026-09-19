@@ -1191,7 +1191,7 @@ button,input,select,textarea{font:inherit}
   .app.mobile-menu-closed .sidebar{display:block!important;transform:translateX(-105%)!important;visibility:hidden!important}
   .app:not(.mobile-menu-closed) .sidebar{visibility:visible!important}
   .mobile-menu-toggle{left:14px!important;top:14px!important;width:48px!important;height:48px!important;border-radius:16px!important;background:linear-gradient(135deg,#5b55ea,#2563eb)!important;box-shadow:0 12px 28px rgba(37,99,235,.30)!important}
-  .mobile-menu-backdrop{display:block;position:fixed;inset:0;background:rgba(7,15,35,.42);backdrop-filter:blur(2px);z-index:9998;opacity:1;transition:opacity .2s ease}
+  .mobile-menu-backdrop{display:block;position:fixed;inset:0;background:rgba(7,15,35,.12);backdrop-filter:none;z-index:9998;opacity:1;transition:opacity .2s ease}
   .app.mobile-menu-closed .mobile-menu-backdrop{display:none}
   .brand{padding:8px 10px 20px!important}.brand-text{display:block!important}.brand-mark{width:46px!important;height:46px!important}
   .nav button{font-size:13px!important;min-height:54px!important;justify-content:flex-start!important;text-align:left!important}
@@ -1204,6 +1204,34 @@ button,input,select,textarea{font:inherit}
   .institution-bar{padding:15px!important}.institution-bar .field{min-width:100%!important}
 }
 </style>
+
+<style id="v44-mobile-professional-final">
+/* V44 — clean professional drawer: content stays sharp and readable */
+@media (max-width:800px){
+  .mobile-menu-backdrop{
+    background:rgba(15,23,42,.10) !important;
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+  .app:not(.mobile-menu-closed) .main{
+    filter:none !important;
+    opacity:1 !important;
+  }
+  .app:not(.mobile-menu-closed) .page,
+  .app:not(.mobile-menu-closed) .main *{
+    filter:none !important;
+  }
+  .sidebar{
+    width:min(300px,82vw) !important;
+    border-right:1px solid rgba(255,255,255,.14) !important;
+    box-shadow:18px 0 48px rgba(15,23,42,.32) !important;
+  }
+  .mobile-menu-toggle{
+    z-index:10001 !important;
+  }
+}
+</style>
+
 <script id="v43-mobile-drawer">
 (function(){
   function appEl(){return document.querySelector('.app');}
