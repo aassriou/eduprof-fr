@@ -89,6 +89,22 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 @media(max-width:900px){.main{padding:16px}.hero-dashboard{padding:28px;min-height:225px}.hero-orb{margin-right:10px}.dashboard-stats{grid-template-columns:repeat(2,1fr)}.dashboard-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.sidebar{width:72px;padding:16px 8px}.brand{justify-content:center;padding:4px 0 18px}.brand-text{display:none}.brand-mark{width:42px}.nav button{font-size:0;justify-content:center;padding:12px 8px}.nav button::first-letter{font-size:20px}.main{padding:14px 12px}.hero-dashboard{min-height:250px;padding:24px 20px}.hero-copy h1{font-size:29px}.hero-copy p{font-size:13px}.hero-orb{display:none}.hero-actions{flex-wrap:wrap}.dashboard-stats{gap:10px}.stat-card{padding:13px}.stat-card strong{font-size:24px}.quick-actions{grid-template-columns:1fr}}
 @media(max-width:480px){.dashboard-stats{grid-template-columns:1fr 1fr}.stat-card{min-width:0}.stat-card span{font-size:10px}.stat-card strong{font-size:22px}.hero-dashboard{border-radius:22px}.hero-copy h1{font-size:26px}.hero-actions .btn{width:100%}}
+
+/* V37 — mobile navigation fixed on the RIGHT */
+@media (max-width:800px){
+  html,body{width:100%;min-width:0;overflow-x:hidden}
+  .app{display:block !important;position:relative !important;width:100% !important;min-height:100vh !important}
+  .main{display:block !important;width:calc(100% - 78px) !important;max-width:none !important;margin:0 !important;padding:14px 12px !important;margin-right:78px !important;min-width:0 !important}
+  .sidebar{display:block !important;position:fixed !important;right:0 !important;top:0 !important;bottom:0 !important;width:78px !important;height:100vh !important;padding:16px 7px !important;margin:0 !important;z-index:9999 !important;overflow-y:auto !important;overflow-x:hidden !important;order:initial !important}
+  .brand{justify-content:center !important;padding:4px 0 18px !important}
+  .brand-text{display:none !important}
+  .brand-mark{width:44px !important;height:44px !important}
+  .nav{width:100% !important}
+  .nav button{width:100% !important;height:48px !important;padding:10px 4px !important;justify-content:center !important;text-align:center !important;font-size:0 !important;gap:0 !important;transform:none !important}
+  .nav button::first-letter{font-size:21px !important}
+  .nav button:hover{transform:none !important}
+}
+
 </style>
 
 <link rel="manifest" href="./manifest.webmanifest">
