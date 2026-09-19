@@ -183,9 +183,9 @@
   <div class="onedrive-icon">☁️</div>
   <div class="onedrive-content">
     <div class="onedrive-kicker">BIBLIOTHÈQUE PÉDAGOGIQUE</div>
-    <h2>Mes cours OneDrive</h2>
-    <p>Retrouvez vos cours, fiches pédagogiques et documents du <b>Lycée collégial Sidi bouafif</b> dans votre bibliothèque OneDrive.</p>
-    <button class="onedrive-btn" onclick="openOneDriveInChrome()">🌐 Ouvrir mes cours dans Chrome <span>↗</span></button>
+    <h2>Mes cours Google Drive</h2>
+    <p>Retrouvez vos cours, fiches pédagogiques et documents du <b>Lycée collégial Sidi bouafif</b> dans votre bibliothèque Google Drive.</p>
+    <button class="onedrive-btn" onclick="openOneDriveInBrowser()">🌐 Ouvrir mes cours dans Browser <span>↗</span></button>
   </div>
 </div>
 <div id="courseList" class="grid" style="grid-template-columns:repeat(2,1fr);margin-top:18px"></div>
@@ -481,11 +481,11 @@ function renderDashboardSummary(){
 }
 
 const ONE_DRIVE_URL='https://drive.google.com/drive/u/1/folders/1tkheDeZSRmkASWtmg4OBmEIW-DTU2rNK';
-function openOneDriveInChrome(){
+function openOneDriveInBrowser(){
   try{
     if(/Android/i.test(navigator.userAgent)){
       const u=ONE_DRIVE_URL.replace(/^https?:\/\//,'');
-      window.location.href='intent://'+u+'#Intent;scheme=https;package=com.android.chrome;end';
+      window.location.href='intent://'+u+'#Intent;scheme=https;package=com.sec.android.app.sbrowser;end';
       setTimeout(()=>window.open(ONE_DRIVE_URL,'_blank','noopener,noreferrer'),1200);
     }else{
       window.open(ONE_DRIVE_URL,'_blank','noopener,noreferrer');
