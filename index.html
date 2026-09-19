@@ -368,10 +368,14 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
   <div class="top"><h1>📥 Importer les élèves</h1></div>
   <div class="card">
     <p class="muted">Importez directement votre fichier <b>Excel (.xlsx)</b> ou CSV. Colonnes attendues : <b>Nom, Prénom, Classe</b>. Les doublons sont automatiquement ignorés.</p>
-    <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="field">
+    <div class="file-picker-box">
+      <input type="file" id="csvFile" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" onchange="updateChosenFileName(this)">
+      <label for="csvFile" class="file-picker-button">📂 Choisir un fichier</label>
+      <span id="chosenFileName" class="file-picker-name">Aucun fichier choisi</span>
+    </div>
     <div class="actions" style="justify-content:flex-start">
-      <button class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
-      <button class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
+      <button type="button" class="btn" onclick="importStudentsFile()">📥 Importer Excel</button>
+      <button type="button" class="btn cancel" onclick="downloadTemplate()">Télécharger le modèle CSV</button>
     </div>
     <p id="importMsg" class="muted"></p>
   </div>
@@ -1369,6 +1373,22 @@ try{updateInstitutionUI();}catch(e){}
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
   window.addEventListener('load',bind);
 })();
+</script>
+
+
+<style id="v50-file-picker">
+.file-picker-box{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0;padding:10px;border:1px solid #dbe3f0;border-radius:16px;background:#f8fafc;position:relative;z-index:10020!important}
+.file-picker-box input[type=file]{position:absolute!important;width:1px!important;height:1px!important;opacity:0!important;overflow:hidden!important;pointer-events:none!important}
+.file-picker-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border-radius:14px;background:linear-gradient(135deg,#4055c7,#2563eb);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(37,99,235,.22);position:relative;z-index:10021!important}
+.file-picker-button:active{transform:scale(.98)}
+.file-picker-name{font-size:14px;color:#64748b;font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:480px){.file-picker-box{align-items:stretch;flex-direction:column}.file-picker-button{width:100%;box-sizing:border-box}.file-picker-name{text-align:center;padding:4px 2px}}
+</style>
+<script id="v50-file-picker-script">
+function updateChosenFileName(input){
+  var el=document.getElementById('chosenFileName');
+  if(el) el.textContent=input && input.files && input.files[0] ? input.files[0].name : 'Aucun fichier choisi';
+}
 </script>
 
 </body>
