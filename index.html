@@ -178,6 +178,14 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
 .institution-picker select{width:100%!important;min-height:50px!important;padding:0 14px!important;border:1px solid #d7dfec!important;border-radius:14px!important;background:#fff!important;color:#17233b!important;font-weight:800!important;cursor:pointer!important;position:relative!important;z-index:20!important;pointer-events:auto!important}
 @media(max-width:480px){.institution-current,.institution-picker{min-width:100%;width:100%}.institution-picker select{min-height:52px!important}}
 </style>
+
+<style id="v48-institution-switcher">
+.institution-quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.institution-choice{appearance:none;border:1px solid #dbe3f0;background:#f8fafc;color:#17233b;border-radius:12px;padding:10px 12px;font-weight:800;cursor:pointer;box-shadow:0 3px 10px rgba(15,23,42,.05);transition:.18s;touch-action:manipulation}
+.institution-choice:hover{transform:translateY(-1px);border-color:#93c5fd}
+.institution-choice.active{background:linear-gradient(135deg,#4f46e5,#2563eb);color:#fff;border-color:#4f46e5;box-shadow:0 7px 16px rgba(37,99,235,.22)}
+@media(max-width:480px){.institution-picker select{display:none!important}.institution-quick{display:grid;grid-template-columns:1fr;gap:8px}.institution-choice{width:100%;min-height:48px;text-align:left;font-size:13px}.institution-bar{position:relative;z-index:30!important}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -208,6 +216,10 @@ body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,
       <option value="manarat">Institut Manarat Rif</option>
       <option value="sidi">Lycée collégial Sidi bouafif</option>
     </select>
+    <div class="institution-quick" aria-label="Institutions">
+      <button type="button" class="institution-choice" data-inst="manarat" onclick="switchInstitution('manarat')">🏫 <span>Institut Manarat Rif</span></button>
+      <button type="button" class="institution-choice" data-inst="sidi" onclick="switchInstitution('sidi')">🏫 <span>Lycée collégial Sidi bouafif</span></button>
+    </div>
   </div>
 </div>
 <section id="dashboard" class="page active">
@@ -510,11 +522,16 @@ function switchInstitution(id){
 }
 function updateInstitutionUI(){
  const sel=document.getElementById('institutionSelect');
- if(sel){ sel.value=currentInstitution; sel.onchange=function(){ switchInstitution(this.value); }; }
+ if(sel){ sel.value=currentInstitution; }
  const name=document.getElementById('activeInstitutionName');
  if(name) name.textContent=INSTITUTIONS[currentInstitution];
  const label=document.getElementById('courseInstitutionLabel');
  if(label) label.textContent=INSTITUTIONS[currentInstitution];
+ document.querySelectorAll('.institution-choice').forEach(function(btn){
+   const active=btn.getAttribute('data-inst')===currentInstitution;
+   btn.classList.toggle('active',active);
+   btn.setAttribute('aria-pressed',active?'true':'false');
+ });
 }
 function renderEvaluationSelectors(){
  const s=document.getElementById('evalStudent'),e=document.getElementById('evalExercise'); if(!s||!e)return;
@@ -833,10 +850,11 @@ function render(){
 
 function bindInstitutionSelector(){
  const sel=document.getElementById('institutionSelect');
- if(!sel) return;
- sel.removeAttribute('onchange');
- sel.addEventListener('change',function(){ switchInstitution(this.value); });
- sel.addEventListener('input',function(){ if(this.value!==currentInstitution) switchInstitution(this.value); });
+ if(sel && !sel.dataset.bound){
+   sel.dataset.bound='1';
+   sel.addEventListener('change',function(e){ e.stopPropagation(); switchInstitution(this.value); },{passive:false});
+ }
+ updateInstitutionUI();
 }
 
 function behaviorDefault(b){
@@ -1321,6 +1339,7 @@ button,input,select,textarea{font:inherit}
 })();
 
 try{bindInstitutionSelector();}catch(e){}
+try{updateInstitutionUI();}catch(e){}
 </script>
 
 </body>
